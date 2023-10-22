@@ -1,0 +1,11 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mariadb://144.122.71.113:8083/group12
+    username: group12
+    password: claZg6xkoNaZbvJ
+    driver-class-name=org: mariadb.jdbc.Driver
+
+#  jpa:
+#    show-sql: true
