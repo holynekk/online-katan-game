@@ -1,5 +1,7 @@
 package com.group12.util;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
@@ -24,5 +26,10 @@ public class SecureStringUtil {
       str.append(STRING_SEED.charAt(SECURE_RANDOM.nextInt(STRING_SEED.length())));
     }
     return str.toString();
+  }
+
+  public static boolean equals(String first, String second) {
+    return MessageDigest.isEqual(
+        first.getBytes(StandardCharsets.UTF_8), second.getBytes(StandardCharsets.UTF_8));
   }
 }

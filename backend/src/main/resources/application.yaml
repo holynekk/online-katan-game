@@ -9,5 +9,8 @@ spring:
   jpa:
     show-sql: true
 
-#  jpa:
-#    show-sql: true
+server:
+  servlet:
+    session:
+      cookie:
+        max-age: 30m

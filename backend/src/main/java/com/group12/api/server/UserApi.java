@@ -1,4 +1,4 @@
-package com.group12.api.server.auth;
+package com.group12.api.server;
 
 import com.group12.api.request.auth.UserCreateRequest;
 import com.group12.entity.User;
@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/user")
 public class UserApi {
   public static final String SECRET_KEY = "TheSecretKey2468";
 
   @Autowired private UserRepository repository;
 
   @PostMapping(
-      value = "/user",
+      value = "",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.TEXT_PLAIN_VALUE)
   public ResponseEntity<String> createUser(@RequestBody UserCreateRequest userRequest)
@@ -51,7 +51,7 @@ public class UserApi {
         .body("New user has been created : " + user.getDisplayName());
   }
 
-  @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getUser(@RequestParam(name = "username") String providedUsername)
       throws Exception {
 
