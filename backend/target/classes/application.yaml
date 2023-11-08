@@ -6,6 +6,11 @@ spring:
     username: group12
     password: claZg6xkoNaZbvJ
     driver-class-name=org: mariadb.jdbc.Driver
+  jpa:
+    show-sql: true
 
-#  jpa:
-#    show-sql: true
+server:
+  servlet:
+    session:
+      cookie:
+        max-age: 30m
