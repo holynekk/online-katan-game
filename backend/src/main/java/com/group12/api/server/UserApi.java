@@ -42,6 +42,7 @@ public class UserApi {
     user.setPasswordHash(passwordHash);
 
     user.setDisplayName(userRequest.getDisplayName());
+    user.setEmail(userRequest.getEmail());
     user.setMaxScore(0);
     user.setLastPasswordUpdate(LocalDateTime.now());
 
