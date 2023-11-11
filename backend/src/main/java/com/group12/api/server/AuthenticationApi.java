@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 
 @RestController
@@ -19,7 +18,7 @@ public class AuthenticationApi {
   @PostMapping(value = "/login", produces = MediaType.TEXT_PLAIN_VALUE)
   public String login(HttpServletRequest request) {
     String encryptedUsername =
-        (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
+            (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
     SessionCookieToken token = new SessionCookieToken();
     token.setUsername(encryptedUsername);
 
@@ -31,7 +30,7 @@ public class AuthenticationApi {
   @GetMapping(value = "/test", produces = MediaType.TEXT_PLAIN_VALUE)
   public String test(HttpServletRequest request) {
     String encryptedUsername =
-        (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
+            (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
 
     return "Token is valid. Endpoint accessed at " + LocalDateTime.now();
   }

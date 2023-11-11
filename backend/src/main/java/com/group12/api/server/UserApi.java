@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.group12.service.PasswordResetService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -62,5 +63,18 @@ public class UserApi {
     String encryptedUsername =
         EncryptDecryptUtil.encryptAes(providedUsername.toLowerCase(), SECRET_KEY);
     return repository.findByUsername(encryptedUsername);
+  }
+
+  @Autowired
+  private PasswordResetService passwordResetService;
+
+  @GetMapping("/find-user-by-reset-token")
+  public ResponseEntity<?> findUserByResetToken(@RequestParam String token) {
+    User user = passwordResetService.getUserByValidatedPasswordResetToken(token);
+    if (user != null) {
+      return ResponseEntity.ok(user);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token not found or invalid");
+    }
   }
 }
