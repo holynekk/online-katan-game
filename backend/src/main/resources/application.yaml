@@ -9,6 +9,11 @@ spring:
   jpa:
     show-sql: true
 
+  mvc:
+    path-match:
+      matching-strategy: ant_path_matcher
+
+
   mail:
     host: smtp.gmail.com #create a new email address and configure
     port: 587
@@ -25,3 +30,8 @@ server:
     session:
       cookie:
         max-age: 30m
+
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true

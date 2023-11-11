@@ -1,10 +1,5 @@
 package com.group12.api.response;
 
-import com.group12.entity.User;
-import org.antlr.v4.runtime.misc.Pair;
-
-import java.util.List;
-
 public class LeaderBoardResponse {
 
   private String displayName;

@@ -4,8 +4,8 @@ import com.group12.constant.SessionCookieConstant;
 import com.group12.entity.SessionCookieToken;
 import com.group12.util.SecureStringUtil;
 import com.group12.util.HashUtil;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

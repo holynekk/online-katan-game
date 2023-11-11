@@ -3,7 +3,7 @@ package com.group12.api.server;
 import com.group12.constant.SessionCookieConstant;
 import com.group12.entity.SessionCookieToken;
 import com.group12.service.SessionCookieTokenService;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
