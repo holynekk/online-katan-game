@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.group12.service.PasswordResetService;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -23,16 +24,20 @@ public class UserApi {
   @Autowired private UserRepository repository;
 
   @PostMapping(
-          value = "",
-          consumes = MediaType.APPLICATION_JSON_VALUE,
-          produces = MediaType.TEXT_PLAIN_VALUE)
+      value = "",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.TEXT_PLAIN_VALUE)
   public ResponseEntity<String> createUser(@RequestBody UserCreateRequest userRequest)
-          throws Exception {
+      throws Exception {
+    String encryptedUsername =
+        EncryptDecryptUtil.encryptAes(userRequest.getUsername().toLowerCase(), SECRET_KEY);
+
+    if (repository.findByUsername(encryptedUsername).isPresent()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( "User with username " + userRequest.getUsername() + " is already exists.");
+    }
 
     User user = new User();
 
-    String encryptedUsername =
-            EncryptDecryptUtil.encryptAes(userRequest.getUsername().toLowerCase(), SECRET_KEY);
     user.setUsername(encryptedUsername);
 
     String salt = SecureStringUtil.randomString(16);
@@ -43,20 +48,20 @@ public class UserApi {
 
     user.setDisplayName(userRequest.getDisplayName());
     user.setEmail(userRequest.getEmail());
-    user.setMaxScore(0);
     user.setLastPasswordUpdate(LocalDateTime.now());
 
     User saved = repository.save(user);
 
     return ResponseEntity.status(HttpStatus.CREATED)
-            .body("New user has been created : " + user.getDisplayName());
+        .body("New user has been created : " + user.getDisplayName());
   }
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getUser(@RequestParam(name = "username") String providedUsername)
-          throws Exception {
+      throws Exception {
+
     String encryptedUsername =
-            EncryptDecryptUtil.encryptAes(providedUsername.toLowerCase(), SECRET_KEY);
+        EncryptDecryptUtil.encryptAes(providedUsername.toLowerCase(), SECRET_KEY);
     return repository.findByUsername(encryptedUsername);
   }
 
