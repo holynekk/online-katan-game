@@ -1,10 +1,13 @@
 package com.group12.entity;
 
 import jakarta.persistence.*;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Optional;
+import java.util.Calendar;
 
+@Getter
+@Setter
 @Entity
 public class PasswordResetToken  {
     private static final int EXPIRATION = 60 * 24; //24 hours expiration
@@ -15,38 +18,20 @@ public class PasswordResetToken  {
     private String token;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    private Optional<User> user;
-
-    public Long getId() {
-        return id;
-    }
+    private User user;
 
     public PasswordResetToken() {
     }
 
-    public PasswordResetToken(String token, Optional<User> user) {
+    public PasswordResetToken(String token, User user) {
         this.token = token;
         this.user = user;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Optional<User> getUser() {
-        return user;
-    }
-
-    public void setUser(Optional<User> user) {
-        this.user = user;
+    public Calendar getExpiryDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, EXPIRATION);
+        return calendar;
     }
 }
 

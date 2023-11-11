@@ -11,7 +11,7 @@ spring:
 
 
   mail:
-    host: smtp.example.com #create a new email address and configure
+    host: smtp.gmail.com #create a new email address and configure
     port: 587
     username: username@example.com
     password: password

@@ -1,8 +1,9 @@
-package com.group12.controller;
+package com.group12.api.server;
 
 import com.group12.entity.User;
 import com.group12.repository.UserRepository;
 import com.group12.service.PasswordResetService;
+import com.group12.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +15,10 @@ import java.util.UUID;
 
 @RestController
 public class PasswordResetController {
-
     @Autowired
-    private PasswordResetService passwordResetService;
-
+    PasswordResetService passwordResetService;
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     // Endpoint to request a password reset
     @PostMapping("/password-reset-request")
@@ -27,7 +26,7 @@ public class PasswordResetController {
         Optional<User> user = userRepository.findByEmail(userEmail);
         if (user.isPresent()) { // CHECK
             String token = UUID.randomUUID().toString();
-            passwordResetService.createPasswordResetTokenForUser(user, token);
+            passwordResetService.createPasswordResetTokenForUser(user.get(), token);
             passwordResetService.sendPasswordResetMail(userEmail, token);
             return ResponseEntity.ok("Password reset link sent to email!");
         } else {
@@ -38,7 +37,14 @@ public class PasswordResetController {
     // Endpoint to reset the password
     @PostMapping("/reset-password")
     public ResponseEntity<?> setNewPassword(@RequestParam("token") String token, @RequestParam("password") String newPassword) {
-        ;// TOKEN VALIDATION AND SETTING PASSWORD
-        return null;
+        User user = passwordResetService.getUserByValidatedPasswordResetToken(token); //
+        if (user != null) {
+            String newPasswordHash = HashUtil.bcrypt(newPassword, user.getSalt());
+            user.setPasswordHash(newPasswordHash);
+            userRepository.save(user);
+            return ResponseEntity.ok("Password reset successfully!");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid token.");
+        }
     }
 }

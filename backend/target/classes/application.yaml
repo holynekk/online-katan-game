@@ -9,6 +9,17 @@ spring:
   jpa:
     show-sql: true
 
+
+  mail:
+    host: smtp.example.com #create a new email address and configure
+    port: 587
+    username: username@example.com
+    password: password
+    properties:
+      smtp.auth: true
+      starttls.enable: true
+
+
 server:
   servlet:
     session:
