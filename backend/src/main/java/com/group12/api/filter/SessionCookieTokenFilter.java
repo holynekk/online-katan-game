@@ -30,7 +30,10 @@ public class SessionCookieTokenFilter extends OncePerRequestFilter {
     } else {
       response.setStatus(HttpStatus.UNAUTHORIZED.value());
       response.setContentType(MediaType.TEXT_PLAIN_VALUE);
-      response.getWriter().print("Invalid Token!");
+      response
+          .getWriter()
+          .print(
+              "Invalid Token! Please make sure use set the X-CSRF header value as your valid session token.");
     }
   }
 

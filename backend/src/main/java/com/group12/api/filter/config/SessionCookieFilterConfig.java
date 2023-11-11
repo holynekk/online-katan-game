@@ -36,6 +36,7 @@ public class SessionCookieFilterConfig {
 
     registrationBean.setFilter(new SessionCookieTokenFilter(tokenService));
     registrationBean.addUrlPatterns("/api/auth/test");
+    registrationBean.addUrlPatterns("/api/leaderboard");
     registrationBean.addUrlPatterns("/api/auth/logout");
 
     return registrationBean;
