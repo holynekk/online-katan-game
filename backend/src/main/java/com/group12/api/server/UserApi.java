@@ -3,27 +3,24 @@ package com.group12.api.server;
 import com.group12.api.request.auth.UserCreateRequest;
 import com.group12.entity.User;
 import com.group12.repository.UserRepository;
-import com.group12.service.PasswordResetService;
 import com.group12.util.EncryptDecryptUtil;
 import com.group12.util.HashUtil;
 import com.group12.util.SecureStringUtil;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.group12.service.PasswordResetService;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserApi {
   public static final String SECRET_KEY = "TheSecretKey2468";
 
-  @Autowired
-  private UserRepository repository;
+  @Autowired private UserRepository repository;
 
   @PostMapping(
           value = "",
@@ -58,7 +55,6 @@ public class UserApi {
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getUser(@RequestParam(name = "username") String providedUsername)
           throws Exception {
-
     String encryptedUsername =
             EncryptDecryptUtil.encryptAes(providedUsername.toLowerCase(), SECRET_KEY);
     return repository.findByUsername(encryptedUsername);
@@ -69,9 +65,9 @@ public class UserApi {
 
   @GetMapping("/find-user-by-reset-token")
   public ResponseEntity<?> findUserByResetToken(@RequestParam String token) {
-    User userOptional = passwordResetService.getUserByValidatedPasswordResetToken(token);
-    if (userOptional != null) {
-      return ResponseEntity.ok(userOptional);
+    User user = passwordResetService.getUserByValidatedPasswordResetToken(token);
+    if (user != null) {
+      return ResponseEntity.ok(user);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token not found or invalid");
     }
