@@ -25,7 +25,7 @@ public class AuthenticationApi {
 
     String tokenId = tokenService.store(request, token);
 
-    return tokenId;
+    return "Logged in with tokenId: " + tokenId;
   }
 
   @GetMapping(value = "/test", produces = MediaType.TEXT_PLAIN_VALUE)
@@ -33,10 +33,7 @@ public class AuthenticationApi {
     String encryptedUsername =
         (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
 
-    return "Token is valid. Endpoint accessed at "
-        + LocalDateTime.now()
-        + " by "
-        + encryptedUsername;
+    return "Token is valid. Endpoint accessed at " + LocalDateTime.now();
   }
 
   @DeleteMapping(value = "/logout", produces = MediaType.TEXT_PLAIN_VALUE)
