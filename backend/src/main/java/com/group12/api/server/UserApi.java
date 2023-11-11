@@ -28,11 +28,15 @@ public class UserApi {
       produces = MediaType.TEXT_PLAIN_VALUE)
   public ResponseEntity<String> createUser(@RequestBody UserCreateRequest userRequest)
       throws Exception {
+    String encryptedUsername =
+        EncryptDecryptUtil.encryptAes(userRequest.getUsername().toLowerCase(), SECRET_KEY);
+
+    if (repository.findByUsername(encryptedUsername).isPresent()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( "User with username " + userRequest.getUsername() + " is already exists.");
+    }
 
     User user = new User();
 
-    String encryptedUsername =
-        EncryptDecryptUtil.encryptAes(userRequest.getUsername().toLowerCase(), SECRET_KEY);
     user.setUsername(encryptedUsername);
 
     String salt = SecureStringUtil.randomString(16);
@@ -43,7 +47,6 @@ public class UserApi {
 
     user.setDisplayName(userRequest.getDisplayName());
     user.setEmail(userRequest.getEmail());
-    user.setMaxScore(0);
     user.setLastPasswordUpdate(LocalDateTime.now());
 
     User saved = repository.save(user);

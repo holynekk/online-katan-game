@@ -13,6 +13,10 @@ public class User {
 
   private String username;
 
+  private String firstName;
+
+  private String lastName;
+
   private String passwordHash;
 
   private String salt;
@@ -20,8 +24,6 @@ public class User {
   private String displayName;
 
   private String email;
-
-  private int maxScore;
 
   private LocalDateTime lastPasswordUpdate;
 
@@ -39,6 +41,22 @@ public class User {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
   public String getPasswordHash() {
@@ -71,14 +89,6 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
-  }
-
-  public int getMaxScore() {
-    return maxScore;
-  }
-
-  public void setMaxScore(int max_score) {
-    this.maxScore = max_score;
   }
 
   public LocalDateTime getLastPasswordUpdate() {
