@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordResetService {
-  @Autowired
-    private JavaMailSender mailSender;
-  @Autowired
-    private PasswordResetTokenRepository tokenRepository;
+  @Autowired private JavaMailSender mailSender;
+  @Autowired private PasswordResetTokenRepository tokenRepository;
 
   public void createPasswordResetTokenForUser(User user, String token) {
     if (user == null) {
@@ -27,7 +25,12 @@ public class PasswordResetService {
     SimpleMailMessage mailMessage = new SimpleMailMessage();
     mailMessage.setTo(email);
     mailMessage.setSubject("Password Reset Request");
-    mailMessage.setText("To reset your password, click the link below:\n" + "group12-katan-backend.onrender.com" + "/api/user/reset-password?token=" + token); // fix the link
+    mailMessage.setText(
+        "You made a password reset request. The link will be valid for 24 hours. \nTo reset your password,"
+            + " click the link below:\n\n"
+            + "group12-katan-backend.onrender.com"
+            + "/api/user/reset-password?token="
+            + token);
     mailSender.send(mailMessage);
   }
 
@@ -58,4 +61,3 @@ public class PasswordResetService {
     tokenRepository.delete(resetToken);
   }
 }
-

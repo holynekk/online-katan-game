@@ -9,33 +9,31 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "password_reset_token")
-public class PasswordResetToken  {
-    private static final int EXPIRATION = 60 * 24; //24 hours expiration
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PasswordResetToken {
+  private static final int EXPIRATION = 60 * 24; // 24 hours expiration
 
-    private String token;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "expiry_date")
-    private LocalDateTime expiryDate;
+  private String token;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+  @Column(name = "expiry_date")
+  private LocalDateTime expiryDate;
 
-    public PasswordResetToken(String token, User user) {
-        this.token = token;
-        this.user = user;
-        this.expiryDate = calculateExpiryDate();
-    }
+  @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id")
+  private User user;
 
-    public PasswordResetToken() {
-    }
+  public PasswordResetToken(String token, User user) {
+    this.token = token;
+    this.user = user;
+    this.expiryDate = calculateExpiryDate();
+  }
 
-    private LocalDateTime calculateExpiryDate() {
-        return LocalDateTime.now().plusMinutes(EXPIRATION);
-    }
+  public PasswordResetToken() {}
+
+  private LocalDateTime calculateExpiryDate() {
+    return LocalDateTime.now().plusMinutes(EXPIRATION);
+  }
 }
-
-
