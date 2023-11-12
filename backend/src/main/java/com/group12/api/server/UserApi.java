@@ -33,7 +33,8 @@ public class UserApi {
         EncryptDecryptUtil.encryptAes(userRequest.getUsername().toLowerCase(), SECRET_KEY);
 
     if (repository.findByUsername(encryptedUsername).isPresent()) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( "User with username " + userRequest.getUsername() + " is already exists.");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body("User with username " + userRequest.getUsername() + " already exists.");
     }
 
     User user = new User();
@@ -65,8 +66,7 @@ public class UserApi {
     return repository.findByUsername(encryptedUsername);
   }
 
-  @Autowired
-  private PasswordResetService passwordResetService;
+  @Autowired private PasswordResetService passwordResetService;
 
   @GetMapping("/find-user-by-reset-token")
   public ResponseEntity<?> findUserByResetToken(@RequestParam String token) {
