@@ -13,9 +13,23 @@ public class PasswordResetService {
   @Autowired private JavaMailSender mailSender;
   @Autowired private PasswordResetTokenRepository tokenRepository;
 
+  @Autowired
+  public PasswordResetService(
+      JavaMailSender mailSender, PasswordResetTokenRepository tokenRepository) {
+    this.mailSender = mailSender;
+    this.tokenRepository = tokenRepository;
+  }
+
+  public PasswordResetService() {
+    super();
+  }
+
   public void createPasswordResetTokenForUser(User user, String token) {
     if (user == null) {
       throw new IllegalArgumentException("User cannot be null");
+    }
+    if (token == null) {
+      throw new IllegalArgumentException("Token cannot be null");
     }
     PasswordResetToken resetToken = new PasswordResetToken(token, user);
     tokenRepository.save(resetToken);
