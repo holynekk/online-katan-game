@@ -1,6 +1,11 @@
 package com.group12.api.request.leaderboard;
 
+/**
+ * Represents a request to get the leaderboard. This class includes the parameters for time
+ * interval, pagination, and offset for leaderboard queries.
+ */
 public class LeaderboardRequest {
+
   private String timeInterval;
 
   private int pagination;
