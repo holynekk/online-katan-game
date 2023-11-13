@@ -25,6 +25,12 @@ public class AuthenticationApi {
 
   @Autowired private PasswordResetService passwordResetService;
 
+  /**
+   * Allows client to log in to the system and creates a session for the current user.
+   *
+   * @param request - http request sent by client
+   * @return - a string response which includes session token id to use in other api endpoints.
+   */
   @PostMapping(value = "/login", produces = MediaType.TEXT_PLAIN_VALUE)
   public String login(HttpServletRequest request) {
     String encryptedUsername =
@@ -45,14 +51,12 @@ public class AuthenticationApi {
     return "Logged in with tokenId: " + tokenId;
   }
 
-  @GetMapping(value = "/test", produces = MediaType.TEXT_PLAIN_VALUE)
-  public String test(HttpServletRequest request) {
-    String encryptedUsername =
-        (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
-
-    return "Token is valid. Endpoint accessed at " + LocalDateTime.now();
-  }
-
+  /**
+   * Allows client to log out from the system and deletes the session and session cookie.
+   *
+   * @param request - http request sent by client
+   * @return - string type of message
+   */
   @DeleteMapping(value = "/logout", produces = MediaType.TEXT_PLAIN_VALUE)
   public String logout(HttpServletRequest request) {
     tokenService.delete(request);
@@ -76,7 +80,12 @@ public class AuthenticationApi {
     }
   }
 
-  // Endpoint to reset the password
+/**
+*
+ * @param token
+ * @param newPassword
+ * @return
+*/
   @GetMapping("/set-new-password")
   public ResponseEntity<?> setNewPassword(
       @RequestParam("token") String token, @RequestParam("password") String newPassword) {

@@ -16,6 +16,11 @@ public class SessionCookieFilterConfig {
 
   @Autowired private UserRepository userRepository;
 
+  /**
+   * Register repository for the endpoints that require basic authorization to work.
+   *
+   * @return - registrationBean to register given endpoints.
+   */
   @Bean
   public FilterRegistrationBean<SessionCookieAuthFilter> sessionCookieAuthFilter() {
 
@@ -28,6 +33,12 @@ public class SessionCookieFilterConfig {
     return registrationBean;
   }
 
+  /**
+   * Register repository for the endpoints that require session cookie token provided via login
+   * endpoint.
+   *
+   * @return - registrationBean to register given endpoints.
+   */
   @Bean
   public FilterRegistrationBean<SessionCookieTokenFilter> sessionCookieTokenFilter() {
 

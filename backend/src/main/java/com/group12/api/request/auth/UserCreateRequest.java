@@ -1,5 +1,6 @@
 package com.group12.api.request.auth;
 
+/** Custom request type to validate request body object for user creation. */
 public class UserCreateRequest {
 
   private String username;
@@ -44,11 +45,19 @@ public class UserCreateRequest {
 
   @Override
   public String toString() {
-    return "UserCreateRequest{" +
-            "username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", displayName='" + displayName + '\'' +
-            ", email='" + email + '\'' +
-            '}';
+    return "UserCreateRequest{"
+        + "username='"
+        + username
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", displayName='"
+        + displayName
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + '}';
   }
 }

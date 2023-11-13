@@ -21,6 +21,15 @@ public class SessionCookieTokenFilter extends OncePerRequestFilter {
     this.tokenService = tokenService;
   }
 
+  /**
+   * Checks if there is a valid session cookie for the current client's session.
+   *
+   * @param request - the http request instance sent by client
+   * @param response - response value, in case of a session auth problem while filtering
+   * @param filterChain - filterChain
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -37,6 +46,13 @@ public class SessionCookieTokenFilter extends OncePerRequestFilter {
     }
   }
 
+  /**
+   * Method to validate if there is a valid session cookie or not. Checks X-CSRF request header (the
+   * provided token by client) and compares it with the session cookie.
+   *
+   * @param request - the http request instance sent by client
+   * @return a boolean value - if the session cookie is still valid or not
+   */
   private boolean isValidSessionCookie(HttpServletRequest request) {
     String providedTokenId = request.getHeader("X-CSRF");
     Optional<SessionCookieToken> token = tokenService.read(request, providedTokenId);

@@ -19,10 +19,21 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/user")
 public class UserApi {
+
+  /** Secret key to encrypt user related credentials. */
   public static final String SECRET_KEY = "TheSecretKey2468";
 
   @Autowired private UserRepository repository;
 
+  /**
+   * Create user endpoint. Email and username should be unique. After validating the information is
+   * unique, user credentials (username and password) is hashed and saved into database with all
+   * other information.
+   *
+   * @param userRequest - custom request object to validate form fields in request body.
+   * @return - string message according to response status.
+   * @throws Exception - encryption related exceptions.
+   */
   @PostMapping(
       value = "",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -57,6 +68,11 @@ public class UserApi {
         .body("New user has been created : " + user.getDisplayName());
   }
 
+  /**
+   * @param providedUsername
+   * @return
+   * @throws Exception
+   */
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getUser(@RequestParam(name = "username") String providedUsername)
       throws Exception {
@@ -68,6 +84,10 @@ public class UserApi {
 
   @Autowired private PasswordResetService passwordResetService;
 
+  /**
+   * @param token
+   * @return
+   */
   @GetMapping("/find-user-by-reset-token")
   public ResponseEntity<?> findUserByResetToken(@RequestParam String token) {
     User user = passwordResetService.getUserByValidatedPasswordResetToken(token);

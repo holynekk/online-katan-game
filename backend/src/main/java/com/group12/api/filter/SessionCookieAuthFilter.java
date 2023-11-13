@@ -28,6 +28,16 @@ public class SessionCookieAuthFilter extends OncePerRequestFilter {
     this.userRepository = userRepository;
   }
 
+  /**
+   * Validates if the provided authorization string is valid or not.
+   *
+   * @param basicAuthString - Authorization string provided by the client via request headers.
+   *     Generated with username and password credentials.
+   * @param request - http request sent by client
+   * @return - Returns a boolean value which ensures that whether the authentication is successful
+   *     or not.
+   * @throws Exception - Throws exceptions when there is a problem decoding auth string.
+   */
   private boolean isValidBasicAuth(String basicAuthString, HttpServletRequest request)
       throws Exception {
 
@@ -62,6 +72,16 @@ public class SessionCookieAuthFilter extends OncePerRequestFilter {
     }
   }
 
+  /**
+   * Before hitting the endpoint, filter is applied to check if the basic authorization is valid. If
+   * not returns a response with invalid credentials to warn client to re-enter its credentials.
+   *
+   * @param request - http request sent by client
+   * @param response - response value, in case of a basic auth problem while filtering
+   * @param chain - filterChain
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)
