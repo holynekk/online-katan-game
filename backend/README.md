@@ -2,7 +2,7 @@
 - Mert Kaan YILMAZ (2381093)
 - Umut YILMAZ (2449064)
 
-<b>*General project documentation:*</b>
+<b>*General project documentation:*</b> holynekk.github.io/group12JavaDocs/
 
 # Database Schema
 
