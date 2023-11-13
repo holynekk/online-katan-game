@@ -15,10 +15,10 @@ spring:
 
 
   mail:
-    host: smtp.gmail.com #create a new email address and configure
+    host: smtp.gmail.com
     port: 587
-    username: 453.group12@gmail.com
-    password: pgitfytlsbjghbmk
+    username: 453.group12backend@gmail.com
+    password: nrrpdhjmlljrrusk
     properties:
       mail:
         smtp:

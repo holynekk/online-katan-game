@@ -4,6 +4,10 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a user entity in the system. This class holds information about a user including
+ * personal details, authentication credentials, and the last password update time.
+ */
 @Entity
 @Table(name = "katan_user")
 public class User {

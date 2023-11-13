@@ -16,6 +16,10 @@ import com.group12.service.PasswordResetService;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * REST controller for managing user-related operations. This class handles API requests for user
+ * creation, retrieval, and finding users by reset tokens.
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserApi {
@@ -24,6 +28,7 @@ public class UserApi {
   public static final String SECRET_KEY = "TheSecretKey2468";
 
   @Autowired private UserRepository repository;
+  @Autowired private PasswordResetService passwordResetService;
 
   /**
    * Create user endpoint. Email and username should be unique. After validating the information is
@@ -69,9 +74,11 @@ public class UserApi {
   }
 
   /**
-   * @param providedUsername
-   * @return
-   * @throws Exception
+   * Retrieves a user based on the provided username after encrypting it.
+   *
+   * @param providedUsername The username of the user to retrieve.
+   * @return An Optional containing the User if found, or an empty Optional otherwise.
+   * @throws Exception If encryption of the username fails.
    */
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<User> getUser(@RequestParam(name = "username") String providedUsername)
@@ -82,11 +89,12 @@ public class UserApi {
     return repository.findByUsername(encryptedUsername);
   }
 
-  @Autowired private PasswordResetService passwordResetService;
-
   /**
-   * @param token
-   * @return
+   * Endpoint to find a user by their password reset token.
+   *
+   * @param token The password reset token.
+   * @return A ResponseEntity containing the User associated with the valid token, or an error
+   *     message if the token is invalid.
    */
   @GetMapping("/find-user-by-reset-token")
   public ResponseEntity<?> findUserByResetToken(@RequestParam String token) {
