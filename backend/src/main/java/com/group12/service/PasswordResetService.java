@@ -26,7 +26,6 @@ public class PasswordResetService {
    * @param tokenRepository the PasswordResetTokenRepository for password reset tokens, used to find
    *     users by token and delete tokens
    * @throws IllegalArgumentException if mailSender or tokenRepository is null
-   * @preconditions mailSender != null && tokenRepository != null
    */
   @Autowired
   public PasswordResetService(
