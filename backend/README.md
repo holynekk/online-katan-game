@@ -6,7 +6,7 @@
 
 # Database Schema
 
-![database_schema](./misc/group12_db_diagram.png)
+![database_schema](./misc/group12dbSchema.png)
 
 # How to Use katanBackend API Service?
 
