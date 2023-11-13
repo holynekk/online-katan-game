@@ -3,7 +3,8 @@
 		"_postman_id": "32db8f6a-e408-4a75-9b6f-72f4a774682b",
 		"name": "group12 - Katan Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19969170"
+		"_exporter_id": "19969170",
+		"_collection_link": "https://galactic-robot-983193.postman.co/workspace/New-Team-Workspace~03b5535d-0829-4709-ac09-07509049a629/collection/19969170-32db8f6a-e408-4a75-9b6f-72f4a774682b?action=share&source=collection_link&creator=19969170"
 	},
 	"item": [
 		{
@@ -16,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"test_admin56\",\r\n    \"password\" : \"test_password3\",\r\n    \"email\": \"test_admin56@gmail.com\",\r\n    \"displayName\" : \"Test User 3\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"test_admin565\",\r\n    \"password\" : \"test_password3\",\r\n    \"email\": \"test_admin5566@gmail.com\",\r\n    \"displayName\" : \"Test User 34\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,7 +116,7 @@
 						"header": [
 							{
 								"key": "X-CSRF",
-								"value": "460cf9afcc983be4c798a8be39cd7aeae6e66a802aabf2d6193ada99c0c08093",
+								"value": "53e0d52386c5208cd479bfc2351aa074122b2e63ad69a3f9865ce26eb21e43a8",
 								"type": "text"
 							}
 						],
@@ -136,21 +137,27 @@
 					"response": []
 				},
 				{
-					"name": "Test",
+					"name": "Password Reset Reminder",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminKatan12group",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "test_admin",
+									"type": "string"
+								}
+							]
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-CSRF",
-								"value": "460cf9afcc983be4c798a8be39cd7aeae6e66a802aabf2d6193ada99c0c08093",
-								"type": "text"
-							}
-						],
+						"method": "POST",
+						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/auth/test",
+							"raw": "http://localhost:8080/api/auth/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -159,7 +166,68 @@
 							"path": [
 								"api",
 								"auth",
-								"test"
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/password-reset-request?email=sample@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"password-reset-request"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "sample@example.com",
+									"description": "Registered email address"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set New Password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/set-new-password?token=d0d87b16-90cc-41e5-9bb8-4357e00c1ec0&password=newPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"set-new-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "d0d87b16-90cc-41e5-9bb8-4357e00c1ec0",
+									"description": "Token value, can be found at the end of the link sent by email"
+								},
+								{
+									"key": "password",
+									"value": "newPassword",
+									"description": "New password to set"
+								}
 							]
 						}
 					},
@@ -192,13 +260,13 @@
 						"header": [
 							{
 								"key": "X-CSRF",
-								"value": "460cf9afcc983be4c798a8be39cd7aeae6e66a802aabf2d6193ada99c0c08093",
+								"value": "02aa95f6f9fc05cf9c36d3fd8e41230f2e4e2b98bf5b73a2a3e536209e40ea0d",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"timeInterval\": \"monthly\",\n    \"offset\": 0,\n    \"pagination\": 10\n}",
+							"raw": "{\n    \"timeInterval\": \"weekly\",\n    \"offset\": 0,\n    \"pagination\": 10\n}",
 							"options": {
 								"raw": {
 									"language": "json"
