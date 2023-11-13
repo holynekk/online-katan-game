@@ -1,8 +1,5 @@
 package com.group12.api;
 
-import com.group12.api.filter.SessionCookieAuthFilter;
-import com.group12.api.filter.SessionCookieTokenFilter;
-import com.group12.api.filter.config.SessionCookieFilterConfig;
 import com.group12.api.server.AuthenticationApi;
 import com.group12.entity.User;
 import com.group12.repository.UserRepository;
