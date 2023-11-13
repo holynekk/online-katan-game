@@ -4,6 +4,10 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entity class representing a score record. This class holds information about a user's all
+ * recorded scores and the date it is recorded. Has an OnetoOne relationship with User class.
+ */
 @Entity
 @Table(name = "scores")
 public class Score {

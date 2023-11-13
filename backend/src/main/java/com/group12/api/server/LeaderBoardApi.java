@@ -13,12 +13,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * REST controller for handling leaderboard requests. Provides endpoints to retrieve leaderboard
+ * information, weekly, monthly and overall.
+ */
 @RestController
 @RequestMapping(value = "/api/leaderboard")
 public class LeaderBoardApi {
 
   @Autowired private ScoreRepository repository;
 
+  /**
+   * Endpoint to get the leaderboard based on the specified time interval. The time interval can be
+   * monthly, weekly, or all-time, as specified in the request body.
+   *
+   * @param leaderboardRequest The request containing the time interval information, can be monthly,
+   *     weekly, or all-time. Any string other than monthly and weekly will be treated as all-time.
+   * @return A ResponseEntity containing a list of LeaderBoardResponses, each representing a user's
+   *     leaderboard data.
+   */
   @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<LeaderBoardResponse>> getLeaderboard(
       @RequestBody LeaderboardRequest leaderboardRequest) {

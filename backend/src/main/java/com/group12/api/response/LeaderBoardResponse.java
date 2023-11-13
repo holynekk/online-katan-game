@@ -1,5 +1,9 @@
 package com.group12.api.response;
 
+/**
+ * Represents a response for leaderboard-related requests. This class holds the display name and
+ * score of a user for leaderboard purposes.
+ */
 public class LeaderBoardResponse {
 
   private String displayName;
