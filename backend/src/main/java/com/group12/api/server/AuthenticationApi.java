@@ -31,24 +31,23 @@ public class AuthenticationApi {
    * @param request - http request sent by client
    * @return - a string response which includes session token id to use in other api endpoints.
    */
-  @PostMapping(value = "/login", produces = MediaType.TEXT_PLAIN_VALUE)
-  public String login(HttpServletRequest request) {
+  @GetMapping(value = "/login", produces = MediaType.TEXT_PLAIN_VALUE)
+  public ResponseEntity<String> login(HttpServletRequest request) {
     String encryptedUsername =
         (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
     SessionCookieToken token = new SessionCookieToken();
     token.setUsername(encryptedUsername);
     String tokenId = tokenService.store(request, token);
 
-    LocalDateTime lastPasswordChange =
-        userRepository.findByUsername(encryptedUsername).get().getLastPasswordUpdate();
-    if (lastPasswordChange.plusDays(90).isBefore(LocalDateTime.now())) {
-      return "Logged in with tokenId: "
-          + tokenId
-          + ".\nYou have not changed your password for more than 90 days. "
-          + "Please change your password.";
-    }
-
-    return "Logged in with tokenId: " + tokenId;
+//    LocalDateTime lastPasswordChange =
+//        userRepository.findByUsername(encryptedUsername).get().getLastPasswordUpdate();
+//    if (lastPasswordChange.plusDays(90).isBefore(LocalDateTime.now())) {
+//      return        "Logged in with tokenId: "
+//          + tokenId
+//          + ".\nYou have not changed your password for more than 90 days. "
+//          + "Please change your password.";
+//    }
+    return ResponseEntity.ok().body(tokenId);
   }
 
   /**
