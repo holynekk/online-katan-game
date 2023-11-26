@@ -1,6 +1,7 @@
 package com.group12.controller;
 
 import com.group12.helper.NotificationHelper;
+import com.group12.helper.HttpClientHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,10 +13,7 @@ import javafx.stage.Window;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.CookieManager;
-import java.net.HttpCookie;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
@@ -35,7 +33,6 @@ public class LoginController {
   private void login() throws Exception {
 
     if (this.isValid()) {
-      HttpClient client = HttpClient.newHttpClient();
 
       String valueToEncode = username.getText() + ":" + password.getText();
       String basicAuthString =
@@ -46,13 +43,18 @@ public class LoginController {
               .uri(URI.create("http://localhost:8080/api/auth/login"))
               .header("Authorization", basicAuthString)
               .build();
-
-      HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response =
+          HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
       if (response.statusCode() == 200) {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "You successfully logged in!");
-        CookieManager cookieManager = new CookieManager();
-        cookieManager.getCookieStore().add(null, new HttpCookie("X-CSRF", response.body()));
+        HttpClientHelper.addNewSessionCookie("X-CSRF", response.body());
+
+        this.showMenuScene();
+      } else if (response.statusCode() == 400) {
+        NotificationHelper.showAlert(
+            Alert.AlertType.ERROR, "Error", "Username or password is wrong! Please try again.");
+        username.requestFocus();
       }
     }
   }
@@ -76,6 +78,14 @@ public class LoginController {
   private void showRegisterScene() throws IOException {
     Stage stage = (Stage) loginButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/registerView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  private void showMenuScene() throws IOException {
+    Stage stage = (Stage) loginButton.getScene().getWindow();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
     stage.setScene(scene);
     stage.show();

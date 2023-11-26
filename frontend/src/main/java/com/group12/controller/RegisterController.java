@@ -1,6 +1,7 @@
 package com.group12.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group12.helper.HttpClientHelper;
 import com.group12.helper.NotificationHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +44,6 @@ public class RegisterController {
 
     if (this.isValidated()) {
       ObjectMapper objectMapper = new ObjectMapper();
-      HttpClient client = HttpClient.newHttpClient();
 
       Map<String, String> body = new HashMap<>();
       body.put("username", username.getText());
@@ -58,7 +58,7 @@ public class RegisterController {
               .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))
               .build();
 
-      HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response = HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
       if (response.statusCode() == 200) {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "New user has been created!");
