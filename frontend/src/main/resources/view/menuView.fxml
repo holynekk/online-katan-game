@@ -15,12 +15,71 @@
     >
     <AnchorPane BorderPane.alignment="CENTER">
         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="169.0" layoutY="230.0" prefHeight="141.0" prefWidth="862.0" text="Main menu for the game" textFill="WHITE">
+            <Label layoutX="300.0" layoutY="120.0" prefHeight="141.0" prefWidth="862.0" text="KATAN" textFill="BLACK">
                 <font>
                     <Font name="System Bold" size="36.0" />
                 </font>
             </Label>
-            <Button fx:id="logoutButton" layoutX="112.0" layoutY="255.0" mnemonicParsing="false" onAction="#logout" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #404040; -fx-background-radius: 0px;" text="Logout" textFill="WHITE">
+            <Button
+                fx:id="playButton"
+                layoutX="300.0"
+                layoutY="255.0"
+                mnemonicParsing="false"
+                onAction="#changeMenuScene"
+                prefHeight="32.0"
+                prefWidth="120.0"
+                style="-fx-background-color: #404040; -fx-background-radius: 0px;"
+                text="Play Game"
+                textFill="WHITE"
+            >
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+            <Button
+                fx:id="leaderboardButton"
+                layoutX="300.0"
+                layoutY="295.0"
+                mnemonicParsing="false"
+                onAction="#changeMenuScene"
+                prefHeight="32.0"
+                prefWidth="120.0"
+                style="-fx-background-color: #404040; -fx-background-radius: 0px;"
+                text="Leaderboard"
+                textFill="WHITE"
+            >
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+            <Button
+                fx:id="settingsButton"
+                layoutX="300.0"
+                layoutY="335.0"
+                mnemonicParsing="false"
+                onAction="#changeMenuScene"
+                prefHeight="32.0"
+                prefWidth="120.0"
+                style="-fx-background-color: #404040; -fx-background-radius: 0px;"
+                text="Settings"
+                textFill="WHITE"
+            >
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+            <Button
+                fx:id="logoutButton"
+                layoutX="300.0"
+                layoutY="375.0"
+                mnemonicParsing="false"
+                onAction="#changeMenuScene"
+                prefHeight="32.0"
+                prefWidth="120.0"
+                style="-fx-background-color: #404040; -fx-background-radius: 0px;"
+                text="Logout"
+                textFill="WHITE"
+            >
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>
