@@ -58,10 +58,12 @@ public class RegisterController {
               .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))
               .build();
 
-      HttpResponse<String> response = HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
-      if (response.statusCode() == 200) {
+      HttpResponse<String> response =
+          HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+      if (response.statusCode() == 201) {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "New user has been created!");
+        showLoginScene();
       }
     }
   }
