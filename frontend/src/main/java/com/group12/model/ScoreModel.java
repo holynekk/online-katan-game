@@ -4,16 +4,27 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class ScoreModel {
+  private final SimpleIntegerProperty gameId;
+
   private final SimpleStringProperty displayName;
 
   private final SimpleIntegerProperty totalWins;
 
   private final SimpleIntegerProperty totalScore;
 
-  public ScoreModel(String displayName, int totalWins, int score) {
+  public ScoreModel(int gameId, String displayName, int totalWins, int score) {
+    this.gameId = new SimpleIntegerProperty(gameId);
     this.displayName = new SimpleStringProperty(displayName);
     this.totalWins = new SimpleIntegerProperty(totalWins);
     this.totalScore = new SimpleIntegerProperty(score);
+  }
+
+  public int getGameId() {
+    return gameId.get();
+  }
+
+  public void setGameId(int gameId) {
+    this.gameId.set(gameId);
   }
 
   public String getDisplayName() {

@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.group12.controller.LobbyController"
->
-    <Label layoutX="300.0" layoutY="120.0" prefHeight="141.0" prefWidth="862.0" text="LOBBY" textFill="BLACK">
-        <font>
-            <Font name="System Bold" size="36.0" />
-        </font>
-    </Label>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LeaderboardController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" />
+            <Label text="Lobby">
+               <font>
+                  <Font size="58.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Label>
+            <Button mnemonicParsing="false" text="New Lobby" />
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>
