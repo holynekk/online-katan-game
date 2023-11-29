@@ -51,8 +51,8 @@ public class LeaderBoardApi {
         }
 
         for (String data : resultSet) {
-            String first = null, second = data.split(",")[0], third = data.split(",")[1], fourth = data.split(",")[2];
-            response.add(new LeaderBoardResponse(0, second, Integer.parseInt(third), Integer.parseInt(fourth)));
+            String first = data.split(",")[0], second = data.split(",")[1], third = data.split(",")[2];
+            response.add(new LeaderBoardResponse(first, Integer.parseInt(second), Integer.parseInt(third)));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

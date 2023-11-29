@@ -6,27 +6,16 @@ package com.group12.api.response;
  */
 public class LeaderBoardResponse {
 
-    private int gameId;
-
     private String displayName;
 
     private int totalWins;
 
     private int totalScore;
 
-    public LeaderBoardResponse(int gameId, String displayName, int totalWins, int totalScore) {
-        this.gameId = gameId;
+    public LeaderBoardResponse(String displayName, int totalWins, int totalScore) {
         this.displayName = displayName;
         this.totalWins = totalWins;
         this.totalScore = totalScore;
-    }
-
-    public int getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
     }
 
     public String getDisplayName() {
