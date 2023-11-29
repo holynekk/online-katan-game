@@ -50,6 +50,7 @@ public class LoginController {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "You successfully logged in!");
         HttpClientHelper.addNewSessionCookie("X-CSRF", response.body());
+        HttpClientHelper.addNewSessionCookie("username", username.getText());
         this.showMenuScene();
       } else if (response.statusCode() == 400) {
         NotificationHelper.showAlert(

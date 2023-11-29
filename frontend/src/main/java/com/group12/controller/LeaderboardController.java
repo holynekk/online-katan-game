@@ -71,7 +71,7 @@ public class LeaderboardController {
   @FXML
   public void changeTimeInterval(ActionEvent event) throws IOException, InterruptedException {
     final MenuItem source = (MenuItem) event.getSource();
-    source.setText(source.getText());
+    timeInterval.setText(source.getText());
     tmInterval = source.getText().toLowerCase();
     scoreTableView.getItems().clear();
     populateTable();
