@@ -1,7 +1,6 @@
 package com.group12.repository;
 
-import com.group12.entity.Score;
-import com.group12.entity.User;
+import com.group12.entity.GameHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,10 +8,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Repository interface for {@link Score} entities. Provides CRUD operations for Score entities.
+ * Repository interface for {@link GameHistory} entities. Provides CRUD operations for Score entities.
  * Also provides custom queries.
  */
-public interface ScoreRepository extends JpaRepository<Score, Long> {
+public interface GameHistoryRepository extends JpaRepository<GameHistory, Long> {
   /**
    * Retrieves a leaderboard showing the sum of total scores acquired since their registration for
    * all users. The leaderboard is sorted in descending order of total scores.
@@ -22,7 +21,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
    */
   @Query(
       value =
-          "SELECT ku.displayName, SUM(s.totalScore) AS total FROM Score s, User ku WHERE ku.userId = s.user.userId GROUP BY ku.userId ORDER BY total DESC")
+          "SELECT ku.displayName, SUM(s.didWon), SUM(s.totalScore) AS total FROM GameHistory s, User ku WHERE ku.userId = s.user.userId GROUP BY ku.userId ORDER BY total DESC")
   List<String> getLeaderBoardForAll();
 
   /**
@@ -35,7 +34,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
    */
   @Query(
       value =
-          "SELECT ku.displayName, SUM(s.totalScore) AS total FROM Score s, User ku WHERE ku.userId = s.user.userId and MONTH(s.history) = ?1 GROUP BY ku.userId ORDER BY total DESC")
+          "SELECT ku.displayName, SUM(s.didWon), SUM(s.totalScore) AS total FROM GameHistory s, User ku WHERE ku.userId = s.user.userId and MONTH(s.history) = ?1 GROUP BY ku.userId ORDER BY total DESC")
   List<String> getLeaderBoardForMonth(int month);
 
   /**
@@ -49,6 +48,6 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
    */
   @Query(
       value =
-          "SELECT ku.displayName, SUM(s.totalScore) AS total FROM Score s, User ku WHERE ku.userId = s.user.userId and DATEDIFF(?1, s.history) < 7 GROUP BY ku.userId ORDER BY total DESC")
+          "SELECT ku.displayName, SUM(s.didWon), SUM(s.totalScore) AS total FROM GameHistory s, User ku WHERE ku.userId = s.user.userId and DATEDIFF(?1, s.history) < 7 GROUP BY ku.userId ORDER BY total DESC")
   List<String> getLeaderBoardForWeek(LocalDateTime dateTime);
 }

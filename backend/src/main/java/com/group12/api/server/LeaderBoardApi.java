@@ -2,7 +2,7 @@ package com.group12.api.server;
 
 import com.group12.api.request.leaderboard.LeaderboardRequest;
 import com.group12.api.response.LeaderBoardResponse;
-import com.group12.repository.ScoreRepository;
+import com.group12.repository.GameHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ import java.util.List;
 public class LeaderBoardApi {
 
     @Autowired
-    private ScoreRepository repository;
+    private GameHistoryRepository repository;
 
     /**
      * Endpoint to get the leaderboard based on the specified time interval. The time interval can be
@@ -51,8 +51,8 @@ public class LeaderBoardApi {
         }
 
         for (String data : resultSet) {
-            String first = data.split(",")[0], second = data.split(",")[1];
-            response.add(new LeaderBoardResponse(first, 0, Integer.parseInt(second)));
+            String first = null, second = data.split(",")[0], third = data.split(",")[1], fourth = data.split(",")[2];
+            response.add(new LeaderBoardResponse(0, second, Integer.parseInt(third), Integer.parseInt(fourth)));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

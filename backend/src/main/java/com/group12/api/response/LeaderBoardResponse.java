@@ -6,39 +6,50 @@ package com.group12.api.response;
  */
 public class LeaderBoardResponse {
 
-  private String displayName;
+    private int gameId;
 
-  private int totalWins;
+    private String displayName;
 
-  private int totalScore;
+    private int totalWins;
 
-  public LeaderBoardResponse(String displayName, int totalWins, int totalScore) {
-    this.displayName = displayName;
-    this.totalWins = totalWins;
-    this.totalScore = totalScore;
-  }
+    private int totalScore;
 
-  public String getDisplayName() {
-    return displayName;
-  }
+    public LeaderBoardResponse(int gameId, String displayName, int totalWins, int totalScore) {
+        this.gameId = gameId;
+        this.displayName = displayName;
+        this.totalWins = totalWins;
+        this.totalScore = totalScore;
+    }
 
-  public void setDisplayName(String displayName) {
-    this.displayName = displayName;
-  }
+    public int getGameId() {
+        return gameId;
+    }
 
-  public int getTotalWins() {
-    return totalWins;
-  }
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
 
-  public void setTotalWins(int totalWins) {
-    this.totalWins = totalWins;
-  }
+    public String getDisplayName() {
+        return displayName;
+    }
 
-  public int getTotalScore() {
-    return totalScore;
-  }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-  public void setTotalScore(int totalScore) {
-    this.totalScore = totalScore;
-  }
+    public int getTotalWins() {
+        return totalWins;
+    }
+
+    public void setTotalWins(int totalWins) {
+        this.totalWins = totalWins;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
 }
