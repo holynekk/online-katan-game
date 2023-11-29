@@ -2,6 +2,8 @@ package com.group12.api.server;
 
 import com.group12.api.request.auth.UserCreateRequest;
 import com.group12.api.request.auth.UserUpdateRequest;
+import com.group12.api.response.GameHistoryResponse;
+import com.group12.api.response.UserResponse;
 import com.group12.entity.User;
 import com.group12.repository.UserRepository;
 import com.group12.util.EncryptDecryptUtil;
@@ -14,7 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.group12.service.PasswordResetService;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -86,12 +94,24 @@ public class UserApi {
      * @throws Exception If encryption of the username fails.
      */
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Optional<User> getUser(@RequestParam(name = "username") String providedUsername)
+    public UserResponse getUser(@RequestParam(name = "username") String providedUsername)
             throws Exception {
 
         String encryptedUsername =
                 EncryptDecryptUtil.encryptAes(providedUsername.toLowerCase(), SECRET_KEY);
-        return repository.findByUsername(encryptedUsername);
+        Optional<User> optionalUser = repository.findByUsername(encryptedUsername);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            UserResponse response = new UserResponse();
+            response.setUserId(user.getUserId());
+            response.setDisplayName(user.getDisplayName());
+            response.setEmail(user.getEmail());
+            response.setFirstName(user.getFirstName());
+            response.setLastName(user.getLastName());
+            return response;
+        }
+
+        return null;
     }
 
     @PutMapping(
@@ -143,5 +163,26 @@ public class UserApi {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token not found or invalid");
         }
+    }
+
+    @GetMapping(value = "/game-history", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<GameHistoryResponse>> getGameHistoryByUsername(@RequestParam(name = "username") String providedUsername) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        List<String> resultSet;
+        List<GameHistoryResponse> response = new ArrayList<>();
+
+        String encryptedUsername =
+                EncryptDecryptUtil.encryptAes(providedUsername.toLowerCase(), SECRET_KEY);
+        Optional<User> optionalUser = repository.findByUsername(encryptedUsername);
+        if (optionalUser.isPresent()) {
+            resultSet = repository.getGameHistoryByUserId(optionalUser.get().getUserId());
+
+            for (String data : resultSet) {
+                String first = data.split(",")[0], second = data.split(",")[1], third = data.split(",")[1], fourth = data.split(",")[2];
+                response.add(new GameHistoryResponse(Integer.parseInt(first), LocalDateTime.now(), 1 == Integer.parseInt(third), Integer.parseInt(fourth)));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return null;
+
     }
 }
