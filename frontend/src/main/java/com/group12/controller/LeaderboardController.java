@@ -33,8 +33,6 @@ public class LeaderboardController {
 
   @FXML TableView<ScoreModel> scoreTableView;
 
-  @FXML private TableColumn<ScoreModel, String> gameIdColumn;
-
   @FXML private TableColumn<ScoreModel, String> displayNameColumn;
 
   @FXML private TableColumn<ScoreModel, Integer> totalWinsColumn;
@@ -49,8 +47,6 @@ public class LeaderboardController {
 
   public void initialize() throws IOException, InterruptedException {
     tmInterval = "All";
-    gameIdColumn.setCellValueFactory(
-            new PropertyValueFactory<ScoreModel, String>("gameId"));
     displayNameColumn.setCellValueFactory(
         new PropertyValueFactory<ScoreModel, String>("displayName"));
     totalWinsColumn.setCellValueFactory(new PropertyValueFactory<ScoreModel, Integer>("totalWins"));
@@ -101,7 +97,11 @@ public class LeaderboardController {
       for (ScoreData data : scoreList) {
         scoreTableView
             .getItems()
-            .add(new ScoreModel(data.getGameId(), data.getDisplayName(), data.getTotalWins(), data.getTotalScore()));
+            .add(
+                new ScoreModel(
+                    data.getDisplayName(),
+                    data.getTotalWins(),
+                    data.getTotalScore()));
       }
     }
   }

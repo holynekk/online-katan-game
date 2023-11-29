@@ -1,7 +1,6 @@
 package com.group12.model;
 
 public class ScoreData {
-  private int gameId;
 
   private String displayName;
 
@@ -11,19 +10,10 @@ public class ScoreData {
 
   public ScoreData() {}
 
-  public ScoreData(int gameId, String displayName, int totalWins, int totalScore) {
-    this.gameId = gameId;
+  public ScoreData(String displayName, int totalWins, int totalScore) {
     this.displayName = displayName;
     this.totalWins = totalWins;
     this.totalScore = totalScore;
-  }
-
-  public int getGameId() {
-    return gameId;
-  }
-
-  public void setGameId(int gameId) {
-    this.gameId = gameId;
   }
 
   public String getDisplayName() {

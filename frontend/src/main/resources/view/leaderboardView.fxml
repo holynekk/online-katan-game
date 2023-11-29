@@ -16,8 +16,7 @@
    <center>
       <TableView fx:id="scoreTableView" maxWidth="790.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="gameIdColumn" maxWidth="100.0" prefWidth="100.0" text="Game ID" />
-          <TableColumn fx:id="displayNameColumn" maxWidth="300.0" prefWidth="300.0" text="Name" />
+          <TableColumn fx:id="displayNameColumn" maxWidth="400.0" prefWidth="400.0" text="Name" />
           <TableColumn fx:id="totalWinsColumn" maxWidth="200.0" prefWidth="200.0" text="Total Wins" />
             <TableColumn fx:id="totalScoreColumn" maxWidth="195.0" prefWidth="195.0" text="Total Score" />
         </columns>
