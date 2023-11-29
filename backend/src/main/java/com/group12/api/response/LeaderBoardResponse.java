@@ -8,11 +8,14 @@ public class LeaderBoardResponse {
 
   private String displayName;
 
-  private int score;
+  private int totalWins;
 
-  public LeaderBoardResponse(String displayName, int score) {
+  private int totalScore;
+
+  public LeaderBoardResponse(String displayName, int totalWins, int totalScore) {
     this.displayName = displayName;
-    this.score = score;
+    this.totalWins = totalWins;
+    this.totalScore = totalScore;
   }
 
   public String getDisplayName() {
@@ -23,11 +26,19 @@ public class LeaderBoardResponse {
     this.displayName = displayName;
   }
 
-  public int getScore() {
-    return score;
+  public int getTotalWins() {
+    return totalWins;
   }
 
-  public void setScore(int score) {
-    this.score = score;
+  public void setTotalWins(int totalWins) {
+    this.totalWins = totalWins;
+  }
+
+  public int getTotalScore() {
+    return totalScore;
+  }
+
+  public void setTotalScore(int totalScore) {
+    this.totalScore = totalScore;
   }
 }
