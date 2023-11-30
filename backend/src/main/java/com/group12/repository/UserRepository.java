@@ -34,6 +34,11 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
   @Query(
           value =
-                  "SELECT gh.game.gameId, gh.didWon, gh.totalScore FROM GameHistory gh WHERE gh.user.userId = ?1")
+                  "SELECT usr FROM User usr WHERE usr.userId = ?1")
+  Optional<User> findById(int userId);
+
+  @Query(
+      value =
+          "SELECT gh.game.gameId, DATE_FORMAT(gh.history, '%Y-%m-%d %T'), gh.didWon, gh.totalScore FROM GameHistory gh WHERE gh.user.userId = ?1")
   List<String> getGameHistoryByUserId(int userId);
 }

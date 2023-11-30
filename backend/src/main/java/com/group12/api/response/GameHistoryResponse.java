@@ -6,13 +6,13 @@ public class GameHistoryResponse {
 
     private int gameId;
 
-    private LocalDateTime history;
+    private String history;
 
     private boolean didWon;
 
     private int score;
 
-    public GameHistoryResponse(int gameId, LocalDateTime history, boolean didWon, int score) {
+    public GameHistoryResponse(int gameId, String history, boolean didWon, int score) {
         this.gameId = gameId;
         this.history = history;
         this.didWon = didWon;
@@ -27,11 +27,11 @@ public class GameHistoryResponse {
         this.gameId = gameId;
     }
 
-    public LocalDateTime getHistory() {
+    public String getHistory() {
         return history;
     }
 
-    public void setHistory(LocalDateTime history) {
+    public void setHistory(String history) {
         this.history = history;
     }
 
