@@ -28,7 +28,17 @@ public class Game {
 
   private Boolean isFinished;
 
-  public Game(String gameName, String gameDescription, String gamePassword, Boolean passwordRequired, User gameLeader, Boolean isOnline, Boolean isStarted, Boolean isFinished) {
+  public Game() {}
+
+  public Game(
+      String gameName,
+      String gameDescription,
+      String gamePassword,
+      Boolean passwordRequired,
+      User gameLeader,
+      Boolean isOnline,
+      Boolean isStarted,
+      Boolean isFinished) {
     this.gameName = gameName;
     this.gameDescription = gameDescription;
     this.gamePassword = gamePassword;

@@ -1,7 +1,5 @@
 package com.group12.api.response;
 
-import com.group12.entity.User;
-
 public class GameResponse {
 
     private int gameId;

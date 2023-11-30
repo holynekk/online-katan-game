@@ -35,19 +35,29 @@ public class AuthenticationApi {
   public ResponseEntity<String> login(HttpServletRequest request) {
     String encryptedUsername =
         (String) request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
-    SessionCookieToken token = new SessionCookieToken();
-    token.setUsername(encryptedUsername);
-    String tokenId = tokenService.store(request, token);
+    Optional<User> optionalUser = userRepository.findByUsername(encryptedUsername);
+    if (optionalUser.isPresent()) {
+      User user = optionalUser.get();
+      SessionCookieToken token = new SessionCookieToken();
+      token.setUsername(encryptedUsername);
+      String tokenId = tokenService.store(request, token);
+      return ResponseEntity.ok()
+          .header("username", encryptedUsername)
+          .header("userId", Integer.toString(user.getUserId()))
+          .body(tokenId);
+    } else {
+      return ResponseEntity.badRequest().body("Username or Password is incorrect!");
+    }
 
-//    LocalDateTime lastPasswordChange =
-//        userRepository.findByUsername(encryptedUsername).get().getLastPasswordUpdate();
-//    if (lastPasswordChange.plusDays(90).isBefore(LocalDateTime.now())) {
-//      return        "Logged in with tokenId: "
-//          + tokenId
-//          + ".\nYou have not changed your password for more than 90 days. "
-//          + "Please change your password.";
-//    }
-    return ResponseEntity.ok().body(tokenId);
+    //    LocalDateTime lastPasswordChange =
+    //        userRepository.findByUsername(encryptedUsername).get().getLastPasswordUpdate();
+    //    if (lastPasswordChange.plusDays(90).isBefore(LocalDateTime.now())) {
+    //      return        "Logged in with tokenId: "
+    //          + tokenId
+    //          + ".\nYou have not changed your password for more than 90 days. "
+    //          + "Please change your password.";
+    //    }
+
   }
 
   /**
