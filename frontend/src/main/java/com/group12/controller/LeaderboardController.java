@@ -97,11 +97,7 @@ public class LeaderboardController {
       for (ScoreData data : scoreList) {
         scoreTableView
             .getItems()
-            .add(
-                new ScoreModel(
-                    data.getDisplayName(),
-                    data.getTotalWins(),
-                    data.getTotalScore()));
+            .add(new ScoreModel(data.getDisplayName(), data.getTotalWins(), data.getTotalScore()));
       }
     }
   }
