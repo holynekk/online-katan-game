@@ -1,105 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: A3D5FF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameController">
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </bottom>
-   <top>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <left>
+      <AnchorPane fx:id="anchPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Polygon fill="DODGERBLUE" layoutX="316.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="420.0" layoutY="360.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="316.0" layoutY="360.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="212.0" layoutY="360.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="420.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="316.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="212.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="160.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="108.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="160.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="524.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="472.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="472.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="368.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="264.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="368.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="264.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="420.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fill="DODGERBLUE" layoutX="212.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="234.0" layoutY="146.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="182.0" layoutY="236.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="442.0" layoutY="146.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="338.0" layoutY="146.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="286.0" layoutY="55.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="442.0" layoutY="326.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="338.0" layoutY="326.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="234.0" layoutY="326.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="494.0" layoutY="235.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="390.0" layoutY="236.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="286.0" layoutY="235.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="286.0" layoutY="415.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="390.0" layoutY="415.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="390.0" layoutY="55.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="419.0" layoutY="285.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="153.0" layoutY="195.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="257.0" layoutY="195.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="361.0" layoutY="195.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="471.0" layoutY="195.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="413.0" layoutY="105.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="315.0" layoutY="105.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="205.0" layoutY="96.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="309.0" layoutY="195.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="361.0" layoutY="96.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="471.0" layoutY="105.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="263.0" layoutY="96.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="361.0" layoutY="374.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="465.0" layoutY="374.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="257.0" layoutY="374.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="517.0" layoutY="285.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="309.0" layoutY="285.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="205.0" layoutY="285.0" rotate="30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="419.0" layoutY="186.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="361.0" layoutY="285.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="205.0" layoutY="374.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="263.0" layoutY="276.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="153.0" layoutY="285.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="523.0" layoutY="186.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="205.0" layoutY="195.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="309.0" layoutY="374.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="419.0" layoutY="374.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="11.0" layoutX="465.0" layoutY="285.0" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Circle fill="#1fff35" layoutX="264.0" layoutY="120.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="259.0" layoutY="362.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="524.0" layoutY="272.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="472.0" layoutY="310.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="368.0" layoutY="310.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="316.0" layoutY="271.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="264.0" layoutY="301.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="207.0" layoutY="282.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="524.0" layoutY="211.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="420.0" layoutY="211.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="316.0" layoutY="212.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="212.0" layoutY="212.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="472.0" layoutY="130.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="368.0" layoutY="120.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="472.0" layoutY="362.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="420.0" layoutY="391.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="363.0" layoutY="362.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="472.0" layoutY="181.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="368.0" layoutY="192.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="264.0" layoutY="182.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="420.0" layoutY="272.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="316.0" layoutY="399.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="420.0" layoutY="91.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1fff35" layoutX="316.0" layoutY="91.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h10" fill="#1f93ff" layoutX="316.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <styleClass>
+                  <String fx:value=".desert" />
+                  <String fx:value="desert" />
+               </styleClass></Polygon>
+            <Polygon id="h19" fill="DODGERBLUE" layoutX="420.0" layoutY="360.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h18" fill="DODGERBLUE" layoutX="316.0" layoutY="360.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h17" fill="DODGERBLUE" layoutX="212.0" layoutY="360.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h3" fill="DODGERBLUE" layoutX="420.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h2" fill="DODGERBLUE" layoutX="316.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h1" fill="DODGERBLUE" layoutX="212.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h13" fill="DODGERBLUE" layoutX="160.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h8" fill="DODGERBLUE" layoutX="108.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h4" fill="DODGERBLUE" layoutX="160.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h12" fill="DODGERBLUE" layoutX="524.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h7" fill="DODGERBLUE" layoutX="472.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h16" fill="DODGERBLUE" layoutX="472.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h15" fill="DODGERBLUE" layoutX="368.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h14" fill="DODGERBLUE" layoutX="264.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h6" fill="DODGERBLUE" layoutX="368.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h5" fill="DODGERBLUE" layoutX="264.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h11" fill="DODGERBLUE" layoutX="420.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h9" fill="DODGERBLUE" layoutX="212.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle id="c10-c20" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="234.0" layoutY="146.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c19-c30" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="182.0" layoutY="236.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c14-c24" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="442.0" layoutY="146.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c12-c22" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="338.0" layoutY="146.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c3-c11" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="286.0" layoutY="55.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c35-c45" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="442.0" layoutY="326.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c33-c43" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="338.0" layoutY="326.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c31-c41" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="234.0" layoutY="326.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c25-c36" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="494.0" layoutY="235.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c23-c34" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="390.0" layoutY="236.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c21-c32" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="286.0" layoutY="235.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c42-c50" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="286.0" layoutY="415.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c44-c52" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="390.0" layoutY="415.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c5-c13" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="390.0" layoutY="55.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c34-c35" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c18-c19" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="153.0" layoutY="195.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c20-c21" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="195.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c22-c23" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="195.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c24-c25" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="471.0" layoutY="195.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c13-c14" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="102.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c11-c12" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="315.0" layoutY="105.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c9-c10" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="96.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c21-c22" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="195.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c12-c13" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="96.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c14-c15" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="471.0" layoutY="96.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c10-c11" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="263.0" layoutY="96.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c43-c44" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="374.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c45-c46" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="465.0" layoutY="374.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c41-c42" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="374.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c36-c37" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="517.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c32-c33" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c30-c31" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c23-c24" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="186.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c33-c34" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c40-c41" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="374.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c31-c32" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="263.0" layoutY="276.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c29-c30" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="153.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c25-c26" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="523.0" layoutY="186.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c19-c20" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="195.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c42-c43" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="374.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c44-c45" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="374.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c35-c36" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="465.0" layoutY="285.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c6-c7" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="465.0" layoutY="15.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c15-c16" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="523.0" layoutY="104.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c26-c27" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="568.0" layoutY="194.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c27-c38" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="598.0" layoutY="236.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c37-c38" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="568.0" layoutY="283.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c37-c47" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="546.0" layoutY="326.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c46-c47" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="517.0" layoutY="370.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c46-c54" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="494.0" layoutY="415.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c53-c54" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="471.0" layoutY="456.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c52-c53" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="456.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c16-c26" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="546.0" layoutY="146.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c5-c6" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="15.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c4-c5" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="15.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c7-c15" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="494.0" layoutY="55.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c3-c4" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="315.0" layoutY="15.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c2-c3" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="9.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c1-c2" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="10.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c1-c9" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="187.0" layoutY="55.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c8-c9" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="158.0" layoutY="102.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c8-c18" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="128.0" layoutY="146.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c17-c18" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="107.0" layoutY="194.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c17-c28" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="85.0" layoutY="236.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c28-c29" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="107.0" layoutY="280.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c29-c39" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="130.0" layoutY="326.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c39-c40" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="154.0" layoutY="370.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c40-c48" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="184.0" layoutY="415.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c48-c49" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="456.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c49-c50" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="456.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c50-c51" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="456.0" onMouseClicked="#rectanglePush" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Rectangle id="c51-c52" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="461.0" onMouseClicked="#rectanglePush" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0" />
+            <Circle id="c10" fill="#1fff35" layoutX="264.0" layoutY="120.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c41" fill="#1fff35" layoutX="259.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c36" fill="#1fff35" layoutX="524.0" layoutY="272.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c35" fill="#1fff35" layoutX="472.0" layoutY="310.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c33" fill="#1fff35" layoutX="368.0" layoutY="310.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c32" fill="#1fff35" layoutX="316.0" layoutY="271.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c31" fill="#1fff35" layoutX="264.0" layoutY="301.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c30" fill="#1fff35" layoutX="212.0" layoutY="282.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c25" fill="#1fff35" layoutX="524.0" layoutY="211.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c23" fill="#1fff35" layoutX="420.0" layoutY="211.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c21" fill="#1fff35" layoutX="316.0" layoutY="212.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c19" fill="#1fff35" layoutX="212.0" layoutY="212.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c14" fill="#1fff35" layoutX="472.0" layoutY="122.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c12" fill="#1fff35" layoutX="368.0" layoutY="120.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c45" fill="#1fff35" layoutX="472.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c44" fill="#1fff35" layoutX="420.0" layoutY="391.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c43" fill="#1fff35" layoutX="363.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c24" fill="#1fff35" layoutX="472.0" layoutY="181.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c22" fill="#1fff35" layoutX="368.0" layoutY="192.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c20" fill="#1fff35" layoutX="264.0" layoutY="182.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c34" fill="#1fff35" layoutX="420.0" layoutY="272.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c42" fill="#1fff35" layoutX="316.0" layoutY="399.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c13" fill="#1fff35" layoutX="420.0" layoutY="91.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c11" fill="#1fff35" layoutX="316.0" layoutY="91.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c1" fill="#1fff35" layoutX="217.0" layoutY="27.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c3" fill="#1fff35" layoutX="316.0" layoutY="35.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c4" fill="#1fff35" layoutX="368.0" layoutY="14.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c6" fill="#1fff35" layoutX="472.0" layoutY="8.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c5" fill="#1fff35" layoutX="419.0" layoutY="35.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c2" fill="#1fff35" layoutX="264.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c7" fill="#1fff35" layoutX="524.0" layoutY="31.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c15" fill="#1fff35" layoutX="525.0" layoutY="91.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c16" fill="#1fff35" layoutX="576.0" layoutY="122.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c26" fill="#1fff35" layoutX="576.0" layoutY="182.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c27" fill="#1fff35" layoutX="628.0" layoutY="212.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c38" fill="#1fff35" layoutX="628.0" layoutY="272.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c37" fill="#1fff35" layoutX="576.0" layoutY="301.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c47" fill="#1fff35" layoutX="571.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c46" fill="#1fff35" layoutX="518.0" layoutY="391.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c54" fill="#1fff35" layoutX="524.0" layoutY="447.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c53" fill="#1fff35" layoutX="472.0" layoutY="479.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c51" fill="#1fff35" layoutX="363.0" layoutY="479.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c52" fill="#1fff35" layoutX="420.0" layoutY="451.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c50" fill="#1fff35" layoutX="316.0" layoutY="451.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c49" fill="#1fff35" layoutX="259.0" layoutY="478.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c40" fill="#1fff35" layoutX="213.0" layoutY="391.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c48" fill="#1fff35" layoutX="214.0" layoutY="447.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c39" fill="#1fff35" layoutX="160.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c29" fill="#1fff35" layoutX="164.0" layoutY="301.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c28" fill="#1fff35" layoutX="115.0" layoutY="272.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c18" fill="#1fff35" layoutX="160.0" layoutY="192.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c17" fill="#1fff35" layoutX="115.0" layoutY="212.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c8" fill="#1fff35" layoutX="158.0" layoutY="122.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle id="c9" fill="#1fff35" layoutX="212.0" layoutY="91.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Text fx:id="h1" layoutX="250.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h2" layoutX="354.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h3" layoutX="458.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h4" layoutX="197.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h5" layoutX="307.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h6" layoutX="405.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h7" layoutX="510.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h8" layoutX="151.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h9" layoutX="244.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h10" layoutX="342.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESERT" />
+            <Text fx:id="h11" layoutX="452.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h12" layoutX="562.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h13" layoutX="194.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h14" layoutX="301.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h15" layoutX="405.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h16" layoutX="509.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h17" layoutX="245.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h18" layoutX="349.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h19" layoutX="458.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+
          </children>
       </AnchorPane>
-   </top>
+   </left>
 </BorderPane>

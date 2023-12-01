@@ -1,0 +1,23 @@
+.desert {
+    -fx-fill: #C2B280;
+}
+
+.hill {
+    -fx-fill: #819A20;
+}
+
+.mountain {
+    -fx-fill: #808080;
+}
+
+.forest {
+    -fx-fill: #416422;
+}
+
+.field {
+    -fx-fill: #D9D40C;
+}
+
+.pastureField {
+    -fx-fill: #E8E4C9;
+}
