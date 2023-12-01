@@ -68,6 +68,12 @@ public class GameCreationController {
       if (response.statusCode() == 200) {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "New lobby has been created!");
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setScene(scene);
+        stage.show();
+
       } else {
         NotificationHelper.showAlert(
             Alert.AlertType.ERROR, "Error", "There was an error! Please try again.");
