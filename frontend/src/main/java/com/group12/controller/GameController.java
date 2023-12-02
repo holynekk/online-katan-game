@@ -3,6 +3,7 @@ package com.group12.controller;
 import com.group12.helper.NotificationHelper;
 import com.group12.model.CPUPlayer;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+
+import static com.group12.helper.GameBoardSetupHelper.circleOptionsAtSetup;
+import static com.group12.helper.GameBoardSetupHelper.setupBoardTiles;
 
 @Component
 public class GameController {
@@ -44,35 +47,19 @@ public class GameController {
   @FXML private Text h18;
   @FXML private Text h19;
 
+  @FXML private Text firstDiceResult;
+
+  @FXML private Text secondDiceResult;
+
+  private int turn;
+
+  private int hillResource;
+  private int mountainResource;
+  private int forestResource;
+  private int fieldResource;
+  private int pastureFieldResource;
+
   private ArrayList<Text> tileTextList = new ArrayList<>();
-
-  private ArrayList<String> tileList =
-      new ArrayList<>(
-          Arrays.asList(
-              "hill",
-              "hill",
-              "hill",
-              "mountain",
-              "mountain",
-              "mountain",
-              "forest",
-              "forest",
-              "forest",
-              "forest",
-              "field",
-              "field",
-              "field",
-              "field",
-              "pastureField",
-              "pastureField",
-              "pastureField",
-              "pastureField"));
-
-  private ArrayList<String> tileResources =
-      new ArrayList<>(
-          Arrays.asList(
-              "2", "3", "11", "12", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9",
-              "10", "10"));
 
   private ArrayList<String> hexagonList =
       new ArrayList<>(
@@ -99,29 +86,18 @@ public class GameController {
   private ArrayList<String> occupiedEdges = new ArrayList<>();
 
   public void initialize() {
+    turn = 0;
+    hillResource = 0;
+    mountainResource = 0;
+    forestResource = 0;
+    fieldResource = 0;
+    pastureFieldResource = 0;
     tileTextList =
         new ArrayList<>(
             Arrays.asList(
                 h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18,
                 h19));
-    Random rnd = new Random();
-    int rndInt;
-    for (Node node : anchPane.getChildren()) {
-      if (node.getClass().getName().contains("Polygon")) {
-        if (!node.getStyleClass().contains("desert")) {
-          // Assign resource types
-          rndInt = rnd.nextInt(tileList.size());
-          node.getStyleClass().add(tileList.get(rndInt));
-          tileList.remove(rndInt);
-          // Assign tile resources
-          rndInt = rnd.nextInt(tileResources.size());
-          tileTextList
-              .get(Integer.parseInt(node.getId().substring(1)) - 1)
-              .setText(tileResources.get(rndInt));
-          tileResources.remove(rndInt);
-        }
-      }
-    }
+    setupBoardTiles(anchPane, tileTextList);
   }
 
   @FXML
@@ -136,6 +112,7 @@ public class GameController {
           node.setVisible(true);
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
         }
       }
     }
@@ -149,48 +126,60 @@ public class GameController {
     String cpuCircleId;
     String cpuRectangleId;
     // Orange --------------------------------------------------------------------
-    cpuCircleId = cpuOrange.buildSettlementAtSetup(anchPane, circleOptions());
+    cpuCircleId =
+        cpuOrange.buildSettlementAtSetup(
+            anchPane, circleOptionsAtSetup(anchPane, circleList, occupiedCircles));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuOrange.buildRoadAtSetup(anchPane, cpuCircleId);
     occupiedEdges.add(cpuRectangleId);
 
     // Green --------------------------------------------------------------------
-    cpuCircleId = cpuGreen.buildSettlementAtSetup(anchPane, circleOptions());
+    cpuCircleId =
+        cpuGreen.buildSettlementAtSetup(
+            anchPane, circleOptionsAtSetup(anchPane, circleList, occupiedCircles));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuGreen.buildRoadAtSetup(anchPane, cpuCircleId);
     occupiedEdges.add(cpuRectangleId);
 
     // Pink --------------------------------------------------------------------
-    cpuCircleId = cpuPink.buildSettlementAtSetup(anchPane, circleOptions());
+    cpuCircleId =
+        cpuPink.buildSettlementAtSetup(
+            anchPane, circleOptionsAtSetup(anchPane, circleList, occupiedCircles));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuPink.buildRoadAtSetup(anchPane, cpuCircleId);
     occupiedEdges.add(cpuRectangleId);
 
     // Pink AGAIN --------------------------------------------------------------------
-    cpuCircleId = cpuPink.buildSettlementAtSetup(anchPane, circleOptions());
+    cpuCircleId =
+        cpuPink.buildSettlementAtSetup(
+            anchPane, circleOptionsAtSetup(anchPane, circleList, occupiedCircles));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuPink.buildRoadAtSetup(anchPane, cpuCircleId);
     occupiedEdges.add(cpuRectangleId);
 
     // Green AGAIN --------------------------------------------------------------------
-    cpuCircleId = cpuGreen.buildSettlementAtSetup(anchPane, circleOptions());
+    cpuCircleId =
+        cpuGreen.buildSettlementAtSetup(
+            anchPane, circleOptionsAtSetup(anchPane, circleList, occupiedCircles));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuGreen.buildRoadAtSetup(anchPane, cpuCircleId);
     occupiedEdges.add(cpuRectangleId);
 
     // Orange AGAIN --------------------------------------------------------------------
-    cpuCircleId = cpuOrange.buildSettlementAtSetup(anchPane, circleOptions());
+    cpuCircleId =
+        cpuOrange.buildSettlementAtSetup(
+            anchPane, circleOptionsAtSetup(anchPane, circleList, occupiedCircles));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuOrange.buildRoadAtSetup(anchPane, cpuCircleId);
     occupiedEdges.add(cpuRectangleId);
 
-    ArrayList<String> blabla = circleOptions();
+    ArrayList<String> blabla = circleOptionsAtSetup(anchPane, circleList, occupiedCircles);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
         if (blabla.contains(node.getId())) {
@@ -200,23 +189,6 @@ public class GameController {
         }
       }
     }
-  }
-
-  public ArrayList<String> circleOptions() {
-    ArrayList<String> circleOptionList = new ArrayList<>(circleList);
-    ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
-    for (Node node : anchPane.getChildren()) {
-      if (node.getClass().getName().contains("Rectangle")) {
-        String[] temp = node.getId().split("-");
-        if (occupiedCircles.contains(temp[0])) {
-          occupiedOptionalList.add(temp[1]);
-        } else if (occupiedCircles.contains(temp[1])) {
-          occupiedOptionalList.add(temp[0]);
-        }
-      }
-    }
-    circleOptionList.removeAll(occupiedOptionalList);
-    return circleOptionList;
   }
 
   @FXML
@@ -232,6 +204,7 @@ public class GameController {
           node.setVisible(true);
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
           node.setScaleX(1.3);
           node.setScaleY(1.3);
         }
@@ -260,6 +233,7 @@ public class GameController {
           node.setVisible(true);
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
           node.setScaleX(1.3);
           node.setScaleY(1.3);
         }
@@ -296,6 +270,7 @@ public class GameController {
           node.setVisible(true);
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
         }
       }
     }

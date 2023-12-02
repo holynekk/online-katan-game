@@ -1,5 +1,6 @@
 package com.group12.model;
 
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
@@ -29,6 +30,7 @@ public class CPUPlayer {
           node.setVisible(true);
           node.setStyle(String.format("-fx-fill: %s;", this.color));
           node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
           node.setScaleX(1.3);
           node.setScaleY(1.3);
         }
@@ -55,6 +57,7 @@ public class CPUPlayer {
           node.setVisible(true);
           node.setStyle(String.format("-fx-fill: %s;", this.color));
           node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
         }
       }
     }
