@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static com.group12.helper.GameBoardSetupHelper.*;
-import static com.group12.helper.GameHelper.circleNeighbours;
+import static com.group12.helper.GameHelper.*;
 
 @Component
 public class GameController {
@@ -53,17 +54,27 @@ public class GameController {
   @FXML private Text secondDiceResult;
 
   private int turn;
+  private int d1;
+  private int d2;
+  private boolean isThrown;
 
-  private int hillResource;
-  private int mountainResource;
-  private int forestResource;
-  private int fieldResource;
-  private int pastureFieldResource;
+  public static int hillResource;
+  public static int mountainResource;
+  public static int forestResource;
+  public static int fieldResource;
+  public static int pastureFieldResource;
+
+  CPUPlayer cpuOrange;
+  CPUPlayer cpuGreen;
+  CPUPlayer cpuPink;
 
   private ArrayList<Text> tileTextList = new ArrayList<>();
 
   private ArrayList<String> occupiedCircles = new ArrayList<>();
   private ArrayList<String> occupiedEdges = new ArrayList<>();
+
+  private ArrayList<String> ownedCircles = new ArrayList<>();
+  private ArrayList<String> ownedEdges = new ArrayList<>();
 
   public void initialize() {
     turn = 0;
@@ -97,12 +108,12 @@ public class GameController {
       }
     }
     occupiedEdges.add(rectangleId);
+    ownedEdges.add(rectangleId);
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
-    CPUPlayer cpuOrange =
-        new CPUPlayer("orange", "Orange Guy", new ArrayList<>(), new ArrayList<>());
-    CPUPlayer cpuGreen = new CPUPlayer("green", "Green Guy", new ArrayList<>(), new ArrayList<>());
-    CPUPlayer cpuPink = new CPUPlayer("pink", "Pink Guy", new ArrayList<>(), new ArrayList<>());
+    cpuOrange = new CPUPlayer("orange", "Orange Guy", new ArrayList<>(), new ArrayList<>());
+    cpuGreen = new CPUPlayer("green", "Green Guy", new ArrayList<>(), new ArrayList<>());
+    cpuPink = new CPUPlayer("pink", "Pink Guy", new ArrayList<>(), new ArrayList<>());
 
     CPUSetup(anchPane, cpuOrange, cpuGreen, cpuPink, occupiedCircles, occupiedEdges);
 
@@ -119,21 +130,29 @@ public class GameController {
   }
 
   @FXML
-  public void buildSettlement() {
-
-  }
-  @FXML
-  public void buildUpgradeSettlement() {
-
+  public void throwDice() {
+    diceThrowResourceGather(true);
   }
 
   @FXML
-  public void buildRoad() {
-
+  public void diceThrowResourceGather(boolean didRealPlayerThrow) {
+    // Throw Dice
+    Random rnd = new Random();
+    d1 = rnd.nextInt(1, 7);
+    d2 = rnd.nextInt(1, 7);
+    System.out.println("Dice result: " + d1 + " " + d2);
+    isThrown = didRealPlayerThrow;
+    // Share resources
+    gatherNewResourcesPlayer(anchPane, tileTextList, ownedCircles, d1 + d2);
+    gatherNewResourcesCPU(anchPane, cpuOrange, tileTextList, cpuOrange.getOwnedCircles(), d1 + d2);
+    gatherNewResourcesCPU(anchPane, cpuGreen, tileTextList, cpuGreen.getOwnedCircles(), d1 + d2);
+    gatherNewResourcesCPU(anchPane, cpuPink, tileTextList, cpuPink.getOwnedCircles(), d1 + d2);
   }
 
   @FXML
   public void skipTurn() {
+    isThrown = false;
+    CPUPlays();
 
   }
 
@@ -157,6 +176,7 @@ public class GameController {
       }
     }
     occupiedCircles.add(circleId);
+    ownedCircles.add(circleId);
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new settlement!");
     for (Node node : anchPane.getChildren()) {
@@ -186,6 +206,7 @@ public class GameController {
       }
     }
     occupiedCircles.add(circleId);
+    ownedCircles.add(circleId);
     List<String> styleList;
     for (String rsrc : circleNeighbours.get(circleId).split("-")) {
       for (Node node : anchPane.getChildren()) {
@@ -241,6 +262,7 @@ public class GameController {
       }
     }
     occupiedEdges.add(rectangleId);
+    ownedEdges.add(rectangleId);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
         if (!occupiedEdges.contains(node.getId())) {

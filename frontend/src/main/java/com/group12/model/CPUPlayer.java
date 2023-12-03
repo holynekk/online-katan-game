@@ -13,7 +13,6 @@ public class CPUPlayer {
   public String displayName;
 
   private ArrayList<String> ownedCircles;
-
   private ArrayList<String> ownedRoads;
 
   private int hillResource;
@@ -22,7 +21,11 @@ public class CPUPlayer {
   private int fieldResource;
   private int pastureFieldResource;
 
-  public CPUPlayer(String color, String displayName, ArrayList<String> ownedCircles, ArrayList<String> ownedRoads) {
+  public CPUPlayer(
+      String color,
+      String displayName,
+      ArrayList<String> ownedCircles,
+      ArrayList<String> ownedRoads) {
     this.displayName = displayName;
     this.color = color;
     this.ownedCircles = ownedCircles;
@@ -48,6 +51,7 @@ public class CPUPlayer {
           node.setCursor(Cursor.DEFAULT);
           node.setScaleX(1.3);
           node.setScaleY(1.3);
+          addOwnedCircles(circleId);
         }
       }
     }
@@ -73,6 +77,7 @@ public class CPUPlayer {
           node.setStyle(String.format("-fx-fill: %s;", this.color));
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
+          addOwnedRoads(roadId);
         }
       }
     }
@@ -85,22 +90,6 @@ public class CPUPlayer {
 
   public void setColor(String color) {
     this.color = color;
-  }
-
-  public ArrayList<String> getOwnedCircles() {
-    return ownedCircles;
-  }
-
-  public void setOwnedCircles(ArrayList<String> ownedCircles) {
-    this.ownedCircles = ownedCircles;
-  }
-
-  public ArrayList<String> getOwnedRoads() {
-    return ownedRoads;
-  }
-
-  public void setOwnedRoads(ArrayList<String> ownedRoads) {
-    this.ownedRoads = ownedRoads;
   }
 
   public void increaseHillResource(int hillResource) {
@@ -161,6 +150,22 @@ public class CPUPlayer {
 
   public int getPastureFieldResource() {
     return pastureFieldResource;
+  }
+
+  public ArrayList<String> getOwnedCircles() {
+    return ownedCircles;
+  }
+
+  public void addOwnedCircles(String circleId) {
+    this.ownedCircles.add(circleId);
+  }
+
+  public ArrayList<String> getOwnedRoads() {
+    return ownedRoads;
+  }
+
+  public void addOwnedRoads(String circleId) {
+    this.ownedRoads.add(circleId);
   }
 
   public String getResourceToString() {

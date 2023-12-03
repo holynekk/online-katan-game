@@ -11,7 +11,6 @@ import static com.group12.helper.GameHelper.*;
 
 public class GameBoardSetupHelper {
 
-
   private static ArrayList<String> tileList =
       new ArrayList<>(
           Arrays.asList(

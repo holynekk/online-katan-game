@@ -1,8 +1,16 @@
 package com.group12.helper;
 
+import com.group12.model.CPUPlayer;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
+import static com.group12.controller.GameController.*;
 
 public class GameHelper {
   public static ArrayList<String> hexagonList =
@@ -95,4 +103,78 @@ public class GameHelper {
           put("c54", "h19");
         }
       };
+
+  public static void gatherNewResourcesPlayer(
+      AnchorPane anchorPane, List<Text> tileTextList, List<String> ownedCircles, int diceResult) {
+    for (Text txt : tileTextList) {
+      if (txt.getText().matches("-?\\d+(\\.\\d+)?")
+          && Integer.parseInt(txt.getText()) == diceResult) {
+        // For player
+        for (String cId : ownedCircles) {
+          if (circleNeighbours.get(cId).contains("-" + txt.getId() + "-")
+              || circleNeighbours.get(cId).startsWith(txt.getId() + "-")
+              || circleNeighbours.get(cId).endsWith("-" + txt.getId())) {
+            for (Node node : anchorPane.getChildren()) {
+
+              if (node.getClass().getName().contains("Polygon")) {
+                if (node.getId().equals(txt.getId())) {
+                  List<String> styleList = node.getStyleClass();
+                  if (styleList.contains("hill")) {
+                    hillResource++;
+                  } else if (styleList.contains("mountain")) {
+                    mountainResource++;
+                  } else if (styleList.contains("forest")) {
+                    forestResource++;
+                  } else if (styleList.contains("field")) {
+                    fieldResource++;
+                  } else if (styleList.contains("pastureField")) {
+                    pastureFieldResource++;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public static void gatherNewResourcesCPU(
+          AnchorPane anchorPane, CPUPlayer cpuPlayer, List<Text> tileTextList, List<String> ownedCircles, int diceResult) {
+    for (Text txt : tileTextList) {
+      if (txt.getText().matches("-?\\d+(\\.\\d+)?")
+              && Integer.parseInt(txt.getText()) == diceResult) {
+        // For player
+        for (String cId : ownedCircles) {
+          if (circleNeighbours.get(cId).contains("-" + txt.getId() + "-")
+                  || circleNeighbours.get(cId).startsWith(txt.getId() + "-")
+                  || circleNeighbours.get(cId).endsWith("-" + txt.getId())) {
+            for (Node node : anchorPane.getChildren()) {
+
+              if (node.getClass().getName().contains("Polygon")) {
+                if (node.getId().equals(txt.getId())) {
+                  List<String> styleList = node.getStyleClass();
+                  if (styleList.contains("hill")) {
+                    cpuPlayer.increaseHillResource(1);
+                  } else if (styleList.contains("mountain")) {
+                    cpuPlayer.increaseMountainResource(1);
+                  } else if (styleList.contains("forest")) {
+                    cpuPlayer.increaseForestResource(1);
+                  } else if (styleList.contains("field")) {
+                    cpuPlayer.increaseFieldResource(1);
+                  } else if (styleList.contains("pastureField")) {
+                    cpuPlayer.increasePastureFieldResource(1);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public static void CPUPlays() {
+    System.out.println("CPU plays!!");
+  }
 }

@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +18,11 @@
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox prefHeight="100.0" prefWidth="232.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#throwDice" text="Throw Dice" />
+                  <Button mnemonicParsing="false" onAction="#skipTurn" text="Skip Turn" />
+               </children></HBox>
          </children></HBox>
    </bottom>
    <right>
@@ -656,15 +661,15 @@
             <Text fx:id="h8" layoutX="152.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h8" />
             <Text fx:id="h9" layoutX="256.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h9" />
             <Text fx:id="h10" layoutX="342.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESERT" />
-            <Text fx:id="h11" layoutX="460.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h10" />
-            <Text fx:id="h12" layoutX="563.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h11" />
-            <Text fx:id="h13" layoutX="199.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h12" />
-            <Text fx:id="h14" layoutX="304.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h13" />
-            <Text fx:id="h15" layoutX="407.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h14" />
-            <Text fx:id="h16" layoutX="511.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h15" />
-            <Text fx:id="h17" layoutX="245.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h16" />
-            <Text fx:id="h18" layoutX="349.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h17" />
-            <Text fx:id="h19" layoutX="458.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h18" />
+            <Text fx:id="h11" layoutX="460.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h11" />
+            <Text fx:id="h12" layoutX="563.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h12" />
+            <Text fx:id="h13" layoutX="199.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h13" />
+            <Text fx:id="h14" layoutX="304.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h14" />
+            <Text fx:id="h15" layoutX="407.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h15" />
+            <Text fx:id="h16" layoutX="511.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h16" />
+            <Text fx:id="h17" layoutX="245.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h17" />
+            <Text fx:id="h18" layoutX="349.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h18" />
+            <Text fx:id="h19" layoutX="458.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h19" />
 
          </children>
          <BorderPane.margin>
