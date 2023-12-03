@@ -1,14 +1,17 @@
 package com.group12.helper;
 
+import com.group12.model.CPUPlayer;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
+
+import static com.group12.helper.GameHelper.*;
 
 public class GameBoardSetupHelper {
+
+
   private static ArrayList<String> tileList =
       new ArrayList<>(
           Arrays.asList(
@@ -38,7 +41,7 @@ public class GameBoardSetupHelper {
               "10", "10"));
 
   public static ArrayList<String> circleOptionsAtSetup(
-      AnchorPane anchorPane, ArrayList<String> circleList, ArrayList<String> occupiedCircles) {
+      AnchorPane anchorPane, ArrayList<String> occupiedCircles) {
     ArrayList<String> circleOptionList = new ArrayList<>(circleList);
     ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
     for (Node node : anchorPane.getChildren()) {
@@ -74,5 +77,96 @@ public class GameBoardSetupHelper {
         }
       }
     }
+  }
+
+  public static void setResourceAtSetup(
+      AnchorPane anchorPane, CPUPlayer cpuPlayer, String cpuCircleId) {
+    List<String> styleList;
+    for (String rsrc : circleNeighbours.get(cpuCircleId).split("-")) {
+      for (Node node : anchorPane.getChildren()) {
+        if (node.getClass().getName().contains("Polygon") && node.getId().equals(rsrc)) {
+          styleList = node.getStyleClass();
+          if (styleList.contains("hill")) {
+            cpuPlayer.increaseHillResource(1);
+          } else if (styleList.contains("mountain")) {
+            cpuPlayer.increaseMountainResource(1);
+          } else if (styleList.contains("forest")) {
+            cpuPlayer.increaseForestResource(1);
+          } else if (styleList.contains("field")) {
+            cpuPlayer.increaseFieldResource(1);
+          } else if (styleList.contains("pastureField")) {
+            cpuPlayer.increasePastureFieldResource(1);
+          }
+        }
+      }
+    }
+  }
+
+  public static void CPUSetup(
+      AnchorPane anchorPane,
+      CPUPlayer cpuGreen,
+      CPUPlayer cpuPink,
+      CPUPlayer cpuOrange,
+      ArrayList<String> occupiedCircles,
+      ArrayList<String> occupiedEdges) {
+    // CPU plays
+    String cpuCircleId;
+    String cpuRectangleId;
+    // Orange --------------------------------------------------------------------
+    cpuCircleId =
+        cpuOrange.buildSettlementAtSetup(
+            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+    occupiedCircles.add(cpuCircleId);
+
+    cpuRectangleId = cpuOrange.buildRoadAtSetup(anchorPane, cpuCircleId);
+    occupiedEdges.add(cpuRectangleId);
+
+    // Green --------------------------------------------------------------------
+    cpuCircleId =
+        cpuGreen.buildSettlementAtSetup(
+            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+    occupiedCircles.add(cpuCircleId);
+
+    cpuRectangleId = cpuGreen.buildRoadAtSetup(anchorPane, cpuCircleId);
+    occupiedEdges.add(cpuRectangleId);
+
+    // Pink --------------------------------------------------------------------
+    cpuCircleId =
+        cpuPink.buildSettlementAtSetup(
+            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+    occupiedCircles.add(cpuCircleId);
+
+    cpuRectangleId = cpuPink.buildRoadAtSetup(anchorPane, cpuCircleId);
+    occupiedEdges.add(cpuRectangleId);
+
+    // Pink AGAIN --------------------------------------------------------------------
+    cpuCircleId =
+        cpuPink.buildSettlementAtSetup(
+            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+    occupiedCircles.add(cpuCircleId);
+    setResourceAtSetup(anchorPane, cpuPink, cpuCircleId);
+
+    cpuRectangleId = cpuPink.buildRoadAtSetup(anchorPane, cpuCircleId);
+    occupiedEdges.add(cpuRectangleId);
+
+    // Green AGAIN --------------------------------------------------------------------
+    cpuCircleId =
+        cpuGreen.buildSettlementAtSetup(
+            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+    occupiedCircles.add(cpuCircleId);
+    setResourceAtSetup(anchorPane, cpuGreen, cpuCircleId);
+
+    cpuRectangleId = cpuGreen.buildRoadAtSetup(anchorPane, cpuCircleId);
+    occupiedEdges.add(cpuRectangleId);
+
+    // Orange AGAIN --------------------------------------------------------------------
+    cpuCircleId =
+        cpuOrange.buildSettlementAtSetup(
+            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+    occupiedCircles.add(cpuCircleId);
+    setResourceAtSetup(anchorPane, cpuOrange, cpuCircleId);
+
+    cpuRectangleId = cpuOrange.buildRoadAtSetup(anchorPane, cpuCircleId);
+    occupiedEdges.add(cpuRectangleId);
   }
 }

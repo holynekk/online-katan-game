@@ -582,7 +582,7 @@
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
-            <Circle id="c46" fill="#D3D3D3" layoutX="518.0" layoutY="391.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c46" fill="#D3D3D3" layoutX="524.0" layoutY="391.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
@@ -590,11 +590,11 @@
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
-            <Circle id="c53" fill="#D3D3D3" layoutX="472.0" layoutY="479.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c53" fill="#D3D3D3" layoutX="472.0" layoutY="478.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
-            <Circle id="c51" fill="#D3D3D3" layoutX="363.0" layoutY="479.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c51" fill="#D3D3D3" layoutX="368.0" layoutY="478.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
@@ -622,7 +622,7 @@
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
-            <Circle id="c29" fill="#D3D3D3" layoutX="164.0" layoutY="301.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c29" fill="#D3D3D3" layoutX="160.0" layoutY="301.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Circle>
@@ -634,7 +634,7 @@
             <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Circle>
-            <Circle id="c17" fill="#D3D3D3" layoutX="115.0" layoutY="212.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c17" fill="#D3D3D3" layoutX="108.0" layoutY="212.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Circle>
@@ -646,25 +646,25 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Circle>
-            <Text fx:id="h1" layoutX="250.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h2" layoutX="354.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h3" layoutX="458.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h4" layoutX="197.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h5" layoutX="307.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h6" layoutX="405.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h7" layoutX="510.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h8" layoutX="151.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h9" layoutX="244.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h1" layoutX="250.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h1" />
+            <Text fx:id="h2" layoutX="360.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h2" />
+            <Text fx:id="h3" layoutX="458.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h3" />
+            <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h4" />
+            <Text fx:id="h5" layoutX="307.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h5" />
+            <Text fx:id="h6" layoutX="412.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h6" />
+            <Text fx:id="h7" layoutX="517.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h7" />
+            <Text fx:id="h8" layoutX="152.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h8" />
+            <Text fx:id="h9" layoutX="256.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h9" />
             <Text fx:id="h10" layoutX="342.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESERT" />
-            <Text fx:id="h11" layoutX="452.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h12" layoutX="562.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h13" layoutX="194.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h14" layoutX="301.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h15" layoutX="405.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h16" layoutX="509.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h17" layoutX="245.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h18" layoutX="349.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text fx:id="h19" layoutX="458.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="h11" layoutX="460.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h10" />
+            <Text fx:id="h12" layoutX="563.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h11" />
+            <Text fx:id="h13" layoutX="199.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h12" />
+            <Text fx:id="h14" layoutX="304.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h13" />
+            <Text fx:id="h15" layoutX="407.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h14" />
+            <Text fx:id="h16" layoutX="511.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h15" />
+            <Text fx:id="h17" layoutX="245.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h16" />
+            <Text fx:id="h18" layoutX="349.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h17" />
+            <Text fx:id="h19" layoutX="458.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h18" />
 
          </children>
          <BorderPane.margin>
