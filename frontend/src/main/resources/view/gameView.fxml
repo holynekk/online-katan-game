@@ -20,8 +20,9 @@
             <HBox prefHeight="100.0" prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="232.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#throwDice" text="Throw Dice" />
-                  <Button mnemonicParsing="false" onAction="#skipTurn" text="Skip Turn" />
+                  <Button fx:id="throwDiceButton" mnemonicParsing="false" onAction="#throwDice" text="Throw Dice" />
+                  <Button fx:id="skipTurnButton" mnemonicParsing="false" onAction="#skipTurn" text="Skip Turn" />
+                  <Text fx:id="diceResultText" strokeType="OUTSIDE" strokeWidth="0.0" text="dice result" />
                </children></HBox>
          </children></HBox>
    </bottom>

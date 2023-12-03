@@ -5,10 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static com.group12.controller.GameController.*;
 
@@ -140,15 +137,19 @@ public class GameHelper {
   }
 
   public static void gatherNewResourcesCPU(
-          AnchorPane anchorPane, CPUPlayer cpuPlayer, List<Text> tileTextList, List<String> ownedCircles, int diceResult) {
+      AnchorPane anchorPane,
+      CPUPlayer cpuPlayer,
+      List<Text> tileTextList,
+      List<String> ownedCircles,
+      int diceResult) {
     for (Text txt : tileTextList) {
       if (txt.getText().matches("-?\\d+(\\.\\d+)?")
-              && Integer.parseInt(txt.getText()) == diceResult) {
+          && Integer.parseInt(txt.getText()) == diceResult) {
         // For player
         for (String cId : ownedCircles) {
           if (circleNeighbours.get(cId).contains("-" + txt.getId() + "-")
-                  || circleNeighbours.get(cId).startsWith(txt.getId() + "-")
-                  || circleNeighbours.get(cId).endsWith("-" + txt.getId())) {
+              || circleNeighbours.get(cId).startsWith(txt.getId() + "-")
+              || circleNeighbours.get(cId).endsWith("-" + txt.getId())) {
             for (Node node : anchorPane.getChildren()) {
 
               if (node.getClass().getName().contains("Polygon")) {
@@ -174,7 +175,36 @@ public class GameHelper {
     }
   }
 
-  public static void CPUPlays() {
-    System.out.println("CPU plays!!");
+  public static void CPUPlays(
+      AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles, Text diceResultText) {
+    System.out.println(cpuPlayer.getDisplayName() + " plays!");
+    diceThrowResourceGather(anchorPane, ownedCircles, diceResultText);
+
+    if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
+      System.out.println(cpuPlayer.getDisplayName() + " can build a road!");
+    } else if (cpuPlayer.getHillResource() >= 1
+        && cpuPlayer.getForestResource() >= 1
+        && cpuPlayer.getFieldResource() >= 1
+        && cpuPlayer.getPastureFieldResource() >= 1) {
+      System.out.println(cpuPlayer.getDisplayName() + " can build a settlement!");
+    } else if (cpuPlayer.getFieldResource() >= 2 && cpuPlayer.getMountainResource() >= 3) {
+      System.out.println(cpuPlayer.getDisplayName() + " can upgrade a settlement to a city!");
+    }
+  }
+
+  public static void diceThrowResourceGather(
+      AnchorPane anchorPane, List<String> ownedCircles, Text diceResultText) {
+    // Throw Dice
+    Random rnd = new Random();
+    d1 = rnd.nextInt(1, 7);
+    d2 = rnd.nextInt(1, 7);
+    diceResultText.setText("Dice result: " + d1 + " " + d2);
+
+    // Share resources
+    gatherNewResourcesPlayer(anchorPane, tileTextList, ownedCircles, d1 + d2);
+    gatherNewResourcesCPU(
+        anchorPane, cpuOrange, tileTextList, cpuOrange.getOwnedCircles(), d1 + d2);
+    gatherNewResourcesCPU(anchorPane, cpuGreen, tileTextList, cpuGreen.getOwnedCircles(), d1 + d2);
+    gatherNewResourcesCPU(anchorPane, cpuPink, tileTextList, cpuPink.getOwnedCircles(), d1 + d2);
   }
 }

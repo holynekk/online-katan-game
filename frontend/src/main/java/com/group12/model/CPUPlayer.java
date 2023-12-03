@@ -92,6 +92,14 @@ public class CPUPlayer {
     this.color = color;
   }
 
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
   public void increaseHillResource(int hillResource) {
     this.hillResource += hillResource;
   }
