@@ -2,7 +2,6 @@ package com.group12.controller;
 
 import com.group12.helper.NotificationHelper;
 import com.group12.model.CPUPlayer;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;

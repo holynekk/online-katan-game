@@ -29,6 +29,11 @@ public class LoginController {
 
   Window window;
 
+  public void initialize() {
+
+  }
+
+
   @FXML
   private void login() throws Exception {
 
