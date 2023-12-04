@@ -24,7 +24,24 @@
                <children>
                   <Label text="Put the resources here!" />
                </children></HBox>
-            <HBox prefHeight="100.0" prefWidth="232.0" />
+            <HBox prefHeight="100.0" prefWidth="232.0">
+               <children>
+                  <Button fx:id="roadBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalRoads" text="Road">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="settlementBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalSettlements" text="Sett">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="settlementUpgradeButton" disable="true" mnemonicParsing="false" onAction="#showOptionalUpgrades" text="Upg">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children></HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="206.0">
                <children>
                   <ImageView fx:id="firstDiceImage" fitHeight="100.0" fitWidth="75.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
@@ -59,7 +76,7 @@
       <VBox prefHeight="500.0" prefWidth="197.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <AnchorPane fx:id="anchPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchPane" prefHeight="491.0" prefWidth="654.0" BorderPane.alignment="CENTER">
          <children>
             <Polygon id="h10" fill="#1f93ff" layoutX="316.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <styleClass>
@@ -703,7 +720,7 @@
 
          </children>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets left="-80.0" top="20.0" />
          </BorderPane.margin>
       </AnchorPane>
    </center>

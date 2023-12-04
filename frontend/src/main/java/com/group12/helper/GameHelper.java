@@ -218,4 +218,32 @@ public class GameHelper {
     rt.setOnFinished(j -> diceImage.setImage(new Image(file.toURI().toString())));
     return diceResult;
   }
+
+  public static ArrayList<String> getOptionalRoads(
+      AnchorPane anchorPane, ArrayList<String> ownedEdges, ArrayList<String> ownedCircles) {
+    ArrayList<String> optionalRoads = new ArrayList<>();
+
+    ArrayList<String> circles = new ArrayList<>();
+    for (String edge : ownedEdges) {
+      String[] temp = edge.split("-");
+      if (!circles.contains(temp[0])) {
+        circles.add(temp[0]);
+      }
+      if (!circles.contains(temp[1])) {
+        circles.add(temp[1]);
+      }
+    }
+    for (String circleId : circles) {
+      for (Node node : anchorPane.getChildren()) {
+        if (node.getClass().getName().contains("Rectangle")) {
+          String[] temp = node.getId().split("-");
+          if (temp[0].equals(circleId) || temp[1].equals(circleId)) {
+            optionalRoads.add(node.getId());
+          }
+        }
+      }
+    }
+    optionalRoads.removeAll(occupiedEdges);
+    return optionalRoads;
+  }
 }

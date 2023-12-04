@@ -2,13 +2,11 @@ package com.group12.controller;
 
 import com.group12.helper.NotificationHelper;
 import com.group12.model.CPUPlayer;
-import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -16,14 +14,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import static com.group12.helper.GameBoardSetupHelper.*;
 import static com.group12.helper.GameHelper.*;
@@ -62,6 +57,10 @@ public class GameController {
   @FXML private ImageView firstDiceImage;
   @FXML private ImageView secondDiceImage;
 
+  @FXML private Button roadBuildButton;
+  @FXML private Button settlementBuildButton;
+  @FXML private Button settlementUpgradeButton;
+
   private int turn;
   public static int d1;
   public static int d2;
@@ -79,8 +78,8 @@ public class GameController {
 
   public static ArrayList<Text> tileTextList = new ArrayList<>();
 
-  private ArrayList<String> occupiedCircles = new ArrayList<>();
-  private ArrayList<String> occupiedEdges = new ArrayList<>();
+  public static ArrayList<String> occupiedCircles = new ArrayList<>();
+  public static ArrayList<String> occupiedEdges = new ArrayList<>();
 
   private ArrayList<String> ownedCircles = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
@@ -153,6 +152,40 @@ public class GameController {
     playSoundEffect(diceEffect);
 
     diceThrowResourceGather(anchPane, ownedCircles);
+    if (hillResource >= 1 && forestResource >= 1) {
+      roadBuildButton.setDisable(false);
+    }
+    if (hillResource >= 1
+            && forestResource >= 1
+            && fieldResource >= 1
+            && pastureFieldResource >= 1) {
+      settlementBuildButton.setDisable(false);
+    }
+    if (fieldResource >= 2 && mountainResource >= 3) {
+      settlementUpgradeButton.setDisable(false);
+    }
+  }
+
+  @FXML
+  public void showOptionalRoads() {
+    ArrayList<String> optionalRoads = getOptionalRoads(anchPane, ownedEdges, ownedCircles);
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        if (optionalRoads.contains(node.getId())) {
+          node.setVisible(!node.isVisible());
+        }
+      }
+    }
+  }
+
+  @FXML
+  public void showOptionalSettlements() {
+    System.out.println("showOptionalSettlements");
+  }
+
+  @FXML
+  public void showOptionalUpgrades() {
+    System.out.println("showOptionalUpgrades");
   }
 
   @FXML
@@ -191,7 +224,10 @@ public class GameController {
         Alert.AlertType.INFORMATION, "Information", "You have built a new settlement!");
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle") && node.getId().contains(circleId)) {
-        node.setVisible(true);
+        String[] temp = node.getId().split("-");
+        if (temp[0].equals(circleId) || temp[1].equals(circleId)) {
+          node.setVisible(true);
+        }
       }
     }
   }
@@ -283,9 +319,54 @@ public class GameController {
 
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
+    finilizeSetupPhase();
+  }
+
+  public void finilizeSetupPhase() {
     firstDiceImage.setDisable(false);
     secondDiceImage.setDisable(false);
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        if (!occupiedEdges.contains(node.getId())) {
+          node.setOnMouseClicked(this::buildRoad);
+        }
+      }
+    }
   }
+
+  @FXML
+  public void buildRoad(MouseEvent event) {
+    Rectangle road = (Rectangle) event.getSource();
+    String roadId = road.getId();
+
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")
+          && !occupiedEdges.contains(node.getId())) {
+        if (node.getId().equals(roadId)) {
+          node.setStyle("-fx-fill: red;");
+          node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
+        } else {
+          node.setVisible(false);
+        }
+      }
+    }
+    hillResource--;
+    forestResource--;
+    occupiedEdges.add(roadId);
+    ownedEdges.add(roadId);
+    NotificationHelper.showAlert(
+        Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
+  }
+
+  @FXML
+  public void buildRSettlement() {}
+
+  @FXML
+  public void upgradeRSettlement() {}
 
   @FXML
   public void hexagonPush(MouseEvent event) {
