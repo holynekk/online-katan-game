@@ -1,10 +1,15 @@
 package com.group12.helper;
 
 import com.group12.model.CPUPlayer;
+import javafx.animation.RotateTransition;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.util.*;
 
 import static com.group12.controller.GameController.*;
@@ -176,9 +181,9 @@ public class GameHelper {
   }
 
   public static void CPUPlays(
-      AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles, Text diceResultText) {
+      AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles) {
     System.out.println(cpuPlayer.getDisplayName() + " plays!");
-    diceThrowResourceGather(anchorPane, ownedCircles, diceResultText);
+    diceThrowResourceGather(anchorPane, ownedCircles);
 
     if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
       System.out.println(cpuPlayer.getDisplayName() + " can build a road!");
@@ -192,19 +197,25 @@ public class GameHelper {
     }
   }
 
-  public static void diceThrowResourceGather(
-      AnchorPane anchorPane, List<String> ownedCircles, Text diceResultText) {
-    // Throw Dice
-    Random rnd = new Random();
-    d1 = rnd.nextInt(1, 7);
-    d2 = rnd.nextInt(1, 7);
-    diceResultText.setText("Dice result: " + d1 + " " + d2);
-
+  public static void diceThrowResourceGather(AnchorPane anchorPane, List<String> ownedCircles) {
     // Share resources
     gatherNewResourcesPlayer(anchorPane, tileTextList, ownedCircles, d1 + d2);
     gatherNewResourcesCPU(
         anchorPane, cpuOrange, tileTextList, cpuOrange.getOwnedCircles(), d1 + d2);
     gatherNewResourcesCPU(anchorPane, cpuGreen, tileTextList, cpuGreen.getOwnedCircles(), d1 + d2);
     gatherNewResourcesCPU(anchorPane, cpuPink, tileTextList, cpuPink.getOwnedCircles(), d1 + d2);
+  }
+
+  public static int rollDice(ImageView diceImage) {
+    Random rnd = new Random();
+    int diceResult = rnd.nextInt(6) + 1;
+    File file = new File("src/main/resources/assets/dice" + diceResult + ".png");
+    RotateTransition rt = new RotateTransition();
+    rt.setByAngle(360);
+    rt.setNode(diceImage);
+    rt.setDuration(Duration.millis(500));
+    rt.play();
+    rt.setOnFinished(j -> diceImage.setImage(new Image(file.toURI().toString())));
+    return diceResult;
   }
 }

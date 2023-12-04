@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.group12.helper.MediaHelper.mediaPlayer;
+import static com.group12.helper.MediaHelper.backgroundPlayer;
 
 @Component
 public class SettingsController {
@@ -22,14 +22,14 @@ public class SettingsController {
   @FXML private Slider backgroundMusicSlider;
 
   public void initialize() {
-    backgroundMusicSlider.setValue(mediaPlayer.getVolume() * 100);
+    backgroundMusicSlider.setValue(backgroundPlayer.getVolume() * 100);
     backgroundMusicSlider
         .valueProperty()
         .addListener(
             new InvalidationListener() {
               @Override
               public void invalidated(Observable observable) {
-                mediaPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
+                  backgroundPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
               }
             });
   }

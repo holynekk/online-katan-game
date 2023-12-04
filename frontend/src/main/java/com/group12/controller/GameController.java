@@ -2,25 +2,33 @@ package com.group12.controller;
 
 import com.group12.helper.NotificationHelper;
 import com.group12.model.CPUPlayer;
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static com.group12.helper.GameBoardSetupHelper.*;
 import static com.group12.helper.GameHelper.*;
+import static com.group12.helper.MediaHelper.diceEffect;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class GameController {
@@ -48,14 +56,11 @@ public class GameController {
   @FXML private Text h17;
   @FXML private Text h18;
   @FXML private Text h19;
-  @FXML private Text diceResultText;
 
   @FXML private Button skipTurnButton;
-  @FXML private Button throwDiceButton;
 
-  @FXML private Text firstDiceResult;
-
-  @FXML private Text secondDiceResult;
+  @FXML private ImageView firstDiceImage;
+  @FXML private ImageView secondDiceImage;
 
   private int turn;
   public static int d1;
@@ -82,7 +87,8 @@ public class GameController {
 
   public void initialize() {
     skipTurnButton.setDisable(true);
-    throwDiceButton.setDisable(true);
+    firstDiceImage.setDisable(true);
+    secondDiceImage.setDisable(true);
     turn = 0;
     hillResource = 0;
     mountainResource = 0;
@@ -136,21 +142,28 @@ public class GameController {
   }
 
   @FXML
-  public void throwDice() {
-    throwDiceButton.setDisable(true);
+  public void throwDice(MouseEvent event) throws InterruptedException {
+    firstDiceImage.setDisable(true);
+    secondDiceImage.setDisable(true);
     skipTurnButton.setDisable(false);
     isThrown = true;
-    diceThrowResourceGather(anchPane, ownedCircles, diceResultText);
+
+    d1 = rollDice(firstDiceImage);
+    d2 = rollDice(secondDiceImage);
+    playSoundEffect(diceEffect);
+
+    diceThrowResourceGather(anchPane, ownedCircles);
   }
 
   @FXML
   public void skipTurn() {
     isThrown = false;
     skipTurnButton.setDisable(true);
-    CPUPlays(anchPane, cpuOrange, ownedCircles, diceResultText);
-    CPUPlays(anchPane, cpuGreen, ownedCircles, diceResultText);
-    CPUPlays(anchPane, cpuPink, ownedCircles, diceResultText);
-    throwDiceButton.setDisable(false);
+    CPUPlays(anchPane, cpuOrange, ownedCircles);
+    CPUPlays(anchPane, cpuGreen, ownedCircles);
+    CPUPlays(anchPane, cpuPink, ownedCircles);
+    firstDiceImage.setDisable(false);
+    secondDiceImage.setDisable(false);
   }
 
   @FXML
@@ -270,7 +283,8 @@ public class GameController {
 
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
-    throwDiceButton.setDisable(false);
+    firstDiceImage.setDisable(false);
+    secondDiceImage.setDisable(false);
   }
 
   @FXML

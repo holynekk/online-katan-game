@@ -9,31 +9,52 @@ import java.net.URISyntaxException;
 
 @Component
 public class MediaHelper {
-    public static MediaPlayer mediaPlayer;
+  public static MediaPlayer backgroundPlayer;
+  public static MediaPlayer effectsPlayer;
 
-    public MediaHelper() throws URISyntaxException {
-        String musicFile = "aeo2_menu.mp3";
+  public static final String backgroundMusic = "aeo2_menu.mp3";
+  public static final String diceEffect = "dice_roll.mp3";
 
-        Media sound = null;
-        try {
-            sound = new Media(getClass().getResource("../../../sounds/" + musicFile).toURI().toString());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+  public MediaHelper() throws URISyntaxException {
+    Media sound = null;
 
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setVolume(0.2);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-            }
+    try {
+      sound =
+          new Media(
+              getClass().getResource("../../../sounds/" + backgroundMusic).toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    backgroundPlayer = new MediaPlayer(sound);
+    backgroundPlayer.setVolume(0.2);
+    backgroundPlayer.setOnEndOfMedia(
+        new Runnable() {
+          @Override
+          public void run() {
+            backgroundPlayer.seek(Duration.ZERO);
+          }
         });
-        mediaPlayer.play();
+    backgroundPlayer.play();
+  }
 
-    }
+  public static void setBackgroundVolume(double volume) {
+    backgroundPlayer.setVolume(volume);
+  }
 
-    public static void setVolume(double volume) {
-        mediaPlayer.setVolume(volume);
+  public static void playSoundEffect(String effect) {
+    Media sound = null;
+    try {
+      sound =
+          new Media(
+              MediaHelper.class
+                  .getResource("../../../sounds/" + effect)
+                  .toURI()
+                  .toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
+    effectsPlayer = new MediaPlayer(sound);
+    effectsPlayer.setVolume(1);
+    effectsPlayer.play();
+  }
 }
