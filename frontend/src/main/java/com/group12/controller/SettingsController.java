@@ -17,28 +17,29 @@ import static com.group12.helper.MediaHelper.mediaPlayer;
 @Component
 public class SettingsController {
 
-    @FXML private Button backButton;
+  @FXML private Button backButton;
 
-    @FXML private Slider backgroundMusicSlider;
+  @FXML private Slider backgroundMusicSlider;
 
-    public void initialize() {
-        backgroundMusicSlider.setValue(mediaPlayer.getVolume() * 100);
-        backgroundMusicSlider.valueProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
+  public void initialize() {
+    backgroundMusicSlider.setValue(mediaPlayer.getVolume() * 100);
+    backgroundMusicSlider
+        .valueProperty()
+        .addListener(
+            new InvalidationListener() {
+              @Override
+              public void invalidated(Observable observable) {
                 mediaPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
-            }
-        });
-    }
+              }
+            });
+  }
 
-    @FXML
-    private void backToMenu() throws IOException {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
+  @FXML
+  private void backToMenu() throws IOException {
+    Stage stage = (Stage) backButton.getScene().getWindow();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    stage.show();
+  }
 }

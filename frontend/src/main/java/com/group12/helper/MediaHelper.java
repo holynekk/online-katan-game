@@ -2,6 +2,7 @@ package com.group12.helper;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
 import java.net.URISyntaxException;
@@ -22,6 +23,12 @@ public class MediaHelper {
 
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setVolume(0.2);
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+            }
+        });
         mediaPlayer.play();
 
     }
