@@ -89,11 +89,11 @@ public class GameController {
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
     turn = 0;
-    hillResource = 0;
-    mountainResource = 0;
-    forestResource = 0;
-    fieldResource = 0;
-    pastureFieldResource = 0;
+    hillResource = 10;
+    mountainResource = 10;
+    forestResource = 10;
+    fieldResource = 10;
+    pastureFieldResource = 10;
     tileTextList =
         new ArrayList<>(
             Arrays.asList(
@@ -128,7 +128,7 @@ public class GameController {
 
     CPUSetup(anchPane, cpuOrange, cpuGreen, cpuPink, occupiedCircles, occupiedEdges);
 
-    ArrayList<String> blabla = circleOptionsAtSetup(anchPane, occupiedCircles);
+    ArrayList<String> blabla = circleOptionsAtSetup(anchPane);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
         if (blabla.contains(node.getId())) {
@@ -156,9 +156,9 @@ public class GameController {
       roadBuildButton.setDisable(false);
     }
     if (hillResource >= 1
-            && forestResource >= 1
-            && fieldResource >= 1
-            && pastureFieldResource >= 1) {
+        && forestResource >= 1
+        && fieldResource >= 1
+        && pastureFieldResource >= 1) {
       settlementBuildButton.setDisable(false);
     }
     if (fieldResource >= 2 && mountainResource >= 3) {
@@ -168,6 +168,7 @@ public class GameController {
 
   @FXML
   public void showOptionalRoads() {
+    clearAllOptionals(anchPane);
     ArrayList<String> optionalRoads = getOptionalRoads(anchPane, ownedEdges, ownedCircles);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
@@ -180,7 +181,17 @@ public class GameController {
 
   @FXML
   public void showOptionalSettlements() {
-    System.out.println("showOptionalSettlements");
+    clearAllOptionals(anchPane);
+    ArrayList<String> optionalSettlements =
+        getOptionalSettlements(anchPane, ownedEdges, ownedCircles, "red");
+    System.out.println(optionalSettlements);
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle")) {
+        if (optionalSettlements.contains(node.getId())) {
+          node.setVisible(!node.isVisible());
+        }
+      }
+    }
   }
 
   @FXML
@@ -197,6 +208,10 @@ public class GameController {
     CPUPlays(anchPane, cpuPink, ownedCircles);
     firstDiceImage.setDisable(false);
     secondDiceImage.setDisable(false);
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
+    clearAllOptionals(anchPane);
   }
 
   @FXML
@@ -331,6 +346,11 @@ public class GameController {
           node.setOnMouseClicked(this::buildRoad);
         }
       }
+      if (node.getClass().getName().contains("Circle")) {
+        if (!occupiedCircles.contains(node.getId())) {
+          node.setOnMouseClicked(this::buildSettlement);
+        }
+      }
     }
   }
 
@@ -363,7 +383,33 @@ public class GameController {
   }
 
   @FXML
-  public void buildRSettlement() {}
+  public void buildSettlement(MouseEvent event) {
+    Circle settlement = (Circle) event.getSource();
+    String settlementId = settlement.getId();
+
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle") && !occupiedCircles.contains(node.getId())) {
+        if (node.getId().equals(settlementId)) {
+          node.setStyle("-fx-fill: red;");
+          node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
+        } else {
+          node.setVisible(false);
+        }
+      }
+    }
+    hillResource--;
+    forestResource--;
+    fieldResource--;
+    pastureFieldResource--;
+    occupiedCircles.add(settlementId);
+    ownedCircles.add(settlementId);
+    NotificationHelper.showAlert(
+        Alert.AlertType.INFORMATION, "Information", "You have built a new settlement!");
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
+  }
 
   @FXML
   public void upgradeRSettlement() {}

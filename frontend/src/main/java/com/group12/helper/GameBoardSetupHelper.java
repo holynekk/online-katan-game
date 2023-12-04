@@ -7,6 +7,7 @@ import javafx.scene.text.Text;
 
 import java.util.*;
 
+import static com.group12.controller.GameController.occupiedCircles;
 import static com.group12.helper.GameHelper.*;
 
 public class GameBoardSetupHelper {
@@ -40,7 +41,7 @@ public class GameBoardSetupHelper {
               "10", "10"));
 
   public static ArrayList<String> circleOptionsAtSetup(
-      AnchorPane anchorPane, ArrayList<String> occupiedCircles) {
+      AnchorPane anchorPane) {
     ArrayList<String> circleOptionList = new ArrayList<>(circleList);
     ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
     for (Node node : anchorPane.getChildren()) {
@@ -114,7 +115,7 @@ public class GameBoardSetupHelper {
     // Orange --------------------------------------------------------------------
     cpuCircleId =
         cpuOrange.buildSettlementAtSetup(
-            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+            anchorPane, circleOptionsAtSetup(anchorPane));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuOrange.buildRoadAtSetup(anchorPane, cpuCircleId);
@@ -123,7 +124,7 @@ public class GameBoardSetupHelper {
     // Green --------------------------------------------------------------------
     cpuCircleId =
         cpuGreen.buildSettlementAtSetup(
-            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+            anchorPane, circleOptionsAtSetup(anchorPane));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuGreen.buildRoadAtSetup(anchorPane, cpuCircleId);
@@ -132,7 +133,7 @@ public class GameBoardSetupHelper {
     // Pink --------------------------------------------------------------------
     cpuCircleId =
         cpuPink.buildSettlementAtSetup(
-            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+            anchorPane, circleOptionsAtSetup(anchorPane));
     occupiedCircles.add(cpuCircleId);
 
     cpuRectangleId = cpuPink.buildRoadAtSetup(anchorPane, cpuCircleId);
@@ -141,7 +142,7 @@ public class GameBoardSetupHelper {
     // Pink AGAIN --------------------------------------------------------------------
     cpuCircleId =
         cpuPink.buildSettlementAtSetup(
-            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+            anchorPane, circleOptionsAtSetup(anchorPane));
     occupiedCircles.add(cpuCircleId);
     setResourceAtSetup(anchorPane, cpuPink, cpuCircleId);
 
@@ -151,7 +152,7 @@ public class GameBoardSetupHelper {
     // Green AGAIN --------------------------------------------------------------------
     cpuCircleId =
         cpuGreen.buildSettlementAtSetup(
-            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+            anchorPane, circleOptionsAtSetup(anchorPane));
     occupiedCircles.add(cpuCircleId);
     setResourceAtSetup(anchorPane, cpuGreen, cpuCircleId);
 
@@ -161,7 +162,7 @@ public class GameBoardSetupHelper {
     // Orange AGAIN --------------------------------------------------------------------
     cpuCircleId =
         cpuOrange.buildSettlementAtSetup(
-            anchorPane, circleOptionsAtSetup(anchorPane, occupiedCircles));
+            anchorPane, circleOptionsAtSetup(anchorPane));
     occupiedCircles.add(cpuCircleId);
     setResourceAtSetup(anchorPane, cpuOrange, cpuCircleId);
 

@@ -2,6 +2,7 @@ package com.group12.helper;
 
 import com.group12.model.CPUPlayer;
 import javafx.animation.RotateTransition;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -245,5 +246,51 @@ public class GameHelper {
     }
     optionalRoads.removeAll(occupiedEdges);
     return optionalRoads;
+  }
+
+  public static ArrayList<String> getOptionalSettlements(
+      AnchorPane anchorPane,
+      ArrayList<String> ownedEdges,
+      ArrayList<String> ownedCircles,
+      String color) {
+
+    ArrayList<String> optionalSettlements = new ArrayList<>();
+    ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
+
+    for (String edge : ownedEdges) {
+      String[] temp = edge.split("-");
+      if (!optionalSettlements.contains(temp[0])) {
+        optionalSettlements.add(temp[0]);
+      }
+      if (!optionalSettlements.contains(temp[1])) {
+        optionalSettlements.add(temp[1]);
+      }
+    }
+
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        String[] temp = node.getId().split("-");
+        if (occupiedCircles.contains(temp[0])) {
+          occupiedOptionalList.add(temp[1]);
+        } else if (occupiedCircles.contains(temp[1])) {
+          occupiedOptionalList.add(temp[0]);
+        }
+      }
+    }
+
+    optionalSettlements.removeAll(occupiedOptionalList);
+    return optionalSettlements;
+  }
+
+  public static void clearAllOptionals(AnchorPane anchorPane) {
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle") && !occupiedCircles.contains(node.getId())) {
+        node.setVisible(false);
+      }
+      if (node.getClass().getName().contains("Rectangle")
+          && !occupiedEdges.contains(node.getId())) {
+        node.setVisible(false);
+      }
+    }
   }
 }
