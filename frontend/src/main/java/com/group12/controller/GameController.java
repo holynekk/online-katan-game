@@ -22,8 +22,7 @@ import java.util.List;
 
 import static com.group12.helper.GameBoardSetupHelper.*;
 import static com.group12.helper.GameHelper.*;
-import static com.group12.helper.MediaHelper.diceEffect;
-import static com.group12.helper.MediaHelper.playSoundEffect;
+import static com.group12.helper.MediaHelper.*;
 
 @Component
 public class GameController {
@@ -89,11 +88,11 @@ public class GameController {
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
     turn = 0;
-    hillResource = 10;
-    mountainResource = 10;
-    forestResource = 10;
-    fieldResource = 10;
-    pastureFieldResource = 10;
+    hillResource = 0;
+    mountainResource = 0;
+    forestResource = 0;
+    fieldResource = 0;
+    pastureFieldResource = 0;
     tileTextList =
         new ArrayList<>(
             Arrays.asList(

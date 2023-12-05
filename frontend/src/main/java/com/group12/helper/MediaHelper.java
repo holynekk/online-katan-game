@@ -12,8 +12,9 @@ public class MediaHelper {
   public static MediaPlayer backgroundPlayer;
   public static MediaPlayer effectsPlayer;
 
-  public static final String backgroundMusic = "aeo2_menu.mp3";
+  public static final String menuBackgroundMusic = "aeo2_menu.mp3";
   public static final String diceEffect = "dice_roll.mp3";
+  public static final String buttonSound = "button_sound.mp3";
 
   public MediaHelper() throws URISyntaxException {
     Media sound = null;
@@ -21,7 +22,7 @@ public class MediaHelper {
     try {
       sound =
           new Media(
-              getClass().getResource("../../../sounds/" + backgroundMusic).toURI().toString());
+              getClass().getResource("../../../sounds/" + menuBackgroundMusic).toURI().toString());
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
@@ -45,11 +46,7 @@ public class MediaHelper {
     Media sound = null;
     try {
       sound =
-          new Media(
-              MediaHelper.class
-                  .getResource("../../../sounds/" + effect)
-                  .toURI()
-                  .toString());
+          new Media(MediaHelper.class.getResource("../../../sounds/" + effect).toURI().toString());
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }

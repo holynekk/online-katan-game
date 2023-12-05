@@ -11,41 +11,48 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LoginController">
-   <top>
-      <Label text="KATAN" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="58.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LoginController">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" maxWidth="250.0" prefHeight="400.0" prefWidth="439.0" styleClass="auth-background" stylesheets="@../styles.css" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #404040; -fx-border-width: 0px 0px 2px 0px;">
+            <Label text="KATAN" textFill="#eedb09">
+               <font>
+                  <Font name="Likhan" size="54.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="200.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="username" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #404040; -fx-border-width: 0px 0px 2px 0px;">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></TextField>
-            <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #404040; -fx-border-width: 0px 0px 2px 0px;">
+            <PasswordField fx:id="password" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #404040; -fx-border-width: 0px 0px 2px 0px;">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin></PasswordField>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #404040; -fx-background-radius: 0px;" text="Login" textFill="WHITE">
+            <Button fx:id="loginButton" focusTraversable="false" mnemonicParsing="false" onAction="#login" styleClass="auth-button" text="Login" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
+               <font>
+                  <Font name="Likhan" size="13.0" />
+               </font>
             </Button>
-            <Text onMouseClicked="#showRegisterScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? Register">
+            <Text fill="WHITE" onMouseClicked="#showRegisterScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? Register">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
          </children>
+         <BorderPane.margin>
+            <Insets left="-300.0" />
+         </BorderPane.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </VBox>
    </center>
 </BorderPane>

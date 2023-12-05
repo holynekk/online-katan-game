@@ -8,15 +8,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
+
+import static com.group12.helper.MediaHelper.buttonSound;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class LoginController {
@@ -27,16 +33,27 @@ public class LoginController {
 
   @FXML private Button loginButton;
 
+  @FXML private BorderPane borderpn;
+
   Window window;
 
-  public void initialize() {
-
+  public void initialize() throws URISyntaxException {
+    Image image =
+        new Image(getClass().getResource("../../../assets/menu_background.jpg").toURI().toString());
+    BackgroundImage backgroundImage =
+        new BackgroundImage(
+            image,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(100, 100, true, true, true, true));
+    Background bg = new Background(backgroundImage);
+    borderpn.setBackground(bg);
   }
-
 
   @FXML
   private void login() throws Exception {
-
+    playSoundEffect(buttonSound);
     if (this.isValid()) {
 
       String valueToEncode = username.getText() + ":" + password.getText();
@@ -55,10 +72,9 @@ public class LoginController {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "You successfully logged in!");
         HttpClientHelper.addNewSessionCookie("X-CSRF", response.body());
+        HttpClientHelper.addNewSessionCookie("username", username.getText());
         HttpClientHelper.addNewSessionCookie(
-            "username", username.getText());
-        HttpClientHelper.addNewSessionCookie(
-                "userId", response.headers().allValues("userId").get(0));
+            "userId", response.headers().allValues("userId").get(0));
         this.showMenuScene();
       } else if (response.statusCode() == 400) {
         NotificationHelper.showAlert(

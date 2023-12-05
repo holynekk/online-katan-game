@@ -21,3 +21,26 @@
 .pastureField {
     -fx-fill: #E8E4C9;
 }
+
+.auth-background {
+    -fx-text-inner-color: white;
+    -fx-background-color: rgba(0,0,0, 0.8);
+    -fx-border-color: yellow ;
+    -fx-border-width: 0 1 0 1;
+}
+
+.auth-button {
+    -fx-background-color: red;
+    -fx-border-color: yellow;
+    -fx-text-fill: yellow;
+    -fx-border-width: 1;
+    -fx-pref-width: 100px;
+}
+
+.menu-button {
+    -fx-background-color: red;
+    -fx-border-color: yellow;
+    -fx-text-fill: yellow;
+    -fx-border-width: 1;
+    -fx-pref-width: 150px;
+}
