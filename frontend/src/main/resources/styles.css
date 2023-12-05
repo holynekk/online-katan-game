@@ -30,17 +30,25 @@
 }
 
 .auth-button {
-    -fx-background-color: red;
+    -fx-background-color: rgb(256, 0, 0);
     -fx-border-color: yellow;
     -fx-text-fill: yellow;
     -fx-border-width: 1;
     -fx-pref-width: 100px;
 }
 
+.auth-button:hover {
+    -fx-background-color: rgb(200, 0, 0);
+}
+
 .menu-button {
-    -fx-background-color: red;
+    -fx-background-color: rgb(256, 0, 0);
     -fx-border-color: yellow;
     -fx-text-fill: yellow;
     -fx-border-width: 1;
     -fx-pref-width: 150px;
+}
+
+.menu-button:hover {
+    -fx-background-color: rgb(200, 0, 0);
 }

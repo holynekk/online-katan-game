@@ -8,15 +8,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.MediaHelper.buttonSound;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class GameCreationController {
@@ -37,8 +44,15 @@ public class GameCreationController {
 
   @FXML private TextField passwordText;
 
+  @FXML private BorderPane borderpn;
+
+  public void initialize() throws URISyntaxException {
+    setTheBackground(borderpn, parchmentBackgroundImage);
+  }
+
   @FXML
   public void createGame() throws IOException, InterruptedException {
+    playSoundEffect(buttonSound);
     RadioButton cpuOrOnlineButton = (RadioButton) cpuOrOnline.getSelectedToggle();
     RadioButton passwordRequiredButton = (RadioButton) passwordRequired.getSelectedToggle();
     if (cpuOrOnlineButton.getText().equals("CPU")) {
@@ -92,6 +106,7 @@ public class GameCreationController {
 
   @FXML
   public void backToLobby() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/lobbyView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);

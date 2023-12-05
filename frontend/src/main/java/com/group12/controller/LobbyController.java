@@ -11,14 +11,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+
+import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.MediaHelper.buttonSound;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class LobbyController {
@@ -37,7 +44,11 @@ public class LobbyController {
 
   @FXML private ListView<GameData> lobbyListView;
 
-  public void initialize() throws IOException, InterruptedException {
+  @FXML private BorderPane borderpn;
+
+  public void initialize() throws IOException, InterruptedException, URISyntaxException {
+    setTheBackground(borderpn, parchmentBackgroundImage);
+
     ObjectMapper objectMapper = new ObjectMapper();
     HttpRequest request =
         HttpRequest.newBuilder()
@@ -63,6 +74,7 @@ public class LobbyController {
 
   @FXML
   public void handleClickListView() {
+    playSoundEffect(buttonSound);
     GameData gameData = lobbyListView.getSelectionModel().getSelectedItem();
     lobbyIdLabel.setText(Integer.toString(gameData.getGameId()));
     lobbyNameLabel.setText(gameData.getGameName());
@@ -72,6 +84,7 @@ public class LobbyController {
 
   @FXML
   public void showLeaderboard() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/leaderboardView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
@@ -81,6 +94,7 @@ public class LobbyController {
 
   @FXML
   public void showGameCreation() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/gameCreationView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
@@ -90,6 +104,7 @@ public class LobbyController {
 
   @FXML
   public void backToMenu() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);

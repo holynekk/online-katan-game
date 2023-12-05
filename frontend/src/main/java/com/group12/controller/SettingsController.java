@@ -7,12 +7,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
-import static com.group12.helper.MediaHelper.backgroundPlayer;
+import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.MediaHelper.*;
 
 @Component
 public class SettingsController {
@@ -21,7 +25,9 @@ public class SettingsController {
 
   @FXML private Slider backgroundMusicSlider;
 
-  public void initialize() {
+  @FXML private BorderPane borderpn;
+
+  public void initialize() throws URISyntaxException {
     backgroundMusicSlider.setValue(backgroundPlayer.getVolume() * 100);
     backgroundMusicSlider
         .valueProperty()
@@ -29,13 +35,15 @@ public class SettingsController {
             new InvalidationListener() {
               @Override
               public void invalidated(Observable observable) {
-                  backgroundPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
+                backgroundPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
               }
             });
+    setTheBackground(borderpn, parchmentBackgroundImage);
   }
 
   @FXML
   private void backToMenu() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);

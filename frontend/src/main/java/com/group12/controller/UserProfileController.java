@@ -12,14 +12,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+
+import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.MediaHelper.buttonSound;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class UserProfileController {
@@ -46,7 +56,17 @@ public class UserProfileController {
 
   @FXML TableView<GameHistoryModel> gameHistoryTableView;
 
-  public void initialize() throws IOException, InterruptedException {
+  @FXML private BorderPane borderpn;
+
+  @FXML private ImageView userProfileImage;
+
+  public void initialize() throws IOException, InterruptedException, URISyntaxException {
+    setTheBackground(borderpn, parchmentBackgroundImage);
+    File file = new File("src/main/resources/assets/villager.png");
+    userProfileImage.setImage(new Image(file.toURI().toString()));
+    userProfileImage.setFitHeight(100);
+    userProfileImage.setFitWidth(100);
+
     ObjectMapper objectMapper = new ObjectMapper();
 
     HttpRequest request =
@@ -105,6 +125,7 @@ public class UserProfileController {
 
   @FXML
   public void backToMenu() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);

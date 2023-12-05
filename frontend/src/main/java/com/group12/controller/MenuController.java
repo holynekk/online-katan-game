@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
@@ -21,6 +20,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static com.group12.helper.BackgroundHelper.menuBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
@@ -44,17 +45,7 @@ public class MenuController {
 
   public void initialize() throws URISyntaxException {
     userProfileButton.setText(getSessionCookie("username"));
-    Image image =
-        new Image(getClass().getResource("../../../assets/menu_background.jpg").toURI().toString());
-    BackgroundImage backgroundImage =
-        new BackgroundImage(
-            image,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundPosition.CENTER,
-            new BackgroundSize(100, 100, true, true, true, true));
-    Background bg = new Background(backgroundImage);
-    borderpn.setBackground(bg);
+    setTheBackground(borderpn, menuBackgroundImage);
   }
 
   @FXML

@@ -13,16 +13,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameCreationController">
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameCreationController">
    <top>
       <AnchorPane maxHeight="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" text="New Game" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label alignment="CENTER" text="New Game" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
                <font>
-                  <Font size="58.0" />
+                  <Font size="54.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToLobby" text="&lt;" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0">
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToLobby" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -31,100 +31,115 @@
       </AnchorPane>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Against CPU or Online?">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="cpuToggleButton" mnemonicParsing="false" selected="true" text="CPU">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="cpuOrOnline" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton disable="true" mnemonicParsing="false" text="Online" toggleGroup="$cpuOrOnline">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </RadioButton>
+                  <VBox prefHeight="200.0" prefWidth="250.0" spacing="20.0">
+                     <children>
+                        <Label text="Against CPU or Online?">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Lobby Name: ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Lobby Description: ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Password Required?">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="passwordLabel" disable="true" text="Password: ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="250.0" spacing="20.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton fx:id="cpuToggleButton" focusTraversable="false" mnemonicParsing="false" selected="true" text="CPU">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="cpuOrOnline" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton disable="true" focusTraversable="false" mnemonicParsing="false" text="Online" toggleGroup="$cpuOrOnline">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="lobbyNameText" focusTraversable="false" />
+                        <TextField fx:id="lobbyDescriptionText" focusTraversable="false" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton focusTraversable="false" mnemonicParsing="false" onAction="#passwordRequiredAction" text="Yes">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="passwordRequired" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton focusTraversable="false" mnemonicParsing="false" onAction="#passwordRequiredAction" selected="true" text="No" toggleGroup="$passwordRequired">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="passwordText" disable="true" focusTraversable="false" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-               <children>
-                  <Label text="Lobby Name: ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="lobbyNameText" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-               <children>
-                  <Label text="Lobby Description: ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="lobbyDescriptionText" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-               <children>
-                  <Label text="Password Required?">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <RadioButton mnemonicParsing="false" onAction="#passwordRequiredAction" text="Yes">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="passwordRequired" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" onAction="#passwordRequiredAction" selected="true" text="No" toggleGroup="$passwordRequired">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </RadioButton>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="passwordLabel" disable="true" text="Password: ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="passwordText" disable="true" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="createButton" mnemonicParsing="false" onAction="#createGame" text="Create" />
-               </children>
-            </HBox>
+            <Button fx:id="createButton" focusTraversable="false" mnemonicParsing="false" onAction="#createGame" text="Create">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Button>
          </children>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
       </VBox>
    </center>
 </BorderPane>

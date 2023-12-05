@@ -5,26 +5,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group12.helper.HttpClientHelper;
 import com.group12.model.ScoreData;
 import com.group12.model.ScoreModel;
-import com.sun.jdi.PrimitiveValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+
+import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.MediaHelper.buttonSound;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class LeaderboardController {
@@ -41,11 +45,13 @@ public class LeaderboardController {
 
   @FXML MenuButton timeInterval;
 
+  @FXML private BorderPane borderpn;
+
   private String tmInterval;
 
   private ObservableList<ScoreModel> scores;
 
-  public void initialize() throws IOException, InterruptedException {
+  public void initialize() throws IOException, InterruptedException, URISyntaxException {
     tmInterval = "All";
     displayNameColumn.setCellValueFactory(
         new PropertyValueFactory<ScoreModel, String>("displayName"));
@@ -53,10 +59,12 @@ public class LeaderboardController {
     totalScoreColumn.setCellValueFactory(
         new PropertyValueFactory<ScoreModel, Integer>("totalScore"));
     populateTable();
+    setTheBackground(borderpn, parchmentBackgroundImage);
   }
 
   @FXML
   public void backToMenu() throws IOException {
+    playSoundEffect(buttonSound);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
@@ -66,6 +74,7 @@ public class LeaderboardController {
 
   @FXML
   public void changeTimeInterval(ActionEvent event) throws IOException, InterruptedException {
+    playSoundEffect(buttonSound);
     final MenuItem source = (MenuItem) event.getSource();
     timeInterval.setText(source.getText());
     tmInterval = source.getText().toLowerCase();

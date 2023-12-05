@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -18,14 +17,14 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.group12.helper.MediaHelper.buttonSound;
-import static com.group12.helper.MediaHelper.playSoundEffect;
+import static com.group12.helper.BackgroundHelper.menuBackgroundImage;
+import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.MediaHelper.*;
 
 @Component
 public class RegisterController {
@@ -47,17 +46,7 @@ public class RegisterController {
   Window window;
 
   public void initialize() throws URISyntaxException {
-    Image image =
-        new Image(getClass().getResource("../../../assets/menu_background.jpg").toURI().toString());
-    BackgroundImage backgroundImage =
-        new BackgroundImage(
-            image,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundPosition.CENTER,
-            new BackgroundSize(100, 100, true, true, true, true));
-    Background bg = new Background(backgroundImage);
-    borderpn.setBackground(bg);
+    setTheBackground(borderpn, menuBackgroundImage);
   }
 
   @FXML
