@@ -59,7 +59,12 @@ public class UserApi {
 
     if (repository.findByUsername(encryptedUsername).isPresent()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body("User with username " + userRequest.getUsername() + " already exists.");
+          .body("User with username '" + userRequest.getUsername() + "' already exists.");
+    }
+
+    if (repository.findByEmail(userRequest.getEmail()).isPresent()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body("User with email '" + userRequest.getEmail() + "' already exists.");
     }
 
     User user = new User();
