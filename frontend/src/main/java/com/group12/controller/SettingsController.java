@@ -25,6 +25,8 @@ public class SettingsController {
 
   @FXML private Slider backgroundMusicSlider;
 
+  @FXML private Slider effectsMusicSlider;
+
   @FXML private BorderPane borderpn;
 
   public void initialize() throws URISyntaxException {
@@ -36,6 +38,16 @@ public class SettingsController {
               @Override
               public void invalidated(Observable observable) {
                 backgroundPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
+              }
+            });
+    effectsMusicSlider.setValue(effectVolume);
+    effectsMusicSlider
+        .valueProperty()
+        .addListener(
+            new InvalidationListener() {
+              @Override
+              public void invalidated(Observable observable) {
+                effectVolume = effectsMusicSlider.getValue();
               }
             });
     setTheBackground(borderpn, parchmentBackgroundImage);

@@ -7,12 +7,16 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.group12.controller.GameController.occupiedCircles;
+import static com.group12.controller.GameController.occupiedEdges;
+
 public class CPUPlayer {
   private String color;
 
   public String displayName;
 
   private ArrayList<String> ownedCircles;
+  private ArrayList<String> ownedCities;
   private ArrayList<String> ownedRoads;
 
   private int hillResource;
@@ -21,20 +25,81 @@ public class CPUPlayer {
   private int fieldResource;
   private int pastureFieldResource;
 
-  public CPUPlayer(
-      String color,
-      String displayName,
-      ArrayList<String> ownedCircles,
-      ArrayList<String> ownedRoads) {
+  private int score;
+
+  public CPUPlayer(String color, String displayName) {
     this.displayName = displayName;
     this.color = color;
-    this.ownedCircles = ownedCircles;
-    this.ownedRoads = ownedRoads;
-    this.hillResource = 0;
-    this.mountainResource = 0;
-    this.forestResource = 0;
-    this.fieldResource = 0;
-    this.pastureFieldResource = 0;
+    this.ownedCircles = new ArrayList<>();
+    this.ownedCities = new ArrayList<>();
+    this.ownedRoads = new ArrayList<>();
+    this.hillResource = 20;
+    this.mountainResource = 20;
+    this.forestResource = 20;
+    this.fieldResource = 20;
+    this.pastureFieldResource = 20;
+    this.score = 0;
+  }
+
+  public void buildRoad(AnchorPane anchorPane, String roadId) {
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")
+          && !occupiedEdges.contains(node.getId())) {
+        if (node.getId().equals(roadId)) {
+          node.setStyle(String.format("-fx-fill: %s;", this.color));
+          node.setOnMouseClicked(null);
+          node.setVisible(true);
+          node.setCursor(Cursor.DEFAULT);
+        } else {
+          node.setVisible(false);
+        }
+      }
+    }
+    this.hillResource--;
+    this.forestResource--;
+    occupiedEdges.add(roadId);
+    this.addOwnedRoads(roadId);
+  }
+
+  public void buildSettlement(AnchorPane anchorPane, String settlementId) {
+    System.out.println("bumbum");
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle") && !occupiedCircles.contains(node.getId())) {
+        if (node.getId().equals(settlementId)) {
+          node.setStyle(String.format("-fx-fill: %s;", this.color));
+          node.setOnMouseClicked(null);
+          node.setVisible(true);
+          node.setCursor(Cursor.DEFAULT);
+        } else {
+          node.setVisible(false);
+        }
+      }
+    }
+    this.hillResource--;
+    this.forestResource--;
+    this.fieldResource--;
+    this.pastureFieldResource--;
+    occupiedCircles.add(settlementId);
+    this.increaseScore(1);
+    ownedCircles.add(settlementId);
+  }
+
+  public void upgradeToCity(AnchorPane anchorPane) {
+    ArrayList<String> optionalUpgrades = new ArrayList<>(this.getOwnedCircles());
+    optionalUpgrades.removeAll(this.getOwnedCities());
+    Random rnd = new Random();
+    if (!optionalUpgrades.isEmpty()) {
+      for (Node node : anchorPane.getChildren()) {
+        if (node.getClass().getName().contains("Circle")
+            && node.getId().equals(optionalUpgrades.get(rnd.nextInt(optionalUpgrades.size())))) {
+          node.setScaleX(1.3);
+          node.setScaleY(1.3);
+          this.ownedCities.add(node.getId());
+          this.increaseScore(1);
+          break;
+        }
+      }
+    }
   }
 
   public String buildSettlementAtSetup(
@@ -49,8 +114,6 @@ public class CPUPlayer {
           node.setStyle(String.format("-fx-fill: %s;", this.color));
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
-          node.setScaleX(1.3);
-          node.setScaleY(1.3);
           addOwnedCircles(circleId);
         }
       }
@@ -140,6 +203,14 @@ public class CPUPlayer {
     this.pastureFieldResource -= pastureFieldResource;
   }
 
+  public void increaseScore(int num) {
+    this.score += num;
+  }
+
+  public int getScore() {
+    return score;
+  }
+
   public int getHillResource() {
     return hillResource;
   }
@@ -166,6 +237,14 @@ public class CPUPlayer {
 
   public void addOwnedCircles(String circleId) {
     this.ownedCircles.add(circleId);
+  }
+
+  public ArrayList<String> getOwnedCities() {
+    return ownedCities;
+  }
+
+  public void setOwnedCities(ArrayList<String> ownedCities) {
+    this.ownedCities = ownedCities;
   }
 
   public ArrayList<String> getOwnedRoads() {

@@ -11,12 +11,15 @@ import java.net.URISyntaxException;
 public class MediaHelper {
   public static MediaPlayer backgroundPlayer;
   public static MediaPlayer effectsPlayer;
+  public static double effectVolume;
 
   public static final String menuBackgroundMusic = "aeo2_menu.mp3";
   public static final String diceEffect = "dice_roll.mp3";
   public static final String buttonSound = "button_sound.mp3";
 
   public MediaHelper() throws URISyntaxException {
+    effectVolume = 100;
+
     Media sound = null;
 
     try {
@@ -38,10 +41,6 @@ public class MediaHelper {
     backgroundPlayer.play();
   }
 
-  public static void setBackgroundVolume(double volume) {
-    backgroundPlayer.setVolume(volume);
-  }
-
   public static void playSoundEffect(String effect) {
     Media sound = null;
     try {
@@ -51,7 +50,7 @@ public class MediaHelper {
       e.printStackTrace();
     }
     effectsPlayer = new MediaPlayer(sound);
-    effectsPlayer.setVolume(1);
+    effectsPlayer.setVolume(effectVolume / 100);
     effectsPlayer.play();
   }
 }

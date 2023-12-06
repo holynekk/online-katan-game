@@ -76,6 +76,8 @@ public class RegisterController {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "New user has been created!");
         showLoginScene();
+      } else if (response.statusCode() == 400) {
+        NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Error", response.body());
       }
     }
   }
