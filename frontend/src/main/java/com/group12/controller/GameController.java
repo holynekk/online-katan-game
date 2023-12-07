@@ -60,6 +60,33 @@ public class GameController {
   @FXML private Button settlementBuildButton;
   @FXML private Button settlementUpgradeButton;
 
+  @FXML private Text player1Name;
+  @FXML private Text player2Name;
+  @FXML private Text player3Name;
+  @FXML private Text player4Name;
+
+  @FXML private Text player1LongestRoad;
+  @FXML private Text player2LongestRoad;
+  @FXML private Text player3LongestRoad;
+  @FXML private Text player4LongestRoad;
+
+  @FXML private Text player1TotalResources;
+  @FXML private Text player2TotalResources;
+  @FXML private Text player3TotalResources;
+  @FXML private Text player4TotalResources;
+
+  @FXML private Text player1Score;
+  @FXML private Text player2Score;
+  @FXML private Text player3Score;
+  @FXML private Text player4Score;
+
+  @FXML private Text woolText;
+  @FXML private Text oreText;
+  @FXML private Text grainText;
+  @FXML private Text brickText;
+  @FXML private Text lumberText;
+
+  private ArrayList<Text> panelTextList;
   private int turn;
   public static int d1;
   public static int d2;
@@ -70,6 +97,7 @@ public class GameController {
   public static int forestResource;
   public static int fieldResource;
   public static int pastureFieldResource;
+  public static int totalResources;
 
   public static CPUPlayer cpuOrange;
   public static CPUPlayer cpuGreen;
@@ -93,6 +121,28 @@ public class GameController {
     forestResource = 0;
     fieldResource = 0;
     pastureFieldResource = 0;
+    totalResources = 0;
+    panelTextList = //All User Panel Texts, except names
+        new ArrayList<>(
+            Arrays.asList(
+                woolText,
+                oreText,
+                grainText,
+                brickText,
+                lumberText,
+                player1LongestRoad,
+                player2LongestRoad,
+                player3LongestRoad,
+                player4LongestRoad,
+                player1TotalResources,
+                player2TotalResources,
+                player3TotalResources,
+                player4TotalResources,
+                player1Score,
+                player2Score,
+                player3Score,
+                player4Score));
+    initalizeUserPanel();
     tileTextList =
         new ArrayList<>(
             Arrays.asList(
@@ -202,9 +252,13 @@ public class GameController {
   public void skipTurn() {
     isThrown = false;
     skipTurnButton.setDisable(true);
+    //
     CPUPlays(anchPane, cpuOrange, ownedCircles);
+    //set texts
     CPUPlays(anchPane, cpuGreen, ownedCircles);
+
     CPUPlays(anchPane, cpuPink, ownedCircles);
+
     firstDiceImage.setDisable(false);
     secondDiceImage.setDisable(false);
     roadBuildButton.setDisable(true);
@@ -272,16 +326,23 @@ public class GameController {
       for (Node node : anchPane.getChildren()) {
         if (node.getClass().getName().contains("Polygon") && node.getId().equals(rsrc)) {
           styleList = node.getStyleClass();
+          totalResources += 1;
+          //set corresponding player resources panel text.
           if (styleList.contains("hill")) {
             hillResource += 1;
+            brickText.setText(Integer.toString(hillResource));
           } else if (styleList.contains("mountain")) {
             mountainResource += 1;
+            oreText.setText(Integer.toString(mountainResource));
           } else if (styleList.contains("forest")) {
             forestResource += 1;
+            lumberText.setText(Integer.toString(forestResource));
           } else if (styleList.contains("field")) {
             fieldResource += 1;
+            grainText.setText(Integer.toString(fieldResource));
           } else if (styleList.contains("pastureField")) {
             pastureFieldResource += 1;
+            woolText.setText(Integer.toString(pastureFieldResource));
           }
         }
       }
@@ -365,13 +426,16 @@ public class GameController {
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
+          //calculate longest road and write to panel
         } else {
           node.setVisible(false);
         }
       }
     }
     hillResource--;
+    brickText.setText(Integer.toString(hillResource));
     forestResource--;
+    lumberText.setText(Integer.toString(forestResource));
     occupiedEdges.add(roadId);
     ownedEdges.add(roadId);
     NotificationHelper.showAlert(
@@ -398,9 +462,13 @@ public class GameController {
       }
     }
     hillResource--;
+    brickText.setText(Integer.toString(hillResource));
     forestResource--;
+    lumberText.setText(Integer.toString(forestResource));
     fieldResource--;
+    grainText.setText(Integer.toString(fieldResource));
     pastureFieldResource--;
+    woolText.setText(Integer.toString(pastureFieldResource));
     occupiedCircles.add(settlementId);
     ownedCircles.add(settlementId);
     NotificationHelper.showAlert(
@@ -411,11 +479,20 @@ public class GameController {
   }
 
   @FXML
-  public void upgradeRSettlement() {}
+  public void upgradeRSettlement() {
+
+  }
 
   @FXML
   public void hexagonPush(MouseEvent event) {
     Node node = (Polygon) event.getSource();
     System.out.println(node.getId() + ": " + node.getStyleClass());
+  }
+
+  @FXML
+  public void initalizeUserPanel() {
+    for (Text text : panelTextList) {
+      text.setText("0");
+    }
   }
 }
