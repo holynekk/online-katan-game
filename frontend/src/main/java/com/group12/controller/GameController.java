@@ -91,6 +91,7 @@ public class GameController {
   public static int d1;
   public static int d2;
   private boolean isThrown;
+  public int score;
 
   public static int hillResource;
   public static int mountainResource;
@@ -109,6 +110,7 @@ public class GameController {
   public static ArrayList<String> occupiedEdges = new ArrayList<>();
 
   private ArrayList<String> ownedCircles = new ArrayList<>();
+  private ArrayList<String> ownedCities = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
   public void initialize() {
@@ -171,9 +173,9 @@ public class GameController {
     ownedEdges.add(rectangleId);
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
-    cpuOrange = new CPUPlayer("orange", "Orange Guy", new ArrayList<>(), new ArrayList<>());
-    cpuGreen = new CPUPlayer("green", "Green Guy", new ArrayList<>(), new ArrayList<>());
-    cpuPink = new CPUPlayer("pink", "Pink Guy", new ArrayList<>(), new ArrayList<>());
+    cpuOrange = new CPUPlayer("orange", "Orange Guy");
+    cpuGreen = new CPUPlayer("green", "Green Guy");
+    cpuPink = new CPUPlayer("pink", "Pink Guy");
 
     CPUSetup(anchPane, cpuOrange, cpuGreen, cpuPink, occupiedCircles, occupiedEdges);
 
@@ -217,8 +219,8 @@ public class GameController {
 
   @FXML
   public void showOptionalRoads() {
-    clearAllOptionals(anchPane);
-    ArrayList<String> optionalRoads = getOptionalRoads(anchPane, ownedEdges, ownedCircles);
+    clearAllOptionals(anchPane, ownedCircles, ownedCities);
+    ArrayList<String> optionalRoads = getOptionalRoads(anchPane, ownedEdges);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
         if (optionalRoads.contains(node.getId())) {
@@ -230,9 +232,8 @@ public class GameController {
 
   @FXML
   public void showOptionalSettlements() {
-    clearAllOptionals(anchPane);
-    ArrayList<String> optionalSettlements =
-        getOptionalSettlements(anchPane, ownedEdges, ownedCircles, "red");
+    clearAllOptionals(anchPane, ownedCircles, ownedCities);
+    ArrayList<String> optionalSettlements = getOptionalSettlements(anchPane, ownedEdges);
     System.out.println(optionalSettlements);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
@@ -245,7 +246,16 @@ public class GameController {
 
   @FXML
   public void showOptionalUpgrades() {
-    System.out.println("showOptionalUpgrades");
+    clearAllOptionals(anchPane, ownedCircles, ownedCities);
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle") && ownedCircles.contains(node.getId())) {
+        node.setScaleX(1.3);
+        node.setScaleY(1.3);
+        node.setStyle("-fx-fill: #D3D3D3;");
+        node.setOnMouseClicked(this::upgradeToCity);
+        node.setCursor(Cursor.HAND);
+      }
+    }
   }
 
   @FXML
@@ -264,7 +274,7 @@ public class GameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
-    clearAllOptionals(anchPane);
+    clearAllOptionals(anchPane, ownedCircles, ownedCities);
   }
 
   @FXML
@@ -281,8 +291,6 @@ public class GameController {
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
-          node.setScaleX(1.3);
-          node.setScaleY(1.3);
         }
       }
     }
@@ -314,8 +322,6 @@ public class GameController {
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
-          node.setScaleX(1.3);
-          node.setScaleY(1.3);
         }
       }
     }
@@ -479,8 +485,29 @@ public class GameController {
   }
 
   @FXML
-  public void upgradeRSettlement() {
+  public void upgradeToCity(MouseEvent event) {
+    Circle settlement = (Circle) event.getSource();
+    String settlementId = settlement.getId();
 
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle") && ownedCircles.contains(node.getId())) {
+        node.setStyle("-fx-fill: red;");
+        node.setOnMouseClicked(null);
+        node.setCursor(Cursor.DEFAULT);
+        if (!node.getId().equals(settlementId)) {
+          node.setScaleX(1);
+          node.setScaleY(1);
+        }
+      }
+    }
+    fieldResource -= 2;
+    mountainResource -= 3;
+    ownedCities.add(settlementId);
+    NotificationHelper.showAlert(
+        Alert.AlertType.INFORMATION, "Information", "You have upgraded your settlement to a city!");
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
   }
 
   @FXML

@@ -2,7 +2,6 @@ package com.group12.helper;
 
 import com.group12.model.CPUPlayer;
 import javafx.animation.RotateTransition;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -186,25 +185,37 @@ public class GameHelper {
     System.out.println(cpuPlayer.getDisplayName() + " plays!");
     diceThrowResourceGather(anchorPane, ownedCircles);
 
+    Random rnd = new Random();
     if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
-      System.out.println(cpuPlayer.getDisplayName() + " can build a road!");
+      ArrayList<String> buildableRoads = getOptionalRoads(anchorPane, cpuPlayer.getOwnedRoads());
+      if (!buildableRoads.isEmpty()) {
+        cpuPlayer.buildRoad(anchorPane, buildableRoads.get(rnd.nextInt(buildableRoads.size())));
+      }
     } else if (cpuPlayer.getHillResource() >= 1
         && cpuPlayer.getForestResource() >= 1
         && cpuPlayer.getFieldResource() >= 1
         && cpuPlayer.getPastureFieldResource() >= 1) {
-      System.out.println(cpuPlayer.getDisplayName() + " can build a settlement!");
+      ArrayList<String> buildableSettlements =
+          getOptionalSettlements(anchorPane, cpuPlayer.getOwnedRoads());
+      if (!buildableSettlements.isEmpty()) {
+        cpuPlayer.buildSettlement(
+            anchorPane, buildableSettlements.get(rnd.nextInt(buildableSettlements.size())));
+      }
     } else if (cpuPlayer.getFieldResource() >= 2 && cpuPlayer.getMountainResource() >= 3) {
-      System.out.println(cpuPlayer.getDisplayName() + " can upgrade a settlement to a city!");
+      cpuPlayer.upgradeToCity(anchorPane);
     }
   }
 
   public static void diceThrowResourceGather(AnchorPane anchorPane, List<String> ownedCircles) {
     // Share resources
-    gatherNewResourcesPlayer(anchorPane, tileTextList, ownedCircles, d1 + d2);
-    gatherNewResourcesCPU(
-        anchorPane, cpuOrange, tileTextList, cpuOrange.getOwnedCircles(), d1 + d2);
-    gatherNewResourcesCPU(anchorPane, cpuGreen, tileTextList, cpuGreen.getOwnedCircles(), d1 + d2);
-    gatherNewResourcesCPU(anchorPane, cpuPink, tileTextList, cpuPink.getOwnedCircles(), d1 + d2);
+    if (d1 + d2 != 7) {
+      gatherNewResourcesPlayer(anchorPane, tileTextList, ownedCircles, d1 + d2);
+      gatherNewResourcesCPU(
+          anchorPane, cpuOrange, tileTextList, cpuOrange.getOwnedCircles(), d1 + d2);
+      gatherNewResourcesCPU(
+          anchorPane, cpuGreen, tileTextList, cpuGreen.getOwnedCircles(), d1 + d2);
+      gatherNewResourcesCPU(anchorPane, cpuPink, tileTextList, cpuPink.getOwnedCircles(), d1 + d2);
+    }
   }
 
   public static int rollDice(ImageView diceImage) {
@@ -221,7 +232,7 @@ public class GameHelper {
   }
 
   public static ArrayList<String> getOptionalRoads(
-      AnchorPane anchorPane, ArrayList<String> ownedEdges, ArrayList<String> ownedCircles) {
+      AnchorPane anchorPane, ArrayList<String> ownedEdges) {
     ArrayList<String> optionalRoads = new ArrayList<>();
 
     ArrayList<String> circles = new ArrayList<>();
@@ -249,10 +260,7 @@ public class GameHelper {
   }
 
   public static ArrayList<String> getOptionalSettlements(
-      AnchorPane anchorPane,
-      ArrayList<String> ownedEdges,
-      ArrayList<String> ownedCircles,
-      String color) {
+      AnchorPane anchorPane, ArrayList<String> ownedEdges) {
 
     ArrayList<String> optionalSettlements = new ArrayList<>();
     ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
@@ -282,15 +290,26 @@ public class GameHelper {
     return optionalSettlements;
   }
 
-  public static void clearAllOptionals(AnchorPane anchorPane) {
+  public static void clearAllOptionals(AnchorPane anchorPane, ArrayList<String> ownedCircles, ArrayList<String> ownedCities) {
     for (Node node : anchorPane.getChildren()) {
-      if (node.getClass().getName().contains("Circle") && !occupiedCircles.contains(node.getId())) {
-        node.setVisible(false);
+      if (node.getClass().getName().contains("Circle")) {
+        if (!occupiedCircles.contains(node.getId())) {
+          node.setVisible(false);
+        }
+        if (ownedCircles.contains(node.getId()) && !ownedCities.contains(node.getId())) {
+          node.setScaleX(1);
+          node.setScaleY(1);
+          node.setStyle("-fx-fill: red;");
+        }
       }
       if (node.getClass().getName().contains("Rectangle")
           && !occupiedEdges.contains(node.getId())) {
         node.setVisible(false);
       }
     }
+  }
+
+  public void checkScores() {
+
   }
 }
