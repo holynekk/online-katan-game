@@ -320,4 +320,37 @@ public class GameHelper {
       }
     }
   }
+  public static int findLongestRoadLength(ArrayList<String> edges) {
+    int longestPath = 0;
+
+    for (int i = 1; i <= 54; i++) {
+      String node = "c" + i;
+      Set<String> visited = new HashSet<>();
+      int currentPathLength = dfs(node, visited, edges, 0);
+      longestPath = Math.max(longestPath, currentPathLength);
+    }
+    return longestPath;
+  }
+
+  private static int dfs(String node, Set<String> visited, ArrayList<String> edges, int pathLength) {
+    if (visited.contains(node)) {
+      return pathLength;
+    }
+
+    visited.add(node);
+    int maxLength = pathLength;
+
+    for (String edge : edges) {
+      String[] nodes = edge.split("-");
+      if (nodes[0].equals(node) && !visited.contains(nodes[1])) {
+        maxLength = Math.max(maxLength, dfs(nodes[1], visited, edges, pathLength + 1));
+      } else if (nodes[1].equals(node) && !visited.contains(nodes[0])) {
+        maxLength = Math.max(maxLength, dfs(nodes[0], visited, edges, pathLength + 1));
+      }
+    }
+
+    visited.remove(node); // Backtrack
+    return maxLength;
+  }
+  public void checkScores() {}
 }

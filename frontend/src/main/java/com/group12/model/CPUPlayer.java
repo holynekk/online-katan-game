@@ -6,7 +6,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+import com.group12.helper.GameHelper;
 import static com.group12.controller.GameController.occupiedCircles;
 import static com.group12.controller.GameController.occupiedEdges;
 
@@ -24,7 +24,8 @@ public class CPUPlayer {
   private int forestResource;
   private int fieldResource;
   private int pastureFieldResource;
-
+  private int longestRoadLength;
+  private boolean hasLongestRoad = false;
   private int score;
 
   public CPUPlayer(String color, String displayName) {
@@ -39,6 +40,7 @@ public class CPUPlayer {
     this.fieldResource = 0;
     this.pastureFieldResource = 0;
     this.score = 0;
+
   }
 
   public void buildRoad(AnchorPane anchorPane, String roadId) {
@@ -59,6 +61,7 @@ public class CPUPlayer {
     this.forestResource--;
     occupiedEdges.add(roadId);
     this.addOwnedRoads(roadId);
+    longestRoadLength = GameHelper.findLongestRoadLength(ownedRoads);
   }
 
   public void buildSettlement(AnchorPane anchorPane, String settlementId) {
@@ -207,9 +210,18 @@ public class CPUPlayer {
   }
 
   public int getScore() {
-    return score;
+    return hasLongestRoad ? score + 2 : score;
   }
 
+  public int getLongestRoadLength() {
+    return longestRoadLength;
+  }
+  public boolean ifHasLongestRoad() {
+    return hasLongestRoad;
+  }
+  public void setHasLongestRoad(boolean hasLongestRoad) {
+    this.hasLongestRoad = hasLongestRoad;
+  }
   public int getHillResource() {
     return hillResource;
   }

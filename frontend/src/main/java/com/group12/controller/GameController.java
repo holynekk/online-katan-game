@@ -1,5 +1,6 @@
 package com.group12.controller;
 
+import com.group12.helper.GameHelper;
 import com.group12.helper.NotificationHelper;
 import com.group12.model.CPUPlayer;
 import javafx.animation.KeyFrame;
@@ -113,6 +114,9 @@ public class GameController {
   public static int fieldResource;
   public static int pastureFieldResource;
   public static int totalResources;
+  public static int longestRoadLength;
+  public static boolean playerHasLongestRoad;
+  public static int longestOfEveryone;
 
   public static CPUPlayer cpuOrange;
   public static CPUPlayer cpuGreen;
@@ -137,6 +141,9 @@ public class GameController {
     fieldResource = 20;
     pastureFieldResource = 20;
     totalResources = 80;
+    longestRoadLength = 0;
+    longestOfEveryone = 0;
+    playerHasLongestRoad = false;
     tileTextList =
         new ArrayList<>(
             Arrays.asList(
@@ -469,6 +476,7 @@ public class GameController {
     }
     occupiedEdges.add(rectangleId);
     ownedEdges.add(rectangleId);
+
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
         if (!occupiedEdges.contains(node.getId())) {
@@ -513,6 +521,8 @@ public class GameController {
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
+
+          longestRoadLength = findLongestRoadLength(ownedEdges);
         } else {
           node.setVisible(false);
         }
@@ -593,7 +603,8 @@ public class GameController {
     grainText.setText(Integer.toString(fieldResource));
     brickText.setText(Integer.toString(hillResource));
     lumberText.setText(Integer.toString(forestResource));
-    player1Score.setText(Integer.toString(ownedCircles.size() + ownedCities.size()));
+    player1Score.setText(Integer.toString(ownedCircles.size() + ownedCities.size() + (playerHasLongestRoad ? 2 : 0)));
+    player1LongestRoad.setText(Integer.toString(longestRoadLength));
     player1TotalResources.setText(
         Integer.toString(
             pastureFieldResource
@@ -601,15 +612,24 @@ public class GameController {
                 + fieldResource
                 + hillResource
                 + forestResource));
+
     player2TotalResources.setText(Integer.toString(cpuOrange.getTotalResources()));
     player2Score.setText(Integer.toString(cpuOrange.getScore()));
+    player2LongestRoad.setText(Integer.toString(cpuOrange.getLongestRoadLength()));
     player3TotalResources.setText(Integer.toString(cpuGreen.getTotalResources()));
     player3Score.setText(Integer.toString(cpuGreen.getScore()));
+    player3LongestRoad.setText(Integer.toString(cpuGreen.getLongestRoadLength()));
     player4TotalResources.setText(Integer.toString(cpuPink.getTotalResources()));
+    player4LongestRoad.setText(Integer.toString(cpuPink.getLongestRoadLength()));
     player4Score.setText(Integer.toString(cpuPink.getScore()));
+
   }
 
   public void checkCpuScore(CPUPlayer cpuPlayer) {
+    if(cpuPlayer.getLongestRoadLength() >= longestOfEveryone && cpuPlayer.getLongestRoadLength() >= 5){
+      cpuPlayer.setHasLongestRoad(true);
+      longestOfEveryone = cpuPlayer.getLongestRoadLength();
+    }
     if (cpuPlayer.getScore() >= 8) {
       closeGame();
       resultBanner.setText("You have been defeated!");
@@ -619,7 +639,11 @@ public class GameController {
   }
 
   public void checkPlayerScore() {
-    if (ownedCities.size() + ownedCircles.size() >= 8) {
+    if (longestRoadLength >= longestOfEveryone && longestRoadLength >= 5) {
+      longestOfEveryone = longestRoadLength;
+      playerHasLongestRoad = true;
+    }
+    if (ownedCities.size() + ownedCircles.size() + (playerHasLongestRoad ? 2 : 0)  >= 8) {
       closeGame();
       playSoundEffect(victoriousSound);
       resultBanner.setText("You are victorious!");
