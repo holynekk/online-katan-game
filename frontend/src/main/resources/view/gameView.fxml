@@ -151,7 +151,7 @@
             </Pane>
             <Pane fx:id="player1Pane" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: red;">
+                  <Pane fx:id="p1" prefHeight="30.0" prefWidth="197.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: red;">
                      <children>
                         <Text fx:id="player1Name" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player1Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
@@ -207,7 +207,7 @@
             </Pane>
             <Pane fx:id="player1Pane1" layoutX="10.0" layoutY="43.0" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: orange;">
+                  <Pane fx:id="p2" prefHeight="30.0" prefWidth="197.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: orange;">
                      <children>
                         <Text fx:id="player2Name" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player2Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
@@ -263,7 +263,7 @@
             </Pane>
             <Pane fx:id="player1Pane11" layoutX="10.0" layoutY="163.0" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: green; -fx-border-width: 2 0 2 0;">
+                  <Pane fx:id="p3" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: green; -fx-border-width: 2 0 2 0;">
                      <children>
                         <Text fx:id="player3Name" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player3Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
@@ -319,7 +319,7 @@
             </Pane>
             <Pane fx:id="player1Pane111" layoutX="10.0" layoutY="283.0" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: pink; -fx-border-width: 2 0 2 0;">
+                  <Pane fx:id="p4" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: pink; -fx-border-width: 2 0 2 0;">
                      <children>
                         <Text fx:id="player4Name" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player4Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
@@ -998,12 +998,12 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Circle>
-            <Text fx:id="h1" layoutX="250.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-            <Text fx:id="h2" layoutX="360.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-            <Text fx:id="h3" layoutX="458.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h1" layoutX="260.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h2" layoutX="364.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h3" layoutX="468.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h5" layoutX="312.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-            <Text fx:id="h6" layoutX="412.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h6" layoutX="415.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h7" layoutX="521.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h8" layoutX="152.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h9" layoutX="260.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
@@ -1033,6 +1033,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <Label fx:id="resultBanner" alignment="CENTER" layoutX="295.0" layoutY="83.0" styleClass="result-banner" text="The Result Banner" textFill="WHITE" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="120.0" />
+            <Button fx:id="backButton" layoutX="101.0" layoutY="2.0" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" visible="false">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
 
          </children>
          <BorderPane.margin>

@@ -5,20 +5,26 @@ import com.group12.model.CPUPlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,6 +69,11 @@ public class GameController {
   @FXML private Button settlementBuildButton;
   @FXML private Button settlementUpgradeButton;
 
+  @FXML private Pane p1;
+  @FXML private Pane p2;
+  @FXML private Pane p3;
+  @FXML private Pane p4;
+
   @FXML private Text player1Name;
   @FXML private Text player2Name;
   @FXML private Text player3Name;
@@ -89,9 +100,12 @@ public class GameController {
   @FXML private Text brickText;
   @FXML private Text lumberText;
 
+  @FXML private Label resultBanner;
+  @FXML private Button backButton;
+
   public static int d1;
   public static int d2;
-  public int score;
+  private boolean isOver;
 
   public static int hillResource;
   public static int mountainResource;
@@ -116,6 +130,7 @@ public class GameController {
   public void initialize() {
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
+    isOver = false;
     hillResource = 20;
     mountainResource = 20;
     forestResource = 20;
@@ -137,6 +152,8 @@ public class GameController {
     player2Name.setText(cpuOrange.getDisplayName());
     player3Name.setText(cpuGreen.getDisplayName());
     player4Name.setText(cpuPink.getDisplayName());
+
+    p1.getStyleClass().addAll("player-turn");
   }
 
   @FXML
@@ -166,10 +183,10 @@ public class GameController {
         new KeyFrame(
             Duration.seconds(7),
             e -> {
-              ArrayList<String> blabla = circleOptionsAtSetup(anchPane);
+              ArrayList<String> circleOptions = circleOptionsAtSetup(anchPane);
               for (Node node : anchPane.getChildren()) {
                 if (node.getClass().getName().contains("Circle")) {
-                  if (blabla.contains(node.getId())) {
+                  if (circleOptions.contains(node.getId())) {
                     node.setVisible(true);
                     node.setStyle("-fx-fill: #D3D3D3;");
                     node.setOnMouseClicked(this::lastCirclePush);
@@ -255,64 +272,90 @@ public class GameController {
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
+    checkPlayerScore();
+    p1.getStyleClass().clear();
+    p2.getStyleClass().addAll("player-turn");
 
     Timeline timeline = new Timeline();
     KeyFrame kv1 =
         new KeyFrame(
             Duration.seconds(1),
             event -> {
-              diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
-              updateScores();
+              if (!isOver) {
+                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
+                updateScores();
+              }
             });
 
     KeyFrame kv2 =
         new KeyFrame(
             Duration.seconds(2),
             event -> {
-              CPUPlays(anchPane, cpuOrange, ownedCircles);
-              updateScores();
+              if (!isOver) {
+                CPUPlays(anchPane, cpuOrange, ownedCircles);
+                updateScores();
+                p2.getStyleClass().clear();
+                p3.getStyleClass().addAll("player-turn");
+                checkCpuScore(cpuOrange);
+              }
             });
 
     KeyFrame kv3 =
         new KeyFrame(
             Duration.seconds(3),
             event -> {
-              diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
-              updateScores();
+              if (!isOver) {
+                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
+                updateScores();
+              }
             });
     KeyFrame kv4 =
         new KeyFrame(
             Duration.seconds(4),
             event -> {
-              CPUPlays(anchPane, cpuGreen, ownedCircles);
-              updateScores();
+              if (!isOver) {
+                CPUPlays(anchPane, cpuGreen, ownedCircles);
+                updateScores();
+                p3.getStyleClass().clear();
+                p4.getStyleClass().addAll("player-turn");
+                checkCpuScore(cpuGreen);
+              }
             });
 
     KeyFrame kv5 =
         new KeyFrame(
             Duration.seconds(5),
             event -> {
-              diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
-              updateScores();
+              if (!isOver) {
+                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
+                updateScores();
+              }
             });
     KeyFrame kv6 =
         new KeyFrame(
             Duration.seconds(6),
             event -> {
-              CPUPlays(anchPane, cpuPink, ownedCircles);
-              updateScores();
+              if (!isOver) {
+                CPUPlays(anchPane, cpuPink, ownedCircles);
+                updateScores();
+                checkCpuScore(cpuPink);
+              }
             });
 
     KeyFrame kv7 =
         new KeyFrame(
             Duration.seconds(7),
             event -> {
-              firstDiceImage.setDisable(false);
-              secondDiceImage.setDisable(false);
-              playSoundEffect(turnSound);
-              updateScores();
-              NotificationHelper.showAlert(
-                  Alert.AlertType.INFORMATION, "Information", "It's your turn!");
+              if (!isOver) {
+                firstDiceImage.setDisable(false);
+                secondDiceImage.setDisable(false);
+                playSoundEffect(turnSound);
+                updateScores();
+                p4.getStyleClass().clear();
+                p1.getStyleClass().addAll("player-turn");
+                NotificationHelper.showAlert(
+                    Alert.AlertType.INFORMATION, "Information", "It's your turn!");
+              }
             });
     timeline.getKeyFrames().addAll(kv1, kv2, kv3, kv4, kv5, kv6, kv7);
     timeline.play();
@@ -369,9 +412,9 @@ public class GameController {
     occupiedCircles.add(circleId);
     ownedCircles.add(circleId);
     List<String> styleList;
-    for (String rsrc : circleNeighbours.get(circleId).split("-")) {
+    for (String cID : circleNeighbours.get(circleId).split("-")) {
       for (Node node : anchPane.getChildren()) {
-        if (node.getClass().getName().contains("Polygon") && node.getId().equals(rsrc)) {
+        if (node.getClass().getName().contains("Polygon") && node.getId().equals(cID)) {
           styleList = node.getStyleClass();
           totalResources += 1;
           if (styleList.contains("hill")) {
@@ -436,10 +479,10 @@ public class GameController {
 
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
-    finilizeSetupPhase();
+    finalizeSetupPhase();
   }
 
-  public void finilizeSetupPhase() {
+  public void finalizeSetupPhase() {
     firstDiceImage.setDisable(false);
     secondDiceImage.setDisable(false);
     for (Node node : anchPane.getChildren()) {
@@ -470,7 +513,6 @@ public class GameController {
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
-          // calculate longest road and write to panel
         } else {
           node.setVisible(false);
         }
@@ -565,5 +607,39 @@ public class GameController {
     player3Score.setText(Integer.toString(cpuGreen.getScore()));
     player4TotalResources.setText(Integer.toString(cpuPink.getTotalResources()));
     player4Score.setText(Integer.toString(cpuPink.getScore()));
+  }
+
+  public void checkCpuScore(CPUPlayer cpuPlayer) {
+    if (cpuPlayer.getScore() >= 8) {
+      closeGame();
+      resultBanner.setText("You have been defeated!");
+      playSoundEffect(defeatedSound);
+      isOver = true;
+    }
+  }
+
+  public void checkPlayerScore() {
+    if (ownedCities.size() + ownedCircles.size() >= 8) {
+      closeGame();
+      playSoundEffect(victoriousSound);
+      resultBanner.setText("You are victorious!");
+      isOver = true;
+    }
+  }
+
+  public void closeGame() {
+    firstDiceImage.setDisable(true);
+    secondDiceImage.setDisable(true);
+    resultBanner.setVisible(true);
+    backButton.setVisible(true);
+  }
+
+  @FXML
+  public void backToMenu() throws IOException {
+    Stage stage = (Stage) backButton.getScene().getWindow();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    stage.show();
   }
 }

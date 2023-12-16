@@ -11,6 +11,13 @@ public class BackgroundHelper {
 
   public static String parchmentBackgroundImage = "parchment.jpg";
 
+  /**
+   * A static method to set a background for a specific scene.
+   *
+   * @param borderPane - Current scene's pane element.
+   * @param backgroundName - Background image name which will be used in the scene.
+   * @throws URISyntaxException - throws an error when specified location of the image is empty.
+   */
   public static void setTheBackground(BorderPane borderPane, String backgroundName)
       throws URISyntaxException {
     Image image =

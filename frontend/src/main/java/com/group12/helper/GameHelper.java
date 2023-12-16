@@ -320,6 +320,4 @@ public class GameHelper {
       }
     }
   }
-
-  public void checkScores() {}
 }

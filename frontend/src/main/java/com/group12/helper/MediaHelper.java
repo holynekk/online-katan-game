@@ -20,6 +20,13 @@ public class MediaHelper {
   public static final String victoriousSound = "victorious_effect.mp3";
   public static final String defeatedSound = "defeated_effect.mp3";
 
+  /**
+   * Constructor of the global media player for the application. Plays the main background music in
+   * loop at the very first boot.
+   *
+   * @throws URISyntaxException - throws an error when track does not exist in the provided
+   *     location.
+   */
   public MediaHelper() throws URISyntaxException {
     effectVolume = 100;
 
@@ -38,6 +45,11 @@ public class MediaHelper {
     backgroundPlayer.play();
   }
 
+  /**
+   * A static helper method to play sound effects throughout the application.
+   *
+   * @param effect - effect name
+   */
   public static void playSoundEffect(String effect) {
     Media sound = null;
     try {
@@ -45,6 +57,7 @@ public class MediaHelper {
           new Media(MediaHelper.class.getResource("../../../sounds/" + effect).toURI().toString());
     } catch (URISyntaxException e) {
       e.printStackTrace();
+      System.out.println(e);
     }
     effectsPlayer = new MediaPlayer(sound);
     effectsPlayer.setVolume(effectVolume / 100);

@@ -3,14 +3,11 @@ package com.group12.helper;
 import com.group12.model.CPUPlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.sql.Time;
 import java.util.*;
 
 import static com.group12.controller.GameController.occupiedCircles;
@@ -46,6 +43,12 @@ public class GameBoardSetupHelper {
               "2", "12", "3", "3", "4", "4", "5", "5", "6", "6", "8", "8", "9", "9", "10", "10",
               "11", "11"));
 
+  /**
+   * A method to return optional settlement positions at the setup phase.
+   *
+   * @param anchorPane - Main pane of the gameView scene.
+   * @return - List of optional settlement places.
+   */
   public static ArrayList<String> circleOptionsAtSetup(AnchorPane anchorPane) {
     ArrayList<String> circleOptionList = new ArrayList<>(circleList);
     ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
@@ -63,6 +66,13 @@ public class GameBoardSetupHelper {
     return circleOptionList;
   }
 
+  /**
+   * A method to set attributes of the hexagonal tiles of the map. Randomizes the numbers and
+   * resource types for the tiles.
+   *
+   * @param anchorPane - Main pane of the gameView scene.
+   * @param tileTextList - A list of all hexagonal tiles' list.
+   */
   public static void setupBoardTiles(AnchorPane anchorPane, ArrayList<Text> tileTextList) {
     Random rnd = new Random();
     int rndInt;
@@ -107,11 +117,21 @@ public class GameBoardSetupHelper {
     }
   }
 
+  /**
+   * A method to allow CPU players to play in order while in setup phase.
+   *
+   * @param anchorPane
+   * @param cpuOrange - Orange cpu player
+   * @param cpuGreen - Green cpu player
+   * @param cpuPink - Pink cpu player
+   * @param occupiedCircles - Settlement positions that are already occupied by other players.
+   * @param occupiedEdges - Road positions that are already occupied by other players.
+   */
   public static void CPUSetup(
       AnchorPane anchorPane,
+      CPUPlayer cpuOrange,
       CPUPlayer cpuGreen,
       CPUPlayer cpuPink,
-      CPUPlayer cpuOrange,
       ArrayList<String> occupiedCircles,
       ArrayList<String> occupiedEdges) {
     Timeline timeline = new Timeline();
@@ -208,7 +228,7 @@ public class GameBoardSetupHelper {
               cpuRectangleId = cpuOrange.buildRoadAtSetup(anchorPane, cpuCircleId);
               occupiedEdges.add(cpuRectangleId);
             });
-      timeline.getKeyFrames().addAll(kv1, kv2, kv3, kv4, kv5, kv6);
-      timeline.play();
+    timeline.getKeyFrames().addAll(kv1, kv2, kv3, kv4, kv5, kv6);
+    timeline.play();
   }
 }
