@@ -21,133 +21,128 @@
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: A3D5FF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameController">
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: rgb(255,255,255,0.5);" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="bottom-panel" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="322.0">
+            <HBox prefHeight="100.0" prefWidth="452.0" styleClass="resources-section">
                <children>
-                  <VBox prefHeight="100.0" prefWidth="300.0">
+                  <VBox prefHeight="100.0" prefWidth="450.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="28.0" prefWidth="300.0" style="-fx-background-color: #f781c4;" text="Resources">
+                        <Label alignment="CENTER" prefHeight="28.0" prefWidth="450.0" style="-fx-text-fill: white;" text="Resources">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <HBox prefHeight="82.0" prefWidth="300.0">
+                        <HBox minWidth="450.0" prefHeight="82.0" prefWidth="450.0">
                            <children>
-                              <Pane prefHeight="78.0" prefWidth="60.0" style="-fx-background-color: #f5b3ae;">
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #BC4A3C;">
                                  <children>
-                                    <ImageView fitHeight="40.0" fitWidth="61.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label alignment="CENTER" layoutX="13.0" layoutY="2.0" prefHeight="17.0" prefWidth="34.0" text="Brick">
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="53.0" text="Brick">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
                                     </Label>
-                                    <Text fx:id="brickText" layoutX="26.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                    <Text fx:id="brickText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
                                  </children>
-                              </Pane>
-                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="78.0" prefWidth="60.0" style="-fx-background-color: #bef5ae;">
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #416422;">
                                  <children>
-                                    <ImageView fitHeight="40.0" fitWidth="61.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label alignment="CENTER" layoutX="4.0" layoutY="2.0" prefHeight="17.0" prefWidth="52.0" text="Lumber">
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="82.0" text="Lumber">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
                                     </Label>
-                                    <Text fx:id="lumberText" layoutX="26.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                    <Text fx:id="lumberText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
                                  </children>
-                              </Pane>
-                              <Pane layoutX="70.0" layoutY="10.0" prefHeight="78.0" prefWidth="60.0" style="-fx-background-color: #b2b6b8;">
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #4E4F55;">
                                  <children>
-                                    <ImageView fitHeight="40.0" fitWidth="61.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="2.0" prefHeight="17.0" prefWidth="34.0" text="Ore" textAlignment="CENTER">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="59.0" text="Ore" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
                                     </Label>
-                                    <Text fx:id="oreText" layoutX="27.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                    <Text fx:id="oreText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
                                  </children>
-                              </Pane>
-                              <Pane layoutX="130.0" layoutY="10.0" prefHeight="78.0" prefWidth="60.0" style="-fx-background-color: #f5e1a2;">
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #E4C798;">
                                  <children>
-                                    <ImageView fitHeight="40.0" fitWidth="61.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label alignment="CENTER" layoutX="14.0" layoutY="2.0" prefHeight="17.0" prefWidth="37.0" text="Grain">
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="70.0" text="Grain">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
                                     </Label>
-                                    <Text fx:id="grainText" layoutX="29.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                    <Text fx:id="grainText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
                                  </children>
-                              </Pane>
-                              <Pane layoutX="190.0" layoutY="10.0" prefHeight="78.0" prefWidth="60.0" style="-fx-background-color: #f2ecd8;">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #E0DFD7;">
                                  <children>
-                                    <ImageView fitHeight="37.0" fitWidth="61.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="2.0" prefHeight="17.0" prefWidth="34.0" text="Wool" textAlignment="CENTER">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="68.0" text="Wool" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
                                     </Label>
-                                    <Text fx:id="woolText" layoutX="26.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                    <Text fx:id="woolText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
                                  </children>
-                              </Pane>
+                              </VBox>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
                </children></HBox>
-            <HBox prefHeight="100.0" prefWidth="232.0">
+            <VBox alignment="CENTER" minWidth="200.0" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="roadBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalRoads" text="Road">
+                  <Button fx:id="roadBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalRoads" styleClass="game-button" text="Build Road">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="settlementBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalSettlements" text="Sett">
+                  <Button fx:id="settlementBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalSettlements" styleClass="game-button" text="Build Settlement">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="settlementUpgradeButton" disable="true" mnemonicParsing="false" onAction="#showOptionalUpgrades" text="Upg">
+                  <Button fx:id="settlementUpgradeButton" disable="true" mnemonicParsing="false" onAction="#showOptionalUpgrades" styleClass="game-button" text="Upgrade Settlement">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-               </children></HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="206.0">
-               <children>
-                  <ImageView fx:id="firstDiceImage" fitHeight="100.0" fitWidth="75.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/dice6.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="secondDiceImage" fitHeight="150.0" fitWidth="75.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/dice6.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
                </children>
-            </HBox>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="0.0" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="128.0">
                <children>
-                  <Button fx:id="skipTurnButton" mnemonicParsing="false" onAction="#skipTurn" text="Skip Turn" />
+                  <Button fx:id="skipTurnButton" disable="true" mnemonicParsing="false" onAction="#skipTurn" styleClass="game-button" text="Skip Turn &gt;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                </children>
             </HBox>
          </children></HBox>
    </bottom>
    <right>
-      <VBox prefHeight="500.0" prefWidth="197.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="500.0" prefWidth="197.0" styleClass="right-panel" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="33.0" prefWidth="197.0" style="-fx-background-color: #8363db;">
+            <Pane prefHeight="33.0" prefWidth="197.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="7.0" prefHeight="19.0" prefWidth="85.0" text="PLAYERS">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="7.0" prefHeight="19.0" prefWidth="85.0" style="-fx-text-fill: white;" text="PLAYERS">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -156,9 +151,9 @@
             </Pane>
             <Pane fx:id="player1Pane" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-background-color: sandybrown; -fx-border-color: brown; -fx-border-width: 3;">
+                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: red;">
                      <children>
-                        <Text fx:id="player1Name" layoutX="60.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="player1Name" textAlignment="CENTER">
+                        <Text fx:id="player1Name" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player1Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -167,34 +162,43 @@
                   </Pane>
                   <HBox layoutY="30.0" prefHeight="90.0" prefWidth="197.0">
                      <children>
-                        <Pane prefHeight="82.0" prefWidth="65.6" style="-fx-background-color: lightpink; -fx-border-width: 2;">
+                        <Pane prefHeight="82.0" prefWidth="65.6" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: #f781c4;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="resource-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resources" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resources">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player1TotalResources" layoutX="29.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player1TotalResources" layoutX="29.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" style="-fx-background-color: lightgreen; -fx-border-width: 3;">
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="69.0" style="-fx-background-color: darkgreen;">
+                              <StackPane prefHeight="41.0" prefWidth="69.0" styleClass="longest-road-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player1LongestRoad" layoutX="30.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player1LongestRoad" layoutX="30.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0" style="-fx-background-color: yellow; -fx-border-width: 2;">
+                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: brown;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="score-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player1Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player1Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: grey;" text="0" />
                            </children>
                         </Pane>
                      </children>
@@ -203,9 +207,9 @@
             </Pane>
             <Pane fx:id="player1Pane1" layoutX="10.0" layoutY="43.0" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-background-color: sandybrown; -fx-border-color: brown; -fx-border-width: 3;">
+                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: orange;">
                      <children>
-                        <Text fx:id="player2Name" layoutX="60.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="player2Name" textAlignment="CENTER">
+                        <Text fx:id="player2Name" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player2Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -214,34 +218,43 @@
                   </Pane>
                   <HBox layoutY="30.0" prefHeight="90.0" prefWidth="197.0">
                      <children>
-                        <Pane prefHeight="82.0" prefWidth="65.6" style="-fx-background-color: lightpink; -fx-border-width: 2;">
+                        <Pane prefHeight="82.0" prefWidth="65.6" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: #f781c4;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="resource-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resources" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resources">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player2TotalResources" layoutX="29.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player2TotalResources" layoutX="29.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" style="-fx-background-color: lightgreen; -fx-border-width: 3;">
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="69.0" style="-fx-background-color: darkgreen;">
+                              <StackPane prefHeight="41.0" prefWidth="69.0" styleClass="longest-road-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player2LongestRoad" layoutX="30.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player2LongestRoad" layoutX="30.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0" style="-fx-background-color: yellow; -fx-border-width: 2;">
+                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: brown;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="score-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player2Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player2Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
                      </children>
@@ -250,9 +263,9 @@
             </Pane>
             <Pane fx:id="player1Pane11" layoutX="10.0" layoutY="163.0" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-background-color: sandybrown; -fx-border-color: brown; -fx-border-width: 3;">
+                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: green; -fx-border-width: 2 0 2 0;">
                      <children>
-                        <Text fx:id="player3Name" layoutX="60.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="player3Name" textAlignment="CENTER">
+                        <Text fx:id="player3Name" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player3Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -261,34 +274,43 @@
                   </Pane>
                   <HBox layoutY="30.0" prefHeight="90.0" prefWidth="197.0">
                      <children>
-                        <Pane prefHeight="82.0" prefWidth="65.6" style="-fx-background-color: lightpink; -fx-border-width: 2;">
+                        <Pane prefHeight="82.0" prefWidth="65.6" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: #f781c4;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="resource-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resources" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resources">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player3TotalResources" layoutX="29.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player3TotalResources" layoutX="29.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" style="-fx-background-color: lightgreen; -fx-border-width: 3;">
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="69.0" style="-fx-background-color: darkgreen;">
+                              <StackPane prefHeight="41.0" prefWidth="69.0" styleClass="longest-road-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player3LongestRoad" layoutX="30.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player3LongestRoad" layoutX="30.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0" style="-fx-background-color: yellow; -fx-border-width: 2;">
+                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: brown;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="score-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player3Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player3Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
                      </children>
@@ -297,9 +319,9 @@
             </Pane>
             <Pane fx:id="player1Pane111" layoutX="10.0" layoutY="283.0" prefHeight="120.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-background-color: sandybrown; -fx-border-color: brown; -fx-border-width: 3;">
+                  <Pane prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: pink; -fx-border-width: 2 0 2 0;">
                      <children>
-                        <Text fx:id="player4Name" layoutX="60.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="player4Name" textAlignment="CENTER">
+                        <Text fx:id="player4Name" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="name-text" text="player4Name" textAlignment="CENTER" wrappingWidth="196.2197265625">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -308,34 +330,43 @@
                   </Pane>
                   <HBox layoutY="30.0" prefHeight="90.0" prefWidth="197.0">
                      <children>
-                        <Pane prefHeight="82.0" prefWidth="65.6" style="-fx-background-color: lightpink; -fx-border-width: 2;">
+                        <Pane prefHeight="82.0" prefWidth="65.6" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: #f781c4;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="resource-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resources" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resources">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player4TotalResources" layoutX="29.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player4TotalResources" layoutX="29.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" style="-fx-background-color: lightgreen; -fx-border-width: 3;">
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="68.0" styleClass="right-border">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="69.0" style="-fx-background-color: darkgreen;">
+                              <StackPane prefHeight="41.0" prefWidth="69.0" styleClass="longest-road-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Longest&#10;Road" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player4LongestRoad" layoutX="30.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player4LongestRoad" layoutX="30.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
-                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0" style="-fx-background-color: yellow; -fx-border-width: 2;">
+                        <Pane layoutX="78.0" layoutY="10.0" prefHeight="82.0" prefWidth="65.0">
                            <children>
-                              <StackPane prefHeight="41.0" prefWidth="65.0" style="-fx-background-color: brown;">
+                              <StackPane prefHeight="41.0" prefWidth="65.0" styleClass="score-border">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font></Text>
                                  </children>
                               </StackPane>
-                              <Text fx:id="player4Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                              <Text fx:id="player4Score" layoutX="28.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: gray;" text="0" />
                            </children>
                         </Pane>
                      </children>
@@ -347,50 +378,50 @@
    <center>
       <AnchorPane fx:id="anchPane" prefHeight="491.0" prefWidth="654.0" BorderPane.alignment="CENTER">
          <children>
-            <Polygon id="h10" fill="#1f93ff" layoutX="316.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h10" fill="#1f93ff" layoutX="316.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <styleClass>
                   <String fx:value=".desert" />
                   <String fx:value="desert" />
                </styleClass></Polygon>
-            <Polygon id="h19" fill="DODGERBLUE" layoutX="420.0" layoutY="360.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h18" fill="DODGERBLUE" layoutX="316.0" layoutY="360.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h17" fill="DODGERBLUE" layoutX="212.0" layoutY="360.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h3" fill="DODGERBLUE" layoutX="420.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h19" fill="DODGERBLUE" layoutX="420.0" layoutY="361.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h18" fill="DODGERBLUE" layoutX="316.0" layoutY="361.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h17" fill="DODGERBLUE" layoutX="212.0" layoutY="361.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h3" fill="DODGERBLUE" layoutX="420.0" layoutY="1.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h2" fill="DODGERBLUE" layoutX="316.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h2" fill="DODGERBLUE" layoutX="316.0" layoutY="1.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h1" fill="DODGERBLUE" layoutX="212.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h1" fill="DODGERBLUE" layoutX="212.0" layoutY="1.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h13" fill="DODGERBLUE" layoutX="160.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h8" fill="DODGERBLUE" layoutX="108.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h4" fill="DODGERBLUE" layoutX="160.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h13" fill="DODGERBLUE" layoutX="160.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h8" fill="DODGERBLUE" layoutX="108.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h4" fill="DODGERBLUE" layoutX="160.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h12" fill="DODGERBLUE" layoutX="524.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h7" fill="DODGERBLUE" layoutX="472.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h12" fill="DODGERBLUE" layoutX="524.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h7" fill="DODGERBLUE" layoutX="472.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h16" fill="DODGERBLUE" layoutX="472.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h15" fill="DODGERBLUE" layoutX="368.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h14" fill="DODGERBLUE" layoutX="264.0" layoutY="271.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h6" fill="DODGERBLUE" layoutX="368.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h16" fill="DODGERBLUE" layoutX="472.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h15" fill="DODGERBLUE" layoutX="368.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h14" fill="DODGERBLUE" layoutX="264.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h6" fill="DODGERBLUE" layoutX="368.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h5" fill="DODGERBLUE" layoutX="264.0" layoutY="91.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon id="h5" fill="DODGERBLUE" layoutX="264.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Polygon>
-            <Polygon id="h11" fill="DODGERBLUE" layoutX="420.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon id="h9" fill="DODGERBLUE" layoutX="212.0" layoutY="181.0" onMouseClicked="#hexagonPush" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h11" fill="DODGERBLUE" layoutX="420.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h9" fill="DODGERBLUE" layoutX="212.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
             <Rectangle id="c10-c20" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="234.0" layoutY="146.0" onMouseClicked="#rectanglePush" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -755,7 +786,7 @@
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
-            <Circle id="c41" fill="#D3D3D3" layoutX="259.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c41" fill="#D3D3D3" layoutX="264.0" layoutY="362.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
@@ -847,7 +878,7 @@
             <cursor>
                 <Cursor fx:constant="HAND" />
              </cursor></Circle>
-            <Circle id="c1" fill="#D3D3D3" layoutX="217.0" layoutY="27.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c1" fill="#D3D3D3" layoutX="213.0" layoutY="31.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Circle>
@@ -867,7 +898,7 @@
             <cursor>
                    <Cursor fx:constant="HAND" />
                 </cursor></Circle>
-            <Circle id="c2" fill="#D3D3D3" layoutX="264.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c2" fill="#D3D3D3" layoutX="263.0" layoutY="1.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                 <Cursor fx:constant="HAND" />
              </cursor></Circle>
@@ -927,7 +958,7 @@
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
-            <Circle id="c49" fill="#D3D3D3" layoutX="259.0" layoutY="478.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle id="c49" fill="#D3D3D3" layoutX="264.0" layoutY="477.0" onMouseClicked="#circlePush" radius="13.0" stroke="BLACK" strokeType="INSIDE">
             <cursor>
                  <Cursor fx:constant="HAND" />
               </cursor></Circle>
@@ -967,25 +998,41 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Circle>
-            <Text fx:id="h1" layoutX="250.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h1" />
-            <Text fx:id="h2" layoutX="360.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h2" />
-            <Text fx:id="h3" layoutX="458.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h3" />
-            <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h4" />
-            <Text fx:id="h5" layoutX="307.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h5" />
-            <Text fx:id="h6" layoutX="412.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h6" />
-            <Text fx:id="h7" layoutX="517.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h7" />
-            <Text fx:id="h8" layoutX="152.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h8" />
-            <Text fx:id="h9" layoutX="256.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h9" />
-            <Text fx:id="h10" layoutX="342.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESERT" />
-            <Text fx:id="h11" layoutX="460.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h11" />
-            <Text fx:id="h12" layoutX="563.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h12" />
-            <Text fx:id="h13" layoutX="199.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h13" />
-            <Text fx:id="h14" layoutX="304.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h14" />
-            <Text fx:id="h15" layoutX="407.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h15" />
-            <Text fx:id="h16" layoutX="511.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h16" />
-            <Text fx:id="h17" layoutX="245.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h17" />
-            <Text fx:id="h18" layoutX="349.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h18" />
-            <Text fx:id="h19" layoutX="458.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h19" />
+            <Text fx:id="h1" layoutX="250.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h2" layoutX="360.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h3" layoutX="458.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h5" layoutX="312.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h6" layoutX="412.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h7" layoutX="521.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h8" layoutX="152.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h9" layoutX="260.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h10" layoutX="341.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESERT" />
+            <Text fx:id="h11" layoutX="468.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h12" layoutX="571.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h13" layoutX="207.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h14" layoutX="311.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h15" layoutX="415.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h16" layoutX="520.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h17" layoutX="259.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h18" layoutX="363.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h19" layoutX="468.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <ImageView fx:id="firstDiceImage" fitHeight="48.0" fitWidth="48.0" layoutX="574.0" layoutY="438.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/dice6.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="secondDiceImage" fitHeight="48.0" fitWidth="48.0" layoutX="628.0" layoutY="438.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/dice6.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
 
          </children>
          <BorderPane.margin>

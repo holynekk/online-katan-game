@@ -1,13 +1,13 @@
 .desert {
-    -fx-fill: #C2B280;
+    -fx-fill: #967117;
 }
 
 .hill {
-    -fx-fill: #819A20;
+    -fx-fill: #BC4A3C;
 }
 
 .mountain {
-    -fx-fill: #808080;
+    -fx-fill: #4E4F55;
 }
 
 .forest {
@@ -15,11 +15,11 @@
 }
 
 .field {
-    -fx-fill: #D9D40C;
+    -fx-fill: #E4C798;
 }
 
 .pastureField {
-    -fx-fill: #E8E4C9;
+    -fx-fill: #E0DFD7;
 }
 
 .auth-background {
@@ -52,3 +52,57 @@
 .menu-button:hover {
     -fx-background-color: rgb(200, 0, 0);
 }
+
+.bottom-panel {
+    -fx-background-color:  rgb(50, 50, 50);
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: gray;
+}
+
+.name-text {
+    -fx-fill: white;
+}
+
+.bottom-panel > .resources-section {
+    -fx-border-width: 0 2 0 0;
+    -fx-border-color: gray;
+}
+
+.game-button {
+    -fx-background-color: rgb(70, 70, 70);
+    -fx-border-color: gray;
+    -fx-text-fill: white;
+    -fx-border-width: 1;
+    -fx-pref-width: 180px;
+}
+
+.game-button:hover {
+    -fx-background-color: rgb(90, 90, 90);
+}
+
+.right-panel {
+    -fx-background-color:  rgb(50, 50, 50);
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: gray;
+}
+
+.resource-border {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: gray;
+}
+
+.longest-road-border {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: gray;
+}
+
+.score-border {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: gray;
+}
+
+.right-border {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: gray;
+}
+

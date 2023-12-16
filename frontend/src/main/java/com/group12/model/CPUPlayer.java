@@ -33,11 +33,11 @@ public class CPUPlayer {
     this.ownedCircles = new ArrayList<>();
     this.ownedCities = new ArrayList<>();
     this.ownedRoads = new ArrayList<>();
-    this.hillResource = 20;
-    this.mountainResource = 20;
-    this.forestResource = 20;
-    this.fieldResource = 20;
-    this.pastureFieldResource = 20;
+    this.hillResource = 0;
+    this.mountainResource = 0;
+    this.forestResource = 0;
+    this.fieldResource = 0;
+    this.pastureFieldResource = 0;
     this.score = 0;
   }
 
@@ -62,7 +62,6 @@ public class CPUPlayer {
   }
 
   public void buildSettlement(AnchorPane anchorPane, String settlementId) {
-    System.out.println("bumbum");
     for (Node node : anchorPane.getChildren()) {
       if (node.getClass().getName().contains("Circle") && !occupiedCircles.contains(node.getId())) {
         if (node.getId().equals(settlementId)) {

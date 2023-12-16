@@ -16,6 +16,9 @@ public class MediaHelper {
   public static final String menuBackgroundMusic = "aeo2_menu.mp3";
   public static final String diceEffect = "dice_roll.mp3";
   public static final String buttonSound = "button_sound.mp3";
+  public static final String turnSound = "turn_effect.mp3";
+  public static final String victoriousSound = "victorious_effect.mp3";
+  public static final String defeatedSound = "defeated_effect.mp3";
 
   public MediaHelper() throws URISyntaxException {
     effectVolume = 100;
@@ -31,13 +34,7 @@ public class MediaHelper {
     }
     backgroundPlayer = new MediaPlayer(sound);
     backgroundPlayer.setVolume(0.2);
-    backgroundPlayer.setOnEndOfMedia(
-        new Runnable() {
-          @Override
-          public void run() {
-            backgroundPlayer.seek(Duration.ZERO);
-          }
-        });
+    backgroundPlayer.setOnEndOfMedia(() -> backgroundPlayer.seek(Duration.ZERO));
     backgroundPlayer.play();
   }
 

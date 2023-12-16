@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.*;
 
 import static com.group12.controller.GameController.*;
+import static com.group12.helper.MediaHelper.diceEffect;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 public class GameHelper {
   public static ArrayList<String> hexagonList =
@@ -183,7 +185,6 @@ public class GameHelper {
   public static void CPUPlays(
       AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles) {
     System.out.println(cpuPlayer.getDisplayName() + " plays!");
-    diceThrowResourceGather(anchorPane, ownedCircles);
 
     Random rnd = new Random();
     if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
@@ -206,7 +207,14 @@ public class GameHelper {
     }
   }
 
-  public static void diceThrowResourceGather(AnchorPane anchorPane, List<String> ownedCircles) {
+  public static void diceThrowResourceGather(
+      AnchorPane anchorPane,
+      List<String> ownedCircles,
+      ImageView firstDiceImage,
+      ImageView secondDiceImage) {
+    d1 = rollDice(firstDiceImage);
+    d2 = rollDice(secondDiceImage);
+    playSoundEffect(diceEffect);
     // Share resources
     if (d1 + d2 != 7) {
       gatherNewResourcesPlayer(anchorPane, tileTextList, ownedCircles, d1 + d2);
@@ -290,7 +298,8 @@ public class GameHelper {
     return optionalSettlements;
   }
 
-  public static void clearAllOptionals(AnchorPane anchorPane, ArrayList<String> ownedCircles, ArrayList<String> ownedCities) {
+  public static void clearAllOptionals(
+      AnchorPane anchorPane, ArrayList<String> ownedCircles, ArrayList<String> ownedCities) {
     for (Node node : anchorPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
         if (!occupiedCircles.contains(node.getId())) {
@@ -309,7 +318,5 @@ public class GameHelper {
     }
   }
 
-  public void checkScores() {
-
-  }
+  public void checkScores() {}
 }

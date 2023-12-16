@@ -2,6 +2,8 @@ package com.group12.controller;
 
 import com.group12.helper.NotificationHelper;
 import com.group12.model.CPUPlayer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -14,6 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -87,10 +90,8 @@ public class GameController {
   @FXML private Text lumberText;
 
   private ArrayList<Text> panelTextList;
-  private int turn;
   public static int d1;
   public static int d2;
-  private boolean isThrown;
   public int score;
 
   public static int hillResource;
@@ -114,17 +115,15 @@ public class GameController {
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
   public void initialize() {
-    skipTurnButton.setDisable(true);
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
-    turn = 0;
     hillResource = 0;
     mountainResource = 0;
     forestResource = 0;
     fieldResource = 0;
     pastureFieldResource = 0;
     totalResources = 0;
-    panelTextList = //All User Panel Texts, except names
+    panelTextList = // All User Panel Texts, except names
         new ArrayList<>(
             Arrays.asList(
                 woolText,
@@ -151,6 +150,15 @@ public class GameController {
                 h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18,
                 h19));
     setupBoardTiles(anchPane, tileTextList);
+
+    cpuOrange = new CPUPlayer("orange", "Orange Guy");
+    cpuGreen = new CPUPlayer("green", "Green Guy");
+    cpuPink = new CPUPlayer("pink", "Pink Guy");
+
+    player1Name.setText("bum bum");
+    player2Name.setText(cpuOrange.getDisplayName());
+    player3Name.setText(cpuGreen.getDisplayName());
+    player4Name.setText(cpuPink.getDisplayName());
   }
 
   @FXML
@@ -173,9 +181,6 @@ public class GameController {
     ownedEdges.add(rectangleId);
     NotificationHelper.showAlert(
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
-    cpuOrange = new CPUPlayer("orange", "Orange Guy");
-    cpuGreen = new CPUPlayer("green", "Green Guy");
-    cpuPink = new CPUPlayer("pink", "Pink Guy");
 
     CPUSetup(anchPane, cpuOrange, cpuGreen, cpuPink, occupiedCircles, occupiedEdges);
 
@@ -192,17 +197,12 @@ public class GameController {
   }
 
   @FXML
-  public void throwDice(MouseEvent event) throws InterruptedException {
+  public void throwDice(MouseEvent event) {
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
     skipTurnButton.setDisable(false);
-    isThrown = true;
 
-    d1 = rollDice(firstDiceImage);
-    d2 = rollDice(secondDiceImage);
-    playSoundEffect(diceEffect);
-
-    diceThrowResourceGather(anchPane, ownedCircles);
+    diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
     if (hillResource >= 1 && forestResource >= 1) {
       roadBuildButton.setDisable(false);
     }
@@ -219,6 +219,7 @@ public class GameController {
 
   @FXML
   public void showOptionalRoads() {
+    playSoundEffect(buttonSound);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
     ArrayList<String> optionalRoads = getOptionalRoads(anchPane, ownedEdges);
     for (Node node : anchPane.getChildren()) {
@@ -232,6 +233,7 @@ public class GameController {
 
   @FXML
   public void showOptionalSettlements() {
+    playSoundEffect(buttonSound);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
     ArrayList<String> optionalSettlements = getOptionalSettlements(anchPane, ownedEdges);
     System.out.println(optionalSettlements);
@@ -246,6 +248,7 @@ public class GameController {
 
   @FXML
   public void showOptionalUpgrades() {
+    playSoundEffect(buttonSound);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle") && ownedCircles.contains(node.getId())) {
@@ -260,21 +263,49 @@ public class GameController {
 
   @FXML
   public void skipTurn() {
-    isThrown = false;
+    playSoundEffect(buttonSound);
     skipTurnButton.setDisable(true);
-    //
-    CPUPlays(anchPane, cpuOrange, ownedCircles);
-    //set texts
-    CPUPlays(anchPane, cpuGreen, ownedCircles);
-
-    CPUPlays(anchPane, cpuPink, ownedCircles);
-
-    firstDiceImage.setDisable(false);
-    secondDiceImage.setDisable(false);
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
+    Timeline timeline = new Timeline();
+    KeyFrame kv1 =
+        new KeyFrame(
+            Duration.seconds(1),
+            event ->
+                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage));
+    KeyFrame kv2 =
+        new KeyFrame(Duration.seconds(2), event -> CPUPlays(anchPane, cpuOrange, ownedCircles));
+
+    KeyFrame kv3 =
+        new KeyFrame(
+            Duration.seconds(3),
+            event ->
+                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage));
+    KeyFrame kv4 =
+        new KeyFrame(Duration.seconds(4), event -> CPUPlays(anchPane, cpuGreen, ownedCircles));
+
+    KeyFrame kv5 =
+        new KeyFrame(
+            Duration.seconds(5),
+            event ->
+                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage));
+    KeyFrame kv6 =
+        new KeyFrame(Duration.seconds(6), event -> CPUPlays(anchPane, cpuPink, ownedCircles));
+
+    KeyFrame kv7 =
+        new KeyFrame(
+            Duration.seconds(7),
+            event -> {
+              firstDiceImage.setDisable(false);
+              secondDiceImage.setDisable(false);
+              playSoundEffect(turnSound);
+              NotificationHelper.showAlert(
+                  Alert.AlertType.INFORMATION, "Information", "It's your turn!");
+            });
+    timeline.getKeyFrames().addAll(kv1, kv2, kv3, kv4, kv5, kv6, kv7);
+    timeline.play();
   }
 
   @FXML
@@ -312,7 +343,6 @@ public class GameController {
   public void lastCirclePush(MouseEvent event) {
     Circle eventCircle = (Circle) event.getSource();
     String circleId = eventCircle.getId();
-    // Set the settlement
 
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
@@ -333,7 +363,7 @@ public class GameController {
         if (node.getClass().getName().contains("Polygon") && node.getId().equals(rsrc)) {
           styleList = node.getStyleClass();
           totalResources += 1;
-          //set corresponding player resources panel text.
+          // set corresponding player resources panel text.
           if (styleList.contains("hill")) {
             hillResource += 1;
             brickText.setText(Integer.toString(hillResource));
@@ -432,7 +462,7 @@ public class GameController {
           node.setStyle("-fx-fill: red;");
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
-          //calculate longest road and write to panel
+          // calculate longest road and write to panel
         } else {
           node.setVisible(false);
         }
@@ -467,14 +497,10 @@ public class GameController {
         }
       }
     }
-    hillResource--;
-    brickText.setText(Integer.toString(hillResource));
-    forestResource--;
-    lumberText.setText(Integer.toString(forestResource));
-    fieldResource--;
-    grainText.setText(Integer.toString(fieldResource));
-    pastureFieldResource--;
-    woolText.setText(Integer.toString(pastureFieldResource));
+    brickText.setText(Integer.toString(--hillResource));
+    lumberText.setText(Integer.toString(--forestResource));
+    grainText.setText(Integer.toString(--fieldResource));
+    woolText.setText(Integer.toString(--pastureFieldResource));
     occupiedCircles.add(settlementId);
     ownedCircles.add(settlementId);
     NotificationHelper.showAlert(
@@ -508,12 +534,6 @@ public class GameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
-  }
-
-  @FXML
-  public void hexagonPush(MouseEvent event) {
-    Node node = (Polygon) event.getSource();
-    System.out.println(node.getId() + ": " + node.getStyleClass());
   }
 
   @FXML
