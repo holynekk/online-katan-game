@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.*;
 
 import static com.group12.controller.GameController.*;
@@ -323,12 +324,15 @@ public class GameHelper {
   public static int findLongestRoadLength(ArrayList<String> edges) {
     int longestPath = 0;
 
+
     for (int i = 1; i <= 54; i++) {
       String node = "c" + i;
       Set<String> visited = new HashSet<>();
       int currentPathLength = dfs(node, visited, edges, 0);
       longestPath = Math.max(longestPath, currentPathLength);
     }
+    System.out.println(edges);
+    System.out.println(longestPath);
     return longestPath;
   }
 

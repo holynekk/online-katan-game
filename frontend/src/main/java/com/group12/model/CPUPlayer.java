@@ -7,8 +7,8 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 import java.util.Random;
 import com.group12.helper.GameHelper;
-import static com.group12.controller.GameController.occupiedCircles;
-import static com.group12.controller.GameController.occupiedEdges;
+
+import static com.group12.controller.GameController.*;
 
 public class CPUPlayer {
   private String color;
@@ -25,7 +25,6 @@ public class CPUPlayer {
   private int fieldResource;
   private int pastureFieldResource;
   private int longestRoadLength;
-  private boolean hasLongestRoad = false;
   private int score;
 
   public CPUPlayer(String color, String displayName) {
@@ -34,13 +33,12 @@ public class CPUPlayer {
     this.ownedCircles = new ArrayList<>();
     this.ownedCities = new ArrayList<>();
     this.ownedRoads = new ArrayList<>();
-    this.hillResource = 0;
-    this.mountainResource = 0;
-    this.forestResource = 0;
-    this.fieldResource = 0;
-    this.pastureFieldResource = 0;
+    this.hillResource = 10;
+    this.mountainResource = 10;
+    this.forestResource = 10;
+    this.fieldResource = 10;
+    this.pastureFieldResource = 10;
     this.score = 0;
-
   }
 
   public void buildRoad(AnchorPane anchorPane, String roadId) {
@@ -62,6 +60,7 @@ public class CPUPlayer {
     occupiedEdges.add(roadId);
     this.addOwnedRoads(roadId);
     longestRoadLength = GameHelper.findLongestRoadLength(ownedRoads);
+    longestOfEveryone = Math.max(longestRoadLength, longestOfEveryone);
   }
 
   public void buildSettlement(AnchorPane anchorPane, String settlementId) {
@@ -143,6 +142,8 @@ public class CPUPlayer {
           node.setOnMouseClicked(null);
           node.setCursor(Cursor.DEFAULT);
           addOwnedRoads(roadId);
+          this.longestRoadLength = GameHelper.findLongestRoadLength(ownedRoads);
+          longestOfEveryone = Math.max(longestRoadLength, longestOfEveryone);
         }
       }
     }
@@ -210,18 +211,17 @@ public class CPUPlayer {
   }
 
   public int getScore() {
-    return hasLongestRoad ? score + 2 : score;
+    return (ifHasLongestRoad() && longestRoadLength >= 5) ? score + 2 : score;
   }
 
   public int getLongestRoadLength() {
     return longestRoadLength;
   }
+
   public boolean ifHasLongestRoad() {
-    return hasLongestRoad;
+    return longestRoadLength == longestOfEveryone;
   }
-  public void setHasLongestRoad(boolean hasLongestRoad) {
-    this.hasLongestRoad = hasLongestRoad;
-  }
+
   public int getHillResource() {
     return hillResource;
   }
