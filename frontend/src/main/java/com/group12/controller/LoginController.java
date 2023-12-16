@@ -98,6 +98,16 @@ public class LoginController {
     stage.show();
   }
 
+  @FXML
+  private void resetPassword() throws IOException {
+    Stage stage = (Stage) loginButton.getScene().getWindow();
+    FXMLLoader fxmlLoader =
+        new FXMLLoader(getClass().getResource("/view/resetPasswordRequestView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    stage.show();
+  }
+
   private void showMenuScene() throws IOException {
     Stage stage = (Stage) loginButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
