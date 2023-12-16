@@ -230,12 +230,17 @@ public class CPUPlayer {
     return pastureFieldResource;
   }
 
+  public int getTotalResources() {
+    return hillResource + mountainResource + forestResource + fieldResource + pastureFieldResource;
+  }
+
   public ArrayList<String> getOwnedCircles() {
     return ownedCircles;
   }
 
   public void addOwnedCircles(String circleId) {
     this.ownedCircles.add(circleId);
+    this.score++;
   }
 
   public ArrayList<String> getOwnedCities() {
@@ -244,6 +249,7 @@ public class CPUPlayer {
 
   public void setOwnedCities(ArrayList<String> ownedCities) {
     this.ownedCities = ownedCities;
+    this.score++;
   }
 
   public ArrayList<String> getOwnedRoads() {

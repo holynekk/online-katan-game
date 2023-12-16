@@ -89,7 +89,6 @@ public class GameController {
   @FXML private Text brickText;
   @FXML private Text lumberText;
 
-  private ArrayList<Text> panelTextList;
   public static int d1;
   public static int d2;
   public int score;
@@ -117,33 +116,12 @@ public class GameController {
   public void initialize() {
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
-    hillResource = 0;
-    mountainResource = 0;
-    forestResource = 0;
-    fieldResource = 0;
-    pastureFieldResource = 0;
-    totalResources = 0;
-    panelTextList = // All User Panel Texts, except names
-        new ArrayList<>(
-            Arrays.asList(
-                woolText,
-                oreText,
-                grainText,
-                brickText,
-                lumberText,
-                player1LongestRoad,
-                player2LongestRoad,
-                player3LongestRoad,
-                player4LongestRoad,
-                player1TotalResources,
-                player2TotalResources,
-                player3TotalResources,
-                player4TotalResources,
-                player1Score,
-                player2Score,
-                player3Score,
-                player4Score));
-    initalizeUserPanel();
+    hillResource = 20;
+    mountainResource = 20;
+    forestResource = 20;
+    fieldResource = 20;
+    pastureFieldResource = 20;
+    totalResources = 80;
     tileTextList =
         new ArrayList<>(
             Arrays.asList(
@@ -183,17 +161,24 @@ public class GameController {
         Alert.AlertType.INFORMATION, "Information", "You have built a new road!");
 
     CPUSetup(anchPane, cpuOrange, cpuGreen, cpuPink, occupiedCircles, occupiedEdges);
-
-    ArrayList<String> blabla = circleOptionsAtSetup(anchPane);
-    for (Node node : anchPane.getChildren()) {
-      if (node.getClass().getName().contains("Circle")) {
-        if (blabla.contains(node.getId())) {
-          node.setVisible(true);
-          node.setStyle("-fx-fill: #D3D3D3;");
-          node.setOnMouseClicked(this::lastCirclePush);
-        }
-      }
-    }
+    Timeline timeline = new Timeline();
+    KeyFrame kv =
+        new KeyFrame(
+            Duration.seconds(7),
+            e -> {
+              ArrayList<String> blabla = circleOptionsAtSetup(anchPane);
+              for (Node node : anchPane.getChildren()) {
+                if (node.getClass().getName().contains("Circle")) {
+                  if (blabla.contains(node.getId())) {
+                    node.setVisible(true);
+                    node.setStyle("-fx-fill: #D3D3D3;");
+                    node.setOnMouseClicked(this::lastCirclePush);
+                  }
+                }
+              }
+            });
+    timeline.getKeyFrames().add(kv);
+    timeline.play();
   }
 
   @FXML
@@ -236,7 +221,6 @@ public class GameController {
     playSoundEffect(buttonSound);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
     ArrayList<String> optionalSettlements = getOptionalSettlements(anchPane, ownedEdges);
-    System.out.println(optionalSettlements);
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
         if (optionalSettlements.contains(node.getId())) {
@@ -251,7 +235,9 @@ public class GameController {
     playSoundEffect(buttonSound);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
     for (Node node : anchPane.getChildren()) {
-      if (node.getClass().getName().contains("Circle") && ownedCircles.contains(node.getId())) {
+      if (node.getClass().getName().contains("Circle")
+          && ownedCircles.contains(node.getId())
+          && !ownedCities.contains(node.getId())) {
         node.setScaleX(1.3);
         node.setScaleY(1.3);
         node.setStyle("-fx-fill: #D3D3D3;");
@@ -269,30 +255,53 @@ public class GameController {
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
     clearAllOptionals(anchPane, ownedCircles, ownedCities);
+
     Timeline timeline = new Timeline();
     KeyFrame kv1 =
         new KeyFrame(
             Duration.seconds(1),
-            event ->
-                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage));
+            event -> {
+              diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
+              updateScores();
+            });
+
     KeyFrame kv2 =
-        new KeyFrame(Duration.seconds(2), event -> CPUPlays(anchPane, cpuOrange, ownedCircles));
+        new KeyFrame(
+            Duration.seconds(2),
+            event -> {
+              CPUPlays(anchPane, cpuOrange, ownedCircles);
+              updateScores();
+            });
 
     KeyFrame kv3 =
         new KeyFrame(
             Duration.seconds(3),
-            event ->
-                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage));
+            event -> {
+              diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
+              updateScores();
+            });
     KeyFrame kv4 =
-        new KeyFrame(Duration.seconds(4), event -> CPUPlays(anchPane, cpuGreen, ownedCircles));
+        new KeyFrame(
+            Duration.seconds(4),
+            event -> {
+              CPUPlays(anchPane, cpuGreen, ownedCircles);
+              updateScores();
+            });
 
     KeyFrame kv5 =
         new KeyFrame(
             Duration.seconds(5),
-            event ->
-                diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage));
+            event -> {
+              diceThrowResourceGather(anchPane, ownedCircles, firstDiceImage, secondDiceImage);
+              updateScores();
+            });
     KeyFrame kv6 =
-        new KeyFrame(Duration.seconds(6), event -> CPUPlays(anchPane, cpuPink, ownedCircles));
+        new KeyFrame(
+            Duration.seconds(6),
+            event -> {
+              CPUPlays(anchPane, cpuPink, ownedCircles);
+              updateScores();
+            });
 
     KeyFrame kv7 =
         new KeyFrame(
@@ -301,6 +310,7 @@ public class GameController {
               firstDiceImage.setDisable(false);
               secondDiceImage.setDisable(false);
               playSoundEffect(turnSound);
+              updateScores();
               NotificationHelper.showAlert(
                   Alert.AlertType.INFORMATION, "Information", "It's your turn!");
             });
@@ -337,6 +347,7 @@ public class GameController {
         }
       }
     }
+    updateScores();
   }
 
   @FXML
@@ -363,22 +374,16 @@ public class GameController {
         if (node.getClass().getName().contains("Polygon") && node.getId().equals(rsrc)) {
           styleList = node.getStyleClass();
           totalResources += 1;
-          // set corresponding player resources panel text.
           if (styleList.contains("hill")) {
             hillResource += 1;
-            brickText.setText(Integer.toString(hillResource));
           } else if (styleList.contains("mountain")) {
             mountainResource += 1;
-            oreText.setText(Integer.toString(mountainResource));
           } else if (styleList.contains("forest")) {
             forestResource += 1;
-            lumberText.setText(Integer.toString(forestResource));
           } else if (styleList.contains("field")) {
             fieldResource += 1;
-            grainText.setText(Integer.toString(fieldResource));
           } else if (styleList.contains("pastureField")) {
             pastureFieldResource += 1;
-            woolText.setText(Integer.toString(pastureFieldResource));
           }
         }
       }
@@ -402,6 +407,7 @@ public class GameController {
         }
       }
     }
+    updateScores();
   }
 
   @FXML
@@ -448,6 +454,8 @@ public class GameController {
         }
       }
     }
+    playSoundEffect(turnSound);
+    NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Information", "It's your turn!");
   }
 
   @FXML
@@ -469,9 +477,7 @@ public class GameController {
       }
     }
     hillResource--;
-    brickText.setText(Integer.toString(hillResource));
     forestResource--;
-    lumberText.setText(Integer.toString(forestResource));
     occupiedEdges.add(roadId);
     ownedEdges.add(roadId);
     NotificationHelper.showAlert(
@@ -479,6 +485,7 @@ public class GameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
+    updateScores();
   }
 
   @FXML
@@ -497,10 +504,10 @@ public class GameController {
         }
       }
     }
-    brickText.setText(Integer.toString(--hillResource));
-    lumberText.setText(Integer.toString(--forestResource));
-    grainText.setText(Integer.toString(--fieldResource));
-    woolText.setText(Integer.toString(--pastureFieldResource));
+    hillResource--;
+    forestResource--;
+    fieldResource--;
+    pastureFieldResource--;
     occupiedCircles.add(settlementId);
     ownedCircles.add(settlementId);
     NotificationHelper.showAlert(
@@ -508,6 +515,7 @@ public class GameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
+    updateScores();
   }
 
   @FXML
@@ -534,12 +542,28 @@ public class GameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
+    updateScores();
   }
 
-  @FXML
-  public void initalizeUserPanel() {
-    for (Text text : panelTextList) {
-      text.setText("0");
-    }
+  public void updateScores() {
+    woolText.setText(Integer.toString(pastureFieldResource));
+    oreText.setText(Integer.toString(mountainResource));
+    grainText.setText(Integer.toString(fieldResource));
+    brickText.setText(Integer.toString(hillResource));
+    lumberText.setText(Integer.toString(forestResource));
+    player1Score.setText(Integer.toString(ownedCircles.size() + ownedCities.size()));
+    player1TotalResources.setText(
+        Integer.toString(
+            pastureFieldResource
+                + mountainResource
+                + fieldResource
+                + hillResource
+                + forestResource));
+    player2TotalResources.setText(Integer.toString(cpuOrange.getTotalResources()));
+    player2Score.setText(Integer.toString(cpuOrange.getScore()));
+    player3TotalResources.setText(Integer.toString(cpuGreen.getTotalResources()));
+    player3Score.setText(Integer.toString(cpuGreen.getScore()));
+    player4TotalResources.setText(Integer.toString(cpuPink.getTotalResources()));
+    player4Score.setText(Integer.toString(cpuPink.getScore()));
   }
 }

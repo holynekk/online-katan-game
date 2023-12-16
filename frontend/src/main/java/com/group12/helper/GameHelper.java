@@ -2,6 +2,7 @@ package com.group12.helper;
 
 import com.group12.model.CPUPlayer;
 import javafx.animation.RotateTransition;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -184,7 +185,7 @@ public class GameHelper {
 
   public static void CPUPlays(
       AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles) {
-    System.out.println(cpuPlayer.getDisplayName() + " plays!");
+    System.out.println(cpuPlayer.getDisplayName() + " plays! " + d1 + " " + d2);
 
     Random rnd = new Random();
     if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
@@ -308,6 +309,8 @@ public class GameHelper {
         if (ownedCircles.contains(node.getId()) && !ownedCities.contains(node.getId())) {
           node.setScaleX(1);
           node.setScaleY(1);
+          node.setCursor(Cursor.DEFAULT);
+          node.setOnMouseClicked(null);
           node.setStyle("-fx-fill: red;");
         }
       }
