@@ -91,7 +91,7 @@
                                     <ToggleGroup fx:id="cpuOrOnline" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton disable="true" focusTraversable="false" mnemonicParsing="false" text="Online" toggleGroup="$cpuOrOnline">
+                              <RadioButton focusTraversable="false" mnemonicParsing="false" text="Online" toggleGroup="$cpuOrOnline">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>

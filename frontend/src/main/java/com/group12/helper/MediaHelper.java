@@ -57,7 +57,6 @@ public class MediaHelper {
           new Media(MediaHelper.class.getResource("../../../sounds/" + effect).toURI().toString());
     } catch (URISyntaxException e) {
       e.printStackTrace();
-      System.out.println(e);
     }
     effectsPlayer = new MediaPlayer(sound);
     effectsPlayer.setVolume(effectVolume / 100);

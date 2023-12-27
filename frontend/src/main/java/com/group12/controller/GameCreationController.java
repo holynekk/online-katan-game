@@ -3,6 +3,7 @@ package com.group12.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group12.helper.HttpClientHelper;
 import com.group12.helper.NotificationHelper;
+import com.group12.model.GameData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,17 +56,19 @@ public class GameCreationController {
     playSoundEffect(buttonSound);
     RadioButton cpuOrOnlineButton = (RadioButton) cpuOrOnline.getSelectedToggle();
     RadioButton passwordRequiredButton = (RadioButton) passwordRequired.getSelectedToggle();
-    if (cpuOrOnlineButton.getText().equals("CPU")) {
-      ObjectMapper objectMapper = new ObjectMapper();
 
-      Map<String, Object> body = new HashMap<>();
-      body.put("gameName", lobbyNameText.getText());
-      body.put("gameDescription", lobbyDescriptionText.getText());
-      body.put("passwordRequired", passwordRequiredButton.getText().equals("Yes"));
-      body.put(
-          "gamePassword",
-          passwordRequiredButton.getText().equals("Yes") ? passwordText.getText() : null);
-      body.put("gameLeader", Integer.parseInt(HttpClientHelper.getSessionCookie("userId")));
+    ObjectMapper objectMapper = new ObjectMapper();
+    Map<String, Object> body = new HashMap<>();
+    body.put("gameName", lobbyNameText.getText());
+    body.put("gameDescription", lobbyDescriptionText.getText());
+    body.put("passwordRequired", passwordRequiredButton.getText().equals("Yes"));
+    body.put(
+        "gamePassword",
+        passwordRequiredButton.getText().equals("Yes") ? passwordText.getText() : null);
+    body.put("gameLeader", Integer.parseInt(HttpClientHelper.getSessionCookie("userId")));
+
+    if (cpuOrOnlineButton.getText().equals("CPU")) {
+      // CPU
       body.put("online", false);
 
       HttpRequest request =
@@ -94,6 +97,35 @@ public class GameCreationController {
       }
     } else {
       // Online
+      body.put("online", true);
+
+      HttpRequest request =
+          HttpRequest.newBuilder()
+              .uri(URI.create("http://localhost:8080/api/game"))
+              .header("Content-Type", "application/json")
+              .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
+              .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))
+              .build();
+
+      HttpResponse<String> response =
+          HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        GameData gData = objectMapper.readValue(response.body(), GameData.class);
+
+        NotificationHelper.showAlert(
+            Alert.AlertType.INFORMATION, "Success", "New lobby has been created!");
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/roomView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setScene(scene);
+        RoomController roomController = fxmlLoader.getController();
+        roomController.initData(gData);
+        stage.show();
+      } else {
+        NotificationHelper.showAlert(
+            Alert.AlertType.ERROR, "Error", "There was an error! Please try again.");
+      }
     }
   }
 

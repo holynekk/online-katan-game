@@ -186,7 +186,6 @@ public class GameHelper {
 
   public static void CPUPlays(
       AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles) {
-    System.out.println(cpuPlayer.getDisplayName() + " plays! " + d1 + " " + d2);
 
     Random rnd = new Random();
     if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
@@ -321,9 +320,9 @@ public class GameHelper {
       }
     }
   }
+
   public static int findLongestRoadLength(ArrayList<String> edges) {
     int longestPath = 0;
-
 
     for (int i = 1; i <= 54; i++) {
       String node = "c" + i;
@@ -331,12 +330,11 @@ public class GameHelper {
       int currentPathLength = dfs(node, visited, edges, 0);
       longestPath = Math.max(longestPath, currentPathLength);
     }
-    System.out.println(edges);
-    System.out.println(longestPath);
     return longestPath;
   }
 
-  private static int dfs(String node, Set<String> visited, ArrayList<String> edges, int pathLength) {
+  private static int dfs(
+      String node, Set<String> visited, ArrayList<String> edges, int pathLength) {
     if (visited.contains(node)) {
       return pathLength;
     }
@@ -356,5 +354,6 @@ public class GameHelper {
     visited.remove(node); // Backtrack
     return maxLength;
   }
+
   public void checkScores() {}
 }
