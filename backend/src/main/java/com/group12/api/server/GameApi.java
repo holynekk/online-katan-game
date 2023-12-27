@@ -66,9 +66,19 @@ public class GameApi {
               false,
               false);
       repository.save(newGame);
-      return ResponseEntity.status(HttpStatus.OK).body(null);
+      return ResponseEntity.status(HttpStatus.OK)
+          .contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+          .body(
+              new GameResponse(
+                  newGame.getGameId(),
+                  newGame.getGameName(),
+                  newGame.getGameDescription(),
+                  newGame.getPasswordRequired(),
+                  newGame.getGameLeader().getDisplayName(),
+                  newGame.getOnline(),
+                  newGame.getStarted(),
+                  newGame.getFinished()));
     }
-
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
   }
 
