@@ -1,0 +1,16 @@
+.slider {
+}
+
+.label {
+    -fx-pref-height: 30px;
+}
+
+.slider .track {
+    -fx-background-radius: 0;
+}
+
+.slider .thumb {
+    -fx-pref-height: 30px;
+    -fx-pref-width: 10px;
+    -fx-background-radius: 0;
+}
