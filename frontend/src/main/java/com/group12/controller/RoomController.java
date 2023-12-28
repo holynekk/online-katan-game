@@ -6,8 +6,11 @@ import com.group12.model.GameData;
 import com.group12.model.chat.Message;
 import com.group12.model.chat.MessageType;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
 import java.net.URISyntaxException;
@@ -21,20 +24,36 @@ public class RoomController {
 
   private StompClient stompClient;
 
+  @FXML private Button sendMessageButton;
+
+  @FXML private TextField chatTextField;
+
   @FXML private BorderPane borderpn;
+
+  @FXML private VBox chatBox;
 
   @FXML private Label gameName;
 
   public void initialize() throws JsonProcessingException, URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
 
-    stompClient = new StompClient();
+    stompClient = new StompClient(this);
     stompClient.connect();
-    stompClient.send(
-        new Message(MessageType.CONNECT, "NOW", getSessionCookie("username"), "hello man"));
   }
 
   public void initData(GameData gameData) {
     gameName.setText(gameData.getGameName());
+  }
+
+  public void addChatMessage(String message) {
+    chatBox.getChildren().add(new Label(message));
+  }
+
+  @FXML
+  public void sendChatMessage() throws JsonProcessingException {
+    Message msg =
+        new Message(MessageType.CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
+    chatTextField.setText("");
+    stompClient.sendChatMessage(msg);
   }
 }

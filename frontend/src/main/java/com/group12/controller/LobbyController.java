@@ -3,14 +3,12 @@ package com.group12.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group12.helper.HttpClientHelper;
+import com.group12.helper.NotificationHelper;
 import com.group12.model.GameData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
@@ -43,6 +41,8 @@ public class LobbyController {
   @FXML private Label lobbyGameLeaderLabel;
 
   @FXML private ListView<GameData> lobbyListView;
+
+  @FXML private Button joinRoom;
 
   @FXML private BorderPane borderpn;
 
@@ -99,6 +99,38 @@ public class LobbyController {
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/gameCreationView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
     stage.setScene(scene);
+    stage.show();
+  }
+
+  @FXML
+  public void joinRoom() throws IOException, InterruptedException {
+    //  TODO: Join logic should be rewritten later.
+
+    playSoundEffect(buttonSound);
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    HttpRequest request =
+        HttpRequest.newBuilder()
+            .uri(
+                URI.create(
+                    String.format(
+                        "http://localhost:8080/api/game?gameId=%s", lobbyIdLabel.getText())))
+            .header("Content-Type", "application/json")
+            .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
+            .build();
+
+    HttpResponse<String> response =
+        HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+    GameData gData = objectMapper.readValue(response.body(), GameData.class);
+
+    NotificationHelper.showAlert(
+        Alert.AlertType.INFORMATION, "Success", "You joined into a lobby!");
+    Stage stage = (Stage) backButton.getScene().getWindow();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/roomView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    RoomController roomController = fxmlLoader.getController();
+    roomController.initData(gData);
     stage.show();
   }
 

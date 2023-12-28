@@ -2,6 +2,7 @@ package com.group12.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group12.controller.RoomController;
 import com.group12.model.chat.Message;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -30,15 +31,32 @@ public class StompClient implements StompSessionHandler {
   private static final Logger LOG = LoggerFactory.getLogger(StompClient.class);
 
   private static final String ENDPOINT_URL = "ws://localhost:8080/ws";
-  private StompSession stompSession;
+
+  private static StompSession stompSession;
+  public static WebSocketStompClient stompClient;
 
   private final ReadOnlyBooleanWrapper connected = new ReadOnlyBooleanWrapper(false);
   private final ObservableList<Message> greetings = FXCollections.observableArrayList();
 
   private final ObjectMapper objectMapper;
+  private final RoomController roomController;
 
-  public StompClient() {
+  public StompClient(RoomController roomController) {
     this.objectMapper = new ObjectMapper();
+    this.roomController = roomController;
+
+    StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
+    List<Transport> transports = new ArrayList<>();
+    transports.add(new WebSocketTransport(webSocketClient));
+    SockJsClient sockJsClient = new SockJsClient(transports);
+    stompClient = new WebSocketStompClient(sockJsClient);
+
+    ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+    taskScheduler.afterPropertiesSet();
+
+    stompClient.setMessageConverter(new StringMessageConverter());
+    stompClient.setTaskScheduler(taskScheduler);
+    stompClient.setDefaultHeartbeat(new long[] {0, 0});
   }
 
   public ObservableList<Message> getGreetings() {
@@ -50,17 +68,6 @@ public class StompClient implements StompSessionHandler {
   }
 
   public void connect() {
-    StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
-    List<Transport> transports = new ArrayList<>();
-    transports.add(new WebSocketTransport(webSocketClient));
-    SockJsClient sockJsClient = new SockJsClient(transports);
-    ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-    taskScheduler.afterPropertiesSet();
-    WebSocketStompClient stompClient = new WebSocketStompClient(sockJsClient);
-    stompClient.setMessageConverter(new StringMessageConverter());
-    stompClient.setTaskScheduler(taskScheduler);
-    stompClient.setDefaultHeartbeat(new long[] {0, 0});
-
     try {
       stompSession = stompClient.connectAsync(ENDPOINT_URL, this).get();
     } catch (Exception e) {
@@ -75,7 +82,8 @@ public class StompClient implements StompSessionHandler {
         session.getSessionId(),
         connectedHeaders);
 
-    subscribe("/topic/greetings");
+    subscribe("/topic/room");
+    subscribe("/topic/chat");
 
     Platform.runLater(() -> connected.set(true));
   }
@@ -87,9 +95,18 @@ public class StompClient implements StompSessionHandler {
 
   @Override
   public void handleFrame(StompHeaders headers, Object payload) {
-    Message greeting = (Message) payload;
-    LOG.info("Received message: {}", greeting.getContent());
-    Platform.runLater(() -> greetings.add(greeting));
+    Message msg = null;
+    try {
+      String strPayload = (String) payload;
+      msg = objectMapper.readValue(strPayload, Message.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    Message finalMsg = msg;
+    Platform.runLater(() -> roomController.addChatMessage(finalMsg.getContent()));
+
+    LOG.info("Received message: {}", msg);
   }
 
   @Override
@@ -99,21 +116,21 @@ public class StompClient implements StompSessionHandler {
       StompHeaders headers,
       byte[] payload,
       Throwable exception) {
-    LOG.info("Exception in stomp session", exception);
+    LOG.info("Exception in stomp session: ", exception);
 
     Platform.runLater(() -> connected.set(false));
   }
 
   @Override
   public void handleTransportError(StompSession session, Throwable exception) {
-    LOG.error("Retrieved a transport error:", exception);
+    LOG.error("Retrieved a transport error: ", exception);
 
     Platform.runLater(() -> connected.set(false));
   }
 
   @Override
   public Type getPayloadType(StompHeaders headers) {
-    return Message.class;
+    return String.class;
   }
 
   public void disconnect() {
@@ -125,7 +142,11 @@ public class StompClient implements StompSessionHandler {
     Platform.runLater(() -> connected.set(false));
   }
 
-  public void send(Message helloRequest) throws JsonProcessingException {
-    stompSession.send("/app/hello", objectMapper.writeValueAsString(helloRequest));
+  public void sendChatMessage(Message message) throws JsonProcessingException {
+    stompSession.send("/app/chat", objectMapper.writeValueAsString(message));
+  }
+
+  public void sendCommand(Message message) throws JsonProcessingException {
+    stompSession.send("/app/room", objectMapper.writeValueAsString(message));
   }
 }

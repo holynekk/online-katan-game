@@ -96,10 +96,13 @@
                      <font>
                         <Font size="14.0" />
                      </font></Label>
-                  <Button disable="true" focusTraversable="false" mnemonicParsing="false" text="Join">
+                  <Button fx:id="joinButton" focusTraversable="false" mnemonicParsing="false" onAction="#joinRoom" text="Join">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <HBox.margin>
