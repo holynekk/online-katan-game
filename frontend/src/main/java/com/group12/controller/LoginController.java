@@ -57,7 +57,6 @@ public class LoginController {
               .build();
       HttpResponse<String> response =
           HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
-
       if (response.statusCode() == 200) {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "You successfully logged in!");

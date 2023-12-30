@@ -2,6 +2,7 @@ package com.group12.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group12.controller.OnlineGameController;
 import com.group12.controller.RoomController;
 import com.group12.model.chat.Message;
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class StompClient implements StompSessionHandler {
 
   private final ObjectMapper objectMapper;
   private final RoomController roomController;
+  private OnlineGameController gameController;
 
   public StompClient(RoomController roomController) {
     this.objectMapper = new ObjectMapper();
@@ -57,6 +60,10 @@ public class StompClient implements StompSessionHandler {
     stompClient.setMessageConverter(new StringMessageConverter());
     stompClient.setTaskScheduler(taskScheduler);
     stompClient.setDefaultHeartbeat(new long[] {0, 0});
+  }
+
+  public void setGameController(OnlineGameController controller) {
+    this.gameController = controller;
   }
 
   public ObservableList<Message> getGreetings() {
@@ -102,9 +109,40 @@ public class StompClient implements StompSessionHandler {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
     Message finalMsg = msg;
-    Platform.runLater(() -> roomController.addChatMessage(finalMsg.getContent()));
+    switch (msg.getMsgType()) {
+      case CHAT:
+        Platform.runLater(() -> roomController.addChatMessage(finalMsg.getContent()));
+        break;
+      case USER_JOINED:
+        Platform.runLater(() -> roomController.refreshPlayerList(finalMsg.getContent()));
+        String[] playerUsernameList = finalMsg.getContent().split("/");
+        Platform.runLater(
+            () ->
+                roomController.addChatMessage(
+                    playerUsernameList[playerUsernameList.length - 1]
+                        + " has joined into the lobby!"));
+        break;
+      case READY:
+        Platform.runLater(
+            () -> roomController.toggleStartGameButton(finalMsg.getContent().equals("true")));
+        Platform.runLater(() -> roomController.setReadyColor(finalMsg.getNickname()));
+        Platform.runLater(
+            () -> roomController.addChatMessage(finalMsg.getNickname() + " is ready!"));
+        break;
+      case START_GAME:
+        Platform.runLater(
+            () -> {
+              try {
+                roomController.showGameScene();
+              } catch (IOException e) {
+                throw new RuntimeException(e);
+              }
+            });
+        break;
+      default:
+        break;
+    }
 
     LOG.info("Received message: {}", msg);
   }
@@ -143,7 +181,9 @@ public class StompClient implements StompSessionHandler {
   }
 
   public void sendChatMessage(Message message) throws JsonProcessingException {
-    stompSession.send("/app/chat", objectMapper.writeValueAsString(message));
+    if (!message.getContent().trim().isEmpty()) {
+      stompSession.send("/app/chat", objectMapper.writeValueAsString(message));
+    }
   }
 
   public void sendCommand(Message message) throws JsonProcessingException {
