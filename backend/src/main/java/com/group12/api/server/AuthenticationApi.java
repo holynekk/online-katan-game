@@ -41,6 +41,7 @@ public class AuthenticationApi {
       SessionCookieToken token = new SessionCookieToken();
       token.setUsername(encryptedUsername);
       String tokenId = tokenService.store(request, token);
+      System.out.println(user);
       return ResponseEntity.ok()
           .header("username", encryptedUsername)
           .header("userId", Integer.toString(user.getUserId()))

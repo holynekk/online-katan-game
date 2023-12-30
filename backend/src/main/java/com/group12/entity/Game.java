@@ -101,6 +101,14 @@ public class Game {
     return isOnline;
   }
 
+  public Boolean getIsOnline() {
+    return isOnline;
+  }
+
+  public void setIsOnline(Boolean online) {
+    isOnline = online;
+  }
+
   public void setOnline(Boolean online) {
     isOnline = online;
   }

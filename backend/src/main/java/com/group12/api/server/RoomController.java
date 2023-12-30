@@ -3,24 +3,53 @@ package com.group12.api.server;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group12.entity.chat.Message;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class RoomController {
+
+  private int turn;
+
+  private List<String> playerList;
+
+  private List<String> readyPlayerList;
 
   private final ObjectMapper objectMapper;
 
   public RoomController() {
-    objectMapper = new ObjectMapper();
+    this.turn = 0;
+    this.objectMapper = new ObjectMapper();
+    this.playerList = new ArrayList<>();
+    this.readyPlayerList = new ArrayList<>();
   }
 
-  @MessageMapping("/join")
+  @MessageMapping("/room")
   @SendTo("/topic/room")
-  public void join(String message) throws JsonProcessingException {
+  public String room(String message) throws JsonProcessingException {
     Message msg = objectMapper.readValue(message, Message.class);
-    System.out.println(msg);
+    switch (msg.getMsgType()) {
+      case USER_JOINED:
+        playerList.add(msg.getNickname());
+        msg.setContent(StringUtils.join(this.playerList, "/"));
+        break;
+      case START_GAME:
+        System.out.println("-- Game starts -- ");
+        break;
+      case READY:
+        readyPlayerList.add(msg.getNickname());
+        msg.setContent(Boolean.toString(this.readyPlayerList.size() == 2));
+        break;
+      default:
+        break;
+    }
+
+    return objectMapper.writeValueAsString(msg);
   }
 
   @MessageMapping("/chat")
