@@ -117,3 +117,7 @@
     -fx-min-height: 50px;
 }
 
+.chatBackground {
+    -fx-background-color: rgb(255, 255, 255);
+}
+

@@ -159,13 +159,14 @@ public class RoomController {
     stage.setScene(scene);
     OnlineGameController gameController = fxmlLoader.getController();
     stompClient.setGameController(gameController);
+    gameController.initData(stompClient);
     stage.show();
   }
 
   @FXML
   public void sendChatMessage() throws JsonProcessingException {
     Message msg =
-        new Message(MessageType.CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
+        new Message(MessageType.LOBBY_CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
     chatTextField.setText("");
     stompClient.sendChatMessage(msg);
   }

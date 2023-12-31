@@ -10,6 +10,8 @@ public enum MessageType {
   DISCONNECT,
   KICK,
   BAN,
-  CHAT,
-  START_GAME
+  LOBBY_CHAT,
+  IN_GAME_CHAT,
+  START_GAME,
+  THROW_DICE
 }

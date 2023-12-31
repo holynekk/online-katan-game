@@ -111,8 +111,11 @@ public class StompClient implements StompSessionHandler {
     }
     Message finalMsg = msg;
     switch (msg.getMsgType()) {
-      case CHAT:
+      case LOBBY_CHAT:
         Platform.runLater(() -> roomController.addChatMessage(finalMsg.getContent()));
+        break;
+      case IN_GAME_CHAT:
+        Platform.runLater(() -> gameController.addChatMessage(finalMsg.getContent()));
         break;
       case USER_JOINED:
         Platform.runLater(() -> roomController.refreshPlayerList(finalMsg.getContent()));
@@ -139,6 +142,18 @@ public class StompClient implements StompSessionHandler {
                 throw new RuntimeException(e);
               }
             });
+        Platform.runLater(() -> gameController.setBoard(finalMsg.getContent()));
+        break;
+      case THROW_DICE:
+        String[] diceResults = finalMsg.getContent().split("/");
+        Platform.runLater(
+            () ->
+                gameController.addChatMessage(
+                    finalMsg.getNickname() + " rolled " + diceResults[0] + " " + diceResults[1]));
+        Platform.runLater(
+            () ->
+                gameController.diceThrowAnimation(
+                    Integer.parseInt(diceResults[0]), Integer.parseInt(diceResults[1])));
         break;
       default:
         break;
