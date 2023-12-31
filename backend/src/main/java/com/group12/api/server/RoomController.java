@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.group12.util.GameUtil.shuffleBoardTiles;
+import static com.group12.util.GameUtil.throwDice;
+
 @Controller
 public class RoomController {
 
@@ -39,11 +42,14 @@ public class RoomController {
         msg.setContent(StringUtils.join(this.playerList, "/"));
         break;
       case START_GAME:
-        System.out.println("-- Game starts -- ");
+        msg.setContent(shuffleBoardTiles());
         break;
       case READY:
         readyPlayerList.add(msg.getNickname());
         msg.setContent(Boolean.toString(this.readyPlayerList.size() == 2));
+        break;
+      case THROW_DICE:
+        msg.setContent(throwDice());
         break;
       default:
         break;
