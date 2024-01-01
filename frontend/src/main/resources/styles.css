@@ -117,7 +117,19 @@
     -fx-min-height: 50px;
 }
 
-.chatBackground {
+.chatBackgroundOpacity {
     -fx-background-color: rgb(255, 255, 255);
+    -fx-opacity: 0.8;
+}
+
+.roomButton {
+    -fx-background-color: rgb(256, 0, 0);
+    -fx-border-color: yellow;
+    -fx-text-fill: yellow;
+    -fx-border-width: 1;
+}
+
+.roomButton:hover {
+    -fx-background-color: rgb(200, 0, 0);
 }
 

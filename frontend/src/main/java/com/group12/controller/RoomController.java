@@ -8,16 +8,16 @@ import com.group12.model.chat.Message;
 import com.group12.model.chat.MessageType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +39,7 @@ public class RoomController {
   @FXML private Button sendMessageButton;
   @FXML private TextField chatTextField;
   @FXML private BorderPane borderpn;
+  @FXML private ScrollPane chatScrollPane;
   @FXML private VBox chatBox;
   @FXML private VBox playerList;
   @FXML private Label gameName;
@@ -76,8 +77,28 @@ public class RoomController {
         });
   }
 
+  public void addChatMessage(Message msg) {
+    Text txt1 = new Text(msg.getNickname() + ": ");
+    Text txt2 = new Text(msg.getContent());
+
+    Color clr =
+        switch (msg.getUserColor()) {
+          case "red" -> Color.RED;
+          case "orange" -> Color.ORANGE;
+          case "green" -> Color.GREEN;
+          case "pink" -> Color.PINK;
+          default -> Color.BLACK;
+        };
+    txt1.setFill(clr);
+
+    TextFlow textFlow = new TextFlow(txt1, txt2);
+    chatBox.getChildren().add(textFlow);
+    chatScrollPane.setVvalue(1D);
+  }
+
   public void addChatMessage(String message) {
     chatBox.getChildren().add(new Label(message));
+    chatScrollPane.setVvalue(1D);
   }
 
   public void refreshPlayerList(Message msg) {
@@ -98,7 +119,7 @@ public class RoomController {
       this.userColor = color;
     }
 
-    HBox hBox = new HBox();
+    HBox hBox = new HBox(10);
     hBox.setId(username);
     hBox.setAlignment(Pos.CENTER_LEFT);
     hBox.setPrefHeight(80);
@@ -176,6 +197,8 @@ public class RoomController {
     Message msg =
         new Message(
             MessageType.LOBBY_CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
+    msg.setUserColor(this.userColor);
+
     chatTextField.setText("");
     stompClient.sendChatMessage(msg);
   }

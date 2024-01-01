@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LobbyController">
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LobbyController">
    <top>
       <AnchorPane prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,12 +27,12 @@
                   </Label>
                </children>
             </HBox>
-            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" styleClass="roomButton" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="newLobbyButton" focusTraversable="false" mnemonicParsing="false" onAction="#showGameCreation" prefWidth="110.0" text="New Lobby" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="170.0">
+            <Button fx:id="newLobbyButton" focusTraversable="false" mnemonicParsing="false" onAction="#showGameCreation" prefWidth="110.0" styleClass="roomButton" text="New Lobby" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -48,7 +48,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <HBox.margin>
-                  <Insets left="40.0" top="-70.0" />
+                  <Insets left="40.0" top="-30.0" />
                </HBox.margin>
             </ListView>
             <VBox prefHeight="200.0" prefWidth="180.0" spacing="5.0">
@@ -96,7 +96,7 @@
                      <font>
                         <Font size="14.0" />
                      </font></Label>
-                  <Button fx:id="joinButton" focusTraversable="false" mnemonicParsing="false" onAction="#joinRoom" text="Join">
+                  <Button fx:id="joinButton" focusTraversable="false" mnemonicParsing="false" onAction="#joinRoom" styleClass="roomButton" text="Join">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -113,12 +113,12 @@
       </HBox>
    </center>
    <bottom>
-      <Button fx:id="leaderboardButton" mnemonicParsing="false" onAction="#showLeaderboard" text="Show Leaderboard" BorderPane.alignment="CENTER">
+      <Button fx:id="leaderboardButton" mnemonicParsing="false" onAction="#showLeaderboard" styleClass="roomButton" text="Show Leaderboard" BorderPane.alignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <BorderPane.margin>
-            <Insets />
+            <Insets bottom="40.0" />
          </BorderPane.margin>
       </Button>
    </bottom>

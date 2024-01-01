@@ -142,15 +142,18 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" styleClass="chatBackground">
                <children>
-                  <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" prefHeight="175.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                  <ScrollPane fx:id="chatScrollPane" focusTraversable="false" hbarPolicy="NEVER" prefHeight="175.0" prefWidth="200.0" vbarPolicy="ALWAYS">
                      <content>
                         <VBox fx:id="chatBox" prefHeight="175.0" prefWidth="178.0" />
                      </content>
                   </ScrollPane>
                   <HBox maxHeight="26.0" prefHeight="26.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="chatTextField" />
-                        <Button fx:id="sendButton" maxWidth="50.0" minWidth="52.0" mnemonicParsing="false" onAction="#sendChatMessage" text="Send" />
+                        <TextField fx:id="chatTextField" focusTraversable="false" promptText="Send a Message" />
+                        <Button fx:id="sendButton" focusTraversable="false" maxWidth="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#sendChatMessage" text="&gt;">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                      </children>
                   </HBox>
                </children>

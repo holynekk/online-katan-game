@@ -24,6 +24,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
@@ -124,6 +125,9 @@ public class OnlineGameController {
 
       HBox hbox = new HBox();
       hbox.setAlignment(Pos.CENTER);
+      //      hbox.setStyle(
+      //          String.format("-fx-border-color: %s; -fx-border-width: 2 0 2 0;",
+      // this.userColor));
       Label totalResource = new Label("0");
       totalResource.setId(username + "Resource");
       usernameLabel.setTextFill(Color.WHITE);
@@ -134,7 +138,7 @@ public class OnlineGameController {
 
       playerInfoBox.getChildren().add(vbox);
     }
-    playerInfoBox.getChildren().get(1).setStyle("-fx-fill: #D3D3D3;");
+    playerInfoBox.getChildren().get(1).setStyle("-fx-fill: #808080;");
   }
 
   public void initialize() {
@@ -193,8 +197,8 @@ public class OnlineGameController {
           && !ownedCities.contains(node.getId())) {
         node.setScaleX(1.3);
         node.setScaleY(1.3);
-        node.setStyle("-fx-fill: #D3D3D3;");
-        node.setOnMouseClicked(this::upgradeToCity);
+        node.setStyle("-fx-fill: #808080;");
+        node.setOnMouseClicked(this::upgradeSettlement);
         node.setCursor(Cursor.HAND);
       }
     }
@@ -332,8 +336,8 @@ public class OnlineGameController {
     if (brickResource >= 1 && lumberResource >= 1 && grainResource >= 1 && woolResource >= 1) {
       settlementBuildButton.setDisable(false);
     }
-    if (grainResource >= 2 && oreResource >= 3) {
-      roadBuildButton.setDisable(false);
+    if (grainResource >= 2 && oreResource >= 3 && ownedCities.size() < ownedCircles.size()) {
+      settlementUpgradeButton.setDisable(false);
     }
     skipTurnButton.setDisable(false);
   }
@@ -397,7 +401,6 @@ public class OnlineGameController {
     stompClient.sendCommand(msg);
   }
 
-  @FXML
   public void roadBuilt(Message msg) {
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
@@ -414,7 +417,42 @@ public class OnlineGameController {
   }
 
   @FXML
-  public void upgradeToCity(MouseEvent event) {}
+  public void upgradeSettlement(MouseEvent event) {
+    Circle eventCircle = (Circle) event.getSource();
+    String circleId = eventCircle.getId();
+
+    ownedCities.add(circleId);
+
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
+
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+    try {
+      Message msg = new Message(MessageType.UPGRADE_SETTLEMENT, "Now", clientUsername, circleId);
+      msg.setUserColor(this.userColor);
+      stompClient.sendCommand(msg);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void settlementUpgraded(Message msg) {
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle")) {
+        if (node.getId().equals(msg.getContent())) {
+          node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
+          node.setStyle(String.format("-fx-fill: %s;", msg.getUserColor()));
+          node.setScaleX(1.3);
+          node.setScaleY(1.3);
+          break;
+        }
+      }
+    }
+    occupiedEdges.add(msg.getContent());
+  }
 
   public void highlightPlayerInfoBox(String username) {
     for (Node node : playerInfoBox.getChildren()) {
@@ -432,8 +470,28 @@ public class OnlineGameController {
   public void sendChatMessage() throws JsonProcessingException {
     Message msg =
         new Message(MessageType.IN_GAME_CHAT, "Now", clientUsername, chatTextField.getText());
+    msg.setUserColor(this.userColor);
     chatTextField.setText("");
     stompClient.sendChatMessage(msg);
+  }
+
+  public void addChatMessage(Message msg) {
+    Text txt1 = new Text(msg.getNickname() + ": ");
+    Text txt2 = new Text(msg.getContent());
+
+    Color clr =
+        switch (msg.getUserColor()) {
+          case "red" -> Color.RED;
+          case "orange" -> Color.ORANGE;
+          case "green" -> Color.GREEN;
+          case "pink" -> Color.PINK;
+          default -> Color.BLACK;
+        };
+    txt1.setFill(clr);
+
+    TextFlow textFlow = new TextFlow(txt1, txt2);
+    chatBox.getChildren().add(textFlow);
+    chatScrollPane.setVvalue(1D);
   }
 
   public void addChatMessage(String message) {

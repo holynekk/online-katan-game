@@ -114,10 +114,10 @@ public class StompClient implements StompSessionHandler {
     Message finalMsg = msg;
     switch (msg.getMsgType()) {
       case LOBBY_CHAT:
-        Platform.runLater(() -> roomController.addChatMessage(finalMsg.getContent()));
+        Platform.runLater(() -> roomController.addChatMessage(finalMsg));
         break;
       case IN_GAME_CHAT:
-        Platform.runLater(() -> gameController.addChatMessage(finalMsg.getContent()));
+        Platform.runLater(() -> gameController.addChatMessage(finalMsg));
         break;
       case USER_JOINED:
         Platform.runLater(
@@ -207,13 +207,29 @@ public class StompClient implements StompSessionHandler {
             });
         break;
       case BUILD_SETTLEMENT:
-        Platform.runLater(() -> gameController.settlementBuilt(finalMsg));
+        Platform.runLater(
+            () -> {
+              gameController.addChatMessage(finalMsg.getNickname() + " built a settlement!");
+              gameController.settlementBuilt(finalMsg);
+            });
+        break;
       case BUILD_ROAD:
-        Platform.runLater(() -> gameController.roadBuilt(finalMsg));
+        Platform.runLater(
+            () -> {
+              gameController.addChatMessage(finalMsg.getNickname() + " built a road!");
+              gameController.roadBuilt(finalMsg);
+            });
+        break;
+      case UPGRADE_SETTLEMENT:
+        Platform.runLater(
+            () -> {
+              gameController.addChatMessage(
+                  finalMsg.getNickname() + " upgraded a settlement to a city!");
+              gameController.settlementUpgraded(finalMsg);
+            });
       default:
         break;
     }
-
     LOG.info("{} Received message: {}", stompUsername, msg);
   }
 
