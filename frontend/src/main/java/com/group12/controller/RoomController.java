@@ -32,6 +32,7 @@ import static com.group12.helper.HttpClientHelper.getSessionCookie;
 public class RoomController {
 
   private StompClient stompClient;
+  private String userColor;
   private String gameLeader;
 
   @FXML private Button sendMessageButton;
@@ -52,7 +53,7 @@ public class RoomController {
   public void initialize() throws JsonProcessingException, URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
 
-    stompClient = new StompClient(this);
+    stompClient = new StompClient(this, getSessionCookie("username"));
     stompClient.connect();
     stompClient.sendCommand(
         new Message(
@@ -78,18 +79,24 @@ public class RoomController {
     chatBox.getChildren().add(new Label(message));
   }
 
-  public void refreshPlayerList(String usernameList) {
+  public void refreshPlayerList(Message msg) {
+    String usernameList = msg.getContent();
+    String color = msg.getUserColor();
     String[] playerUsernameList = usernameList.split("/");
     if (this.playerList.getChildren().size() == playerUsernameList.length - 1) {
-      addPlayerToTheList(playerUsernameList[playerUsernameList.length - 1]);
+      addPlayerToTheList(playerUsernameList[playerUsernameList.length - 1], color);
     } else {
       for (String username : playerUsernameList) {
-        addPlayerToTheList(username);
+        addPlayerToTheList(username, color);
       }
     }
   }
 
-  public void addPlayerToTheList(String username) {
+  public void addPlayerToTheList(String username, String color) {
+    if (username.equals(getSessionCookie("username"))) {
+      this.userColor = color;
+    }
+
     HBox hBox = new HBox();
     hBox.setId(username);
     hBox.setAlignment(Pos.CENTER_LEFT);
@@ -159,14 +166,15 @@ public class RoomController {
     stage.setScene(scene);
     OnlineGameController gameController = fxmlLoader.getController();
     stompClient.setGameController(gameController);
-    gameController.initData(stompClient);
+    gameController.initData(this.stompClient, this.userColor);
     stage.show();
   }
 
   @FXML
   public void sendChatMessage() throws JsonProcessingException {
     Message msg =
-        new Message(MessageType.LOBBY_CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
+        new Message(
+            MessageType.LOBBY_CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
     chatTextField.setText("");
     stompClient.sendChatMessage(msg);
   }

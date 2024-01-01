@@ -1,23 +1,24 @@
 package com.group12.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.group12.helper.NotificationHelper;
 import com.group12.helper.StompClient;
 import com.group12.model.chat.Message;
 import com.group12.model.chat.MessageType;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
@@ -25,13 +26,10 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
-import static com.group12.controller.GameController.d1;
-import static com.group12.controller.GameController.d2;
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
-import static com.group12.helper.MediaHelper.diceEffect;
-import static com.group12.helper.MediaHelper.playSoundEffect;
+import static com.group12.helper.MediaHelper.*;
+import static com.group12.helper.OnlineGameHelper.*;
 
 @Component
 public class OnlineGameController {
@@ -75,14 +73,23 @@ public class OnlineGameController {
 
   private StompClient stompClient;
   private String clientUsername;
+  private String userColor;
 
   @FXML private TextField chatTextField;
   @FXML private Button sendButton;
   @FXML private ScrollPane chatScrollPane;
   @FXML private VBox chatBox;
 
-  public void initData(StompClient stompClient) {
+  public ArrayList<String> occupiedCircles = new ArrayList<>();
+  public ArrayList<String> occupiedEdges = new ArrayList<>();
+
+  private ArrayList<String> ownedCircles = new ArrayList<>();
+  private ArrayList<String> ownedCities = new ArrayList<>();
+  private ArrayList<String> ownedEdges = new ArrayList<>();
+
+  public void initData(StompClient stompClient, String color) {
     this.stompClient = stompClient;
+    this.userColor = color;
   }
 
   public void initialize() {
@@ -105,16 +112,47 @@ public class OnlineGameController {
   }
 
   @FXML
-  public void showOptionalRoads() {}
+  public void showOptionalSettlements() {
+    playSoundEffect(buttonSound);
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+    showSettlementOptions(anchPane, occupiedCircles);
+  }
 
   @FXML
-  public void showOptionalSettlements() {}
+  public void showOptionalRoads() {
+    playSoundEffect(buttonSound);
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+    showRoadOptions(anchPane, ownedCircles, ownedEdges, occupiedEdges);
+  }
 
   @FXML
-  public void showOptionalUpgrades() {}
+  public void showOptionalUpgrades() {
+    playSoundEffect(buttonSound);
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle")
+          && ownedCircles.contains(node.getId())
+          && !ownedCities.contains(node.getId())) {
+        node.setScaleX(1.3);
+        node.setScaleY(1.3);
+        node.setStyle("-fx-fill: #D3D3D3;");
+        node.setOnMouseClicked(this::upgradeToCity);
+        node.setCursor(Cursor.HAND);
+      }
+    }
+  }
 
   @FXML
-  public void skipTurn() {}
+  public void skipTurn() throws JsonProcessingException {
+    Message msg = new Message(MessageType.SKIP_TURN, "Now", clientUsername, "skip_turn!");
+    stompClient.sendCommand(msg);
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+    toggleButtons(true);
+  }
 
   @FXML
   public void throwDice(MouseEvent event) throws JsonProcessingException {
@@ -154,6 +192,98 @@ public class OnlineGameController {
     }
   }
 
+  public void setupHelper(String turnUsername) {
+    if (turnUsername.equals(this.clientUsername)) {
+      showSettlementOptions(anchPane, occupiedCircles);
+    }
+  }
+
+  public void turnHelper(String turnUsername) {
+    if (turnUsername.equals(this.clientUsername)) {
+      playSoundEffect(turnSound);
+      NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Information", "It's your turn!");
+      toggleButtons(false);
+    }
+  }
+
+  public void toggleButtons(Boolean setDisable) {
+    roadBuildButton.setDisable(setDisable);
+    settlementBuildButton.setDisable(setDisable);
+    settlementUpgradeButton.setDisable(setDisable);
+    skipTurnButton.setDisable(setDisable);
+  }
+
+  @FXML
+  public void buildSettlement(MouseEvent event) throws JsonProcessingException {
+    Circle eventCircle = (Circle) event.getSource();
+    String circleId = eventCircle.getId();
+
+    ownedCircles.add(circleId);
+    Message msg = new Message(MessageType.BUILD_SETTLEMENT, "Now", clientUsername, circleId);
+    msg.setUserColor(this.userColor);
+    stompClient.sendCommand(msg);
+
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
+
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+  }
+
+  public void settlementBuilt(Message msg) {
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle")) {
+        if (node.getId().equals(msg.getContent())) {
+          node.setVisible(true);
+          node.setStyle(String.format("-fx-fill: %s;", msg.getUserColor()));
+          node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
+          break;
+        }
+      }
+    }
+    occupiedCircles.add(msg.getContent());
+  }
+
+  @FXML
+  public void buildRoad(MouseEvent event) throws JsonProcessingException {
+    Rectangle eventCircle = (Rectangle) event.getSource();
+    String rectangleId = eventCircle.getId();
+
+    ownedEdges.add(rectangleId);
+
+    roadBuildButton.setDisable(true);
+    settlementBuildButton.setDisable(true);
+    settlementUpgradeButton.setDisable(true);
+
+    clearOptionals(
+        anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+
+    Message msg = new Message(MessageType.BUILD_ROAD, "Now", clientUsername, rectangleId);
+    msg.setUserColor(this.userColor);
+    stompClient.sendCommand(msg);
+  }
+
+  @FXML
+  public void roadBuilt(Message msg) {
+    for (Node node : anchPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        if (node.getId().equals(msg.getContent())) {
+          node.setVisible(true);
+          node.setStyle(String.format("-fx-fill: %s;", msg.getUserColor()));
+          node.setOnMouseClicked(null);
+          node.setCursor(Cursor.DEFAULT);
+          break;
+        }
+      }
+    }
+    occupiedEdges.add(msg.getContent());
+  }
+
+  @FXML
+  public void upgradeToCity(MouseEvent event) {}
+
   @FXML
   public void sendChatMessage() throws JsonProcessingException {
     Message msg =
@@ -165,5 +295,9 @@ public class OnlineGameController {
   public void addChatMessage(String message) {
     chatBox.getChildren().add(new Label(message));
     chatScrollPane.setVvalue(1D);
+  }
+
+  public String getClientUsername() {
+    return this.clientUsername;
   }
 }

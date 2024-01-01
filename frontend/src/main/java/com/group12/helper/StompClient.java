@@ -36,6 +36,7 @@ public class StompClient implements StompSessionHandler {
 
   private static StompSession stompSession;
   public static WebSocketStompClient stompClient;
+  private String stompUsername;
 
   private final ReadOnlyBooleanWrapper connected = new ReadOnlyBooleanWrapper(false);
   private final ObservableList<Message> greetings = FXCollections.observableArrayList();
@@ -44,9 +45,10 @@ public class StompClient implements StompSessionHandler {
   private final RoomController roomController;
   private OnlineGameController gameController;
 
-  public StompClient(RoomController roomController) {
+  public StompClient(RoomController roomController, String stompUsername) {
     this.objectMapper = new ObjectMapper();
     this.roomController = roomController;
+    this.stompUsername = stompUsername;
 
     StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
     List<Transport> transports = new ArrayList<>();
@@ -118,7 +120,7 @@ public class StompClient implements StompSessionHandler {
         Platform.runLater(() -> gameController.addChatMessage(finalMsg.getContent()));
         break;
       case USER_JOINED:
-        Platform.runLater(() -> roomController.refreshPlayerList(finalMsg.getContent()));
+        Platform.runLater(() -> roomController.refreshPlayerList(finalMsg));
         String[] playerUsernameList = finalMsg.getContent().split("/");
         Platform.runLater(
             () ->
@@ -128,10 +130,11 @@ public class StompClient implements StompSessionHandler {
         break;
       case READY:
         Platform.runLater(
-            () -> roomController.toggleStartGameButton(finalMsg.getContent().equals("true")));
-        Platform.runLater(() -> roomController.setReadyColor(finalMsg.getNickname()));
-        Platform.runLater(
-            () -> roomController.addChatMessage(finalMsg.getNickname() + " is ready!"));
+            () -> {
+              roomController.toggleStartGameButton(finalMsg.getContent().equals("true"));
+              roomController.setReadyColor(finalMsg.getNickname());
+              roomController.addChatMessage(finalMsg.getNickname() + " is ready!");
+            });
         break;
       case START_GAME:
         Platform.runLater(
@@ -142,7 +145,28 @@ public class StompClient implements StompSessionHandler {
                 throw new RuntimeException(e);
               }
             });
-        Platform.runLater(() -> gameController.setBoard(finalMsg.getContent()));
+        Platform.runLater(
+            () -> {
+              gameController.setBoard(finalMsg.getContent());
+              gameController.setupHelper(finalMsg.getTurnUsername());
+            });
+        //        Platform.runLater(() -> gameController.turnHelper(finalMsg.getTurnUsername()));
+        break;
+      case SHOW_ROADS_AT_SETUP:
+        Platform.runLater(
+            () -> {
+              gameController.settlementBuilt(finalMsg);
+              if (stompUsername.equals(finalMsg.getNickname())) {
+                gameController.showOptionalRoads();
+              }
+            });
+        break;
+      case SKIP_SETUP_TURN:
+        Platform.runLater(
+            () -> {
+              gameController.roadBuilt(finalMsg);
+              gameController.setupHelper(finalMsg.getTurnUsername());
+            });
         break;
       case THROW_DICE:
         String[] diceResults = finalMsg.getContent().split("/");
@@ -155,11 +179,18 @@ public class StompClient implements StompSessionHandler {
                 gameController.diceThrowAnimation(
                     Integer.parseInt(diceResults[0]), Integer.parseInt(diceResults[1])));
         break;
+      case SKIP_TURN:
+        Platform.runLater(() -> gameController.turnHelper(finalMsg.getTurnUsername()));
+        break;
+      case BUILD_SETTLEMENT:
+        Platform.runLater(() -> gameController.settlementBuilt(finalMsg));
+      case BUILD_ROAD:
+        Platform.runLater(() -> gameController.roadBuilt(finalMsg));
       default:
         break;
     }
 
-    LOG.info("Received message: {}", msg);
+    LOG.info(" {} Received message: {}", stompUsername, msg);
   }
 
   @Override
