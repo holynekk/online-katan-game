@@ -54,6 +54,9 @@ public class RoomController {
         break;
       case THROW_DICE:
         msg.setContent(throwDice());
+        msg.setTurnUsername(this.playerList.get(turnCount % this.playerList.size()));
+        break;
+      case RESOURCE_CHANGE:
         break;
       case SKIP_TURN:
         msg.setTurnUsername(this.playerList.get(++turnCount % this.playerList.size()));
@@ -68,16 +71,15 @@ public class RoomController {
         if (this.turnCount < this.playerList.size() - 1) {
           msg.setMsgType(MessageType.SKIP_SETUP_TURN);
           msg.setTurnUsername(this.playerList.get(++turnCount % this.playerList.size()));
-          break;
-        }
-        else if (this.turnCount < (this.playerList.size() * 2 - 1)) {
+        } else if (this.turnCount < (this.playerList.size() * 2 - 1)) {
           msg.setMsgType(MessageType.SKIP_SETUP_TURN);
           msg.setTurnUsername(
-              this.playerList.get(this.playerList.size() - 1 - (++turnCount % this.playerList.size())));
-          break;
-        }
-        else {
-          System.out.println("setup ends!");
+              this.playerList.get(
+                  this.playerList.size() - 1 - (++turnCount % this.playerList.size())));
+        } else if (this.turnCount < (this.playerList.size() * 2)) {
+          this.turnCount++;
+          msg.setMsgType(MessageType.END_SETUP);
+          msg.setTurnUsername(this.playerList.get(0));
         }
         break;
       default:
@@ -91,7 +93,7 @@ public class RoomController {
   @SendTo("/topic/chat")
   public String chat(String message) throws JsonProcessingException {
     Message msg = objectMapper.readValue(message, Message.class);
-    msg.setContent(msg.getNickname() + ": " + msg.getContent());
+    msg.setContent(msg.getContent());
     return objectMapper.writeValueAsString(msg);
   }
 
