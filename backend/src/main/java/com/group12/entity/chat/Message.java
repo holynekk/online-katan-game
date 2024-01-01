@@ -6,6 +6,9 @@ public class Message {
   private MessageType msgType;
   private String timestamp;
   private String nickname;
+  private String turnUsername;
+  private String userColor;
+  private Boolean atSetup;
   private String content;
 
   public Message() {}
@@ -46,6 +49,30 @@ public class Message {
 
   public void setNickname(String nickname) {
     this.nickname = nickname;
+  }
+
+  public String getTurnUsername() {
+    return turnUsername;
+  }
+
+  public void setTurnUsername(String turnUsername) {
+    this.turnUsername = turnUsername;
+  }
+
+  public String getUserColor() {
+    return userColor;
+  }
+
+  public void setUserColor(String userColor) {
+    this.userColor = userColor;
+  }
+
+  public Boolean getAtSetup() {
+    return atSetup;
+  }
+
+  public void setAtSetup(Boolean atSetup) {
+    this.atSetup = atSetup;
   }
 
   public String getContent() {
