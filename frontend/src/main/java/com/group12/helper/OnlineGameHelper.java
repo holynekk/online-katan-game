@@ -3,10 +3,12 @@ package com.group12.helper;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class OnlineGameHelper {
   public static ArrayList<String> hexagonList =
@@ -104,7 +106,7 @@ public class OnlineGameHelper {
       AnchorPane anchorPane, ArrayList<String> occupiedCircles) {
     ArrayList<String> circleOptionList = new ArrayList<>(circleList);
     ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
-    System.out.println(occupiedCircles);
+
     for (Node node : anchorPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
         String[] temp = node.getId().split("-");
@@ -153,6 +155,25 @@ public class OnlineGameHelper {
       }
     }
     optionalRoads.removeAll(occupiedEdges);
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        if (optionalRoads.contains(node.getId())) {
+          node.setVisible(true);
+        }
+      }
+    }
+  }
+
+  public static void showRoadOptions(AnchorPane anchorPane, String circleId) {
+    ArrayList<String> optionalRoads = new ArrayList<>();
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        String[] temp = node.getId().split("-");
+        if (temp[0].equals(circleId) || temp[1].equals(circleId)) {
+          optionalRoads.add(node.getId());
+        }
+      }
+    }
     for (Node node : anchorPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
         if (optionalRoads.contains(node.getId())) {

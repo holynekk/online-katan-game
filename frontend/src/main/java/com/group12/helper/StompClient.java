@@ -120,13 +120,14 @@ public class StompClient implements StompSessionHandler {
         Platform.runLater(() -> gameController.addChatMessage(finalMsg.getContent()));
         break;
       case USER_JOINED:
-        Platform.runLater(() -> roomController.refreshPlayerList(finalMsg));
-        String[] playerUsernameList = finalMsg.getContent().split("/");
         Platform.runLater(
-            () ->
-                roomController.addChatMessage(
-                    playerUsernameList[playerUsernameList.length - 1]
-                        + " has joined into the lobby!"));
+            () -> {
+              roomController.refreshPlayerList(finalMsg);
+              String[] playerUsernameList = finalMsg.getContent().split("/");
+              roomController.addChatMessage(
+                  playerUsernameList[playerUsernameList.length - 1]
+                      + " has joined into the lobby!");
+            });
         break;
       case READY:
         Platform.runLater(
@@ -150,14 +151,13 @@ public class StompClient implements StompSessionHandler {
               gameController.setBoard(finalMsg.getContent());
               gameController.setupHelper(finalMsg.getTurnUsername());
             });
-        //        Platform.runLater(() -> gameController.turnHelper(finalMsg.getTurnUsername()));
         break;
       case SHOW_ROADS_AT_SETUP:
         Platform.runLater(
             () -> {
               gameController.settlementBuilt(finalMsg);
               if (stompUsername.equals(finalMsg.getNickname())) {
-                gameController.showOptionalRoads();
+                gameController.showOptionalRoadsAtSetup();
               }
             });
         break;
@@ -166,6 +166,14 @@ public class StompClient implements StompSessionHandler {
             () -> {
               gameController.roadBuilt(finalMsg);
               gameController.setupHelper(finalMsg.getTurnUsername());
+              gameController.highlightPlayerInfoBox(finalMsg.getTurnUsername());
+            });
+        break;
+      case END_SETUP:
+        Platform.runLater(
+            () -> {
+              gameController.roadBuilt(finalMsg);
+              gameController.turnHelper(finalMsg.getTurnUsername());
             });
         break;
       case THROW_DICE:
@@ -175,12 +183,28 @@ public class StompClient implements StompSessionHandler {
                 gameController.addChatMessage(
                     finalMsg.getNickname() + " rolled " + diceResults[0] + " " + diceResults[1]));
         Platform.runLater(
+            () -> {
+              int d1 = Integer.parseInt(diceResults[0]), d2 = Integer.parseInt(diceResults[1]);
+              gameController.diceThrowAnimation(finalMsg.getTurnUsername(), d1, d2);
+              try {
+                gameController.gatherNewResources(d1 + d2);
+              } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+              }
+            });
+        break;
+      case RESOURCE_CHANGE:
+        Platform.runLater(
             () ->
-                gameController.diceThrowAnimation(
-                    Integer.parseInt(diceResults[0]), Integer.parseInt(diceResults[1])));
+                gameController.setPlayerResourceInfoPanel(
+                    finalMsg.getNickname(), finalMsg.getContent()));
         break;
       case SKIP_TURN:
-        Platform.runLater(() -> gameController.turnHelper(finalMsg.getTurnUsername()));
+        Platform.runLater(
+            () -> {
+              gameController.turnHelper(finalMsg.getTurnUsername());
+              gameController.highlightPlayerInfoBox(finalMsg.getTurnUsername());
+            });
         break;
       case BUILD_SETTLEMENT:
         Platform.runLater(() -> gameController.settlementBuilt(finalMsg));
@@ -190,7 +214,7 @@ public class StompClient implements StompSessionHandler {
         break;
     }
 
-    LOG.info(" {} Received message: {}", stompUsername, msg);
+    LOG.info("{} Received message: {}", stompUsername, msg);
   }
 
   @Override

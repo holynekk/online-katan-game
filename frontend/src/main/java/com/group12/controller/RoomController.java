@@ -34,6 +34,7 @@ public class RoomController {
   private StompClient stompClient;
   private String userColor;
   private String gameLeader;
+  private String[] playerUsernameList;
 
   @FXML private Button sendMessageButton;
   @FXML private TextField chatTextField;
@@ -82,7 +83,7 @@ public class RoomController {
   public void refreshPlayerList(Message msg) {
     String usernameList = msg.getContent();
     String color = msg.getUserColor();
-    String[] playerUsernameList = usernameList.split("/");
+    playerUsernameList = usernameList.split("/");
     if (this.playerList.getChildren().size() == playerUsernameList.length - 1) {
       addPlayerToTheList(playerUsernameList[playerUsernameList.length - 1], color);
     } else {
@@ -166,7 +167,7 @@ public class RoomController {
     stage.setScene(scene);
     OnlineGameController gameController = fxmlLoader.getController();
     stompClient.setGameController(gameController);
-    gameController.initData(this.stompClient, this.userColor);
+    gameController.initData(this.stompClient, this.userColor, this.playerUsernameList);
     stage.show();
   }
 
