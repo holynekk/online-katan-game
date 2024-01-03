@@ -62,8 +62,11 @@ public class RoomController {
         msg.setTurnUsername(this.playerList.get(++turnCount % this.playerList.size()));
         break;
       case BUILD_SETTLEMENT:
-        if (this.turnCount < this.playerList.size() * 2) {
+        if (this.turnCount < this.playerList.size()) {
           msg.setMsgType(MessageType.SHOW_ROADS_AT_SETUP);
+          break;
+        } else if (this.turnCount < this.playerList.size() * 2) {
+          msg.setMsgType(MessageType.SHOW_ROADS_AT_SETUP_AND_GATHER);
           break;
         }
         break;
@@ -81,6 +84,9 @@ public class RoomController {
           msg.setMsgType(MessageType.END_SETUP);
           msg.setTurnUsername(this.playerList.get(0));
         }
+        break;
+      case TRADE_OFFER_SENT:
+        msg.setMsgType(MessageType.TRADE_OFFER_RECEIVED);
         break;
       default:
         break;
