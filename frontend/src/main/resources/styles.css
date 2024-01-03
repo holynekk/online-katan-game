@@ -30,7 +30,7 @@
 }
 
 .auth-button {
-    -fx-background-color: rgb(256, 0, 0);
+    -fx-background-color: #8b0b12;
     -fx-border-color: yellow;
     -fx-text-fill: yellow;
     -fx-border-width: 1;
@@ -38,19 +38,19 @@
 }
 
 .auth-button:hover {
-    -fx-background-color: rgb(200, 0, 0);
+    -fx-background-color: #9b1b22;
 }
 
 .menu-button {
-    -fx-background-color: rgb(256, 0, 0);
-    -fx-border-color: yellow;
+    -fx-background-color: #8b0b12;
+    -fx-border-color: #bf9232;
     -fx-text-fill: yellow;
     -fx-border-width: 1;
     -fx-pref-width: 150px;
 }
 
 .menu-button:hover {
-    -fx-background-color: rgb(200, 0, 0);
+    -fx-background-color: #9b1b22;
 }
 
 .bottom-panel {
@@ -131,5 +131,107 @@
 
 .roomButton:hover {
     -fx-background-color: rgb(200, 0, 0);
+}
+
+.tradePanel {
+    -fx-background-color: rgb(255, 255, 255, 0.7);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-border-color: gray;
+}
+
+.resourceRadioButton {
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+}
+
+.resourceRadioButton:selected {
+    -fx-border-color: black;
+    -fx-border-insets: -2;
+    -fx-border-radius: 4;
+    -fx-border-width: 2;
+}
+
+.resourceRadioButton > .radio {
+  -fx-background-color: transparent;
+  -fx-background-insets: 0;
+  -fx-background-radius: 0px;
+  -fx-padding: 0.0em;
+}
+
+.resourceRadioButton:selected > .radio > .dot {
+  -fx-background-color: transparent;
+}
+
+.circularButton {
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-border-insets: -2;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-border-width: 2;
+}
+
+.circularButton:hover {
+    -fx-background-color: rgb(180, 180, 180);
+}
+
+.brick {
+    -fx-background-color: #BC4A3C;
+}
+
+.brickTrade {
+    -fx-fill: #BC4A3C;
+}
+
+.lumber {
+    -fx-background-color: #416422;
+}
+
+.lumberTrade {
+    -fx-fill: #BC4A3C;
+}
+
+.ore {
+    -fx-background-color: #4E4F55;
+}
+
+.oreTrade {
+    -fx-fill: #BC4A3C;
+}
+
+.grain {
+    -fx-background-color: #E4C798;
+}
+
+.grainTrade {
+    -fx-fill: #BC4A3C;
+}
+
+.wool {
+    -fx-background-color: #E0DFD7;
+}
+
+.woolTrade {
+    -fx-fill: #BC4A3C;
+}
+
+.tradeButton {
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-border-insets: -2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-width: 2;
+}
+
+.tradeButton:hover {
+    -fx-background-color: rgb(180, 180, 180);
+}
+
+.tradeCard {
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 }
 

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.group12.helper.GameHelper.circleNeighbours;
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.MediaHelper.*;
 import static com.group12.helper.OnlineGameHelper.*;
@@ -80,6 +81,7 @@ public class OnlineGameController {
   @FXML private Button roadBuildButton;
   @FXML private Button settlementBuildButton;
   @FXML private Button settlementUpgradeButton;
+  @FXML private Button tradeButton;
   @FXML private Button skipTurnButton;
 
   @FXML private Label resultBanner;
@@ -96,6 +98,18 @@ public class OnlineGameController {
 
   @FXML private VBox playerInfoBox;
 
+  @FXML private AnchorPane tradePanel;
+  @FXML private ToggleGroup resourceGiveGroup;
+  @FXML private ToggleGroup resourceGetGroup;
+  @FXML private Label tradeUsername;
+  @FXML private Rectangle tradeGivenResource;
+  @FXML private Rectangle tradeWantedResource;
+  @FXML private Button tradeAcceptButton;
+  @FXML private Button tradeRejectButton;
+  @FXML private Button sendTradeButton;
+  @FXML private Button cancelTradeButton;
+  @FXML private AnchorPane tradeOfferPanel;
+
   public ArrayList<String> occupiedCircles = new ArrayList<>();
   public ArrayList<String> occupiedEdges = new ArrayList<>();
 
@@ -108,6 +122,9 @@ public class OnlineGameController {
   private int oreResource = 0;
   private int grainResource = 0;
   private int woolResource = 0;
+
+  private int score = 0;
+  private int longestRoad = 0;
 
   public void initData(StompClient stompClient, String color, String[] playerUsernameList) {
     this.stompClient = stompClient;
@@ -128,10 +145,32 @@ public class OnlineGameController {
       //      hbox.setStyle(
       //          String.format("-fx-border-color: %s; -fx-border-width: 2 0 2 0;",
       // this.userColor));
-      Label totalResource = new Label("0");
-      totalResource.setId(username + "Resource");
-      usernameLabel.setTextFill(Color.WHITE);
-      hbox.getChildren().add(totalResource);
+      Label label1 = new Label("r: ");
+      label1.setTextFill(Color.WHITE);
+      hbox.getChildren().add(label1);
+
+      Label label2 = new Label("0");
+      label2.setTextFill(Color.WHITE);
+      label2.setId(username + "Resource");
+      hbox.getChildren().add(label2);
+
+      Label label3 = new Label("l: ");
+      label3.setTextFill(Color.WHITE);
+      hbox.getChildren().add(label3);
+
+      Label label4 = new Label("0");
+      label4.setTextFill(Color.WHITE);
+      label4.setId(username + "LongestRoad");
+      hbox.getChildren().add(label4);
+
+      Label label5 = new Label("Score: ");
+      label5.setTextFill(Color.WHITE);
+      hbox.getChildren().add(label5);
+
+      Label label6 = new Label("0");
+      label6.setTextFill(Color.WHITE);
+      label6.setId(username + "Score");
+      hbox.getChildren().add(label6);
 
       vbox.getChildren().add(usernameLabel);
       vbox.getChildren().add(hbox);
@@ -271,21 +310,84 @@ public class OnlineGameController {
         }
       }
     }
+    updateResourcePanels(totalGain);
+  }
 
+  public void gatherResourcesAtSetup(String circleId) throws JsonProcessingException {
+
+    List<String> styleList;
+    int totalGain = 0;
+    for (String resourceTile : circleNeighbours.get(circleId).split("-")) {
+      for (Node node : anchPane.getChildren()) {
+        if (node.getClass().getName().contains("Polygon") && node.getId().equals(resourceTile)) {
+          styleList = node.getStyleClass();
+          if (styleList.contains("hill")) {
+            brickResource++;
+            totalGain++;
+          } else if (styleList.contains("mountain")) {
+            oreResource++;
+            totalGain++;
+          } else if (styleList.contains("forest")) {
+            lumberResource++;
+            totalGain++;
+          } else if (styleList.contains("field")) {
+            grainResource++;
+            totalGain++;
+          } else if (styleList.contains("pastureField")) {
+            woolResource++;
+            totalGain++;
+          }
+        }
+      }
+    }
+    updateResourcePanels(totalGain);
+  }
+
+  public void updateResourcePanels(int totalGain) throws JsonProcessingException {
+    refreshClientResources();
+    Message msg =
+        new Message(
+            MessageType.RESOURCE_CHANGE,
+            "Now",
+            this.clientUsername,
+            totalGain + "/" + longestRoad + "/" + score);
+    stompClient.sendCommand(msg);
+  }
+
+  public void refreshClientResources() {
     brickText.setText(Integer.toString(brickResource));
     oreText.setText(Integer.toString(oreResource));
     lumberText.setText(Integer.toString(lumberResource));
     grainText.setText(Integer.toString(grainResource));
     woolText.setText(Integer.toString(woolResource));
+  }
+
+  public void updateScorePanel() throws JsonProcessingException {
     Message msg =
         new Message(
-            MessageType.RESOURCE_CHANGE, "Now", this.clientUsername, Integer.toString(totalGain));
+            MessageType.RESOURCE_CHANGE,
+            "Now",
+            this.clientUsername,
+            "0/" + longestRoad + "/" + score);
     stompClient.sendCommand(msg);
   }
 
-  public void setPlayerResourceInfoPanel(String username, String total) {
+  public void setPlayerResourceInfoPanel(String username, String msgContent) {
+    String[] playerInfo = msgContent.split("/");
+
     Label text = (Label) anchPane.getScene().lookup("#" + username + "Resource");
-    text.setText(Integer.toString(Integer.parseInt(text.getText()) + Integer.parseInt(total)));
+    text.setText(
+        Integer.toString(Integer.parseInt(text.getText()) + Integer.parseInt(playerInfo[0])));
+  }
+
+  public void setPlayerScorePanel(String username, String msgContent) {
+    String[] playerInfo = msgContent.split("/");
+
+    Label text = (Label) anchPane.getScene().lookup("#" + username + "LongestRoad");
+    text.setText(Integer.toString(Integer.parseInt(playerInfo[1])));
+
+    text = (Label) anchPane.getScene().lookup("#" + username + "Score");
+    text.setText(Integer.toString(Integer.parseInt(playerInfo[2])));
   }
 
   public void rollDice(ImageView diceImage, int diceResult) {
@@ -320,6 +422,10 @@ public class OnlineGameController {
   }
 
   public void turnHelper(String turnUsername) {
+    closeTradePanels();
+    tradeOfferPanel.setVisible(false);
+    tradeAcceptButton.setVisible(false);
+    tradeRejectButton.setVisible(false);
     if (turnUsername.equals(this.clientUsername)) {
       playSoundEffect(turnSound);
       firstDiceImage.setDisable(false);
@@ -354,17 +460,28 @@ public class OnlineGameController {
     Circle eventCircle = (Circle) event.getSource();
     String circleId = eventCircle.getId();
 
-    ownedCircles.add(circleId);
-    Message msg = new Message(MessageType.BUILD_SETTLEMENT, "Now", clientUsername, circleId);
-    msg.setUserColor(this.userColor);
-    stompClient.sendCommand(msg);
-
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
 
+    if (ownedEdges.size() >= 2) {
+      brickResource--;
+      lumberResource--;
+      grainResource--;
+      woolResource--;
+      updateResourcePanels(-4);
+    }
+    score++;
+    updateScorePanel();
+
+    ownedCircles.add(circleId);
+
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+
+    Message msg = new Message(MessageType.BUILD_SETTLEMENT, "Now", clientUsername, circleId);
+    msg.setUserColor(this.userColor);
+    stompClient.sendCommand(msg);
   }
 
   public void settlementBuilt(Message msg) {
@@ -387,14 +504,22 @@ public class OnlineGameController {
     Rectangle eventCircle = (Rectangle) event.getSource();
     String rectangleId = eventCircle.getId();
 
-    ownedEdges.add(rectangleId);
-
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
 
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
+
+    if (ownedEdges.size() >= 2) {
+      brickResource--;
+      lumberResource--;
+      updateResourcePanels(-2);
+    }
+
+    ownedEdges.add(rectangleId);
+    longestRoad = findLongestRoadLength(ownedEdges);
+    updateScorePanel();
 
     Message msg = new Message(MessageType.BUILD_ROAD, "Now", clientUsername, rectangleId);
     msg.setUserColor(this.userColor);
@@ -430,6 +555,12 @@ public class OnlineGameController {
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
     try {
+      grainResource -= 2;
+      oreResource -= 3;
+      score++;
+      updateResourcePanels(-5);
+      updateScorePanel();
+
       Message msg = new Message(MessageType.UPGRADE_SETTLEMENT, "Now", clientUsername, circleId);
       msg.setUserColor(this.userColor);
       stompClient.sendCommand(msg);
@@ -452,6 +583,73 @@ public class OnlineGameController {
       }
     }
     occupiedEdges.add(msg.getContent());
+  }
+
+  @FXML
+  public void openTradePanel() {
+    tradePanel.setVisible(true);
+  }
+
+  @FXML
+  public void closeTradePanels() {
+    tradePanel.setVisible(false);
+  }
+
+  @FXML
+  public void sendTradeOffer() throws JsonProcessingException {
+    RadioButton resourceGiveButton = (RadioButton) resourceGiveGroup.getSelectedToggle();
+    RadioButton resourceGetButton = (RadioButton) resourceGetGroup.getSelectedToggle();
+    closeTradePanels();
+
+    if (resourceGiveButton == null || resourceGetButton == null) {
+      NotificationHelper.showAlert(
+          Alert.AlertType.ERROR, "Error", "Please select resource to crate a trade!");
+    } else {
+      String resourceTypes =
+          getResourceTypes(resourceGiveButton.getStyleClass(), resourceGetButton.getStyleClass());
+      Message msg =
+          new Message(MessageType.TRADE_OFFER_SENT, "Now", this.clientUsername, resourceTypes);
+      stompClient.sendCommand(msg);
+    }
+  }
+
+  public void showTradeOffer(Message msg) {
+    tradeUsername.setText(msg.getNickname());
+    String[] resources = msg.getContent().split("/");
+    tradeGivenResource.getStyleClass().add(String.format("%sTrade", resources[0]));
+    tradeWantedResource.getStyleClass().add(String.format("%sTrade", resources[1]));
+
+    tradeOfferPanel.setVisible(true);
+    if (!msg.getNickname().equals(this.clientUsername)) {
+      tradeAcceptButton.setVisible(true);
+      tradeRejectButton.setVisible(true);
+    }
+  }
+
+  @FXML
+  public void acceptTradeOffer() throws JsonProcessingException {
+    String resourceTypes =
+        getResourceTypes(tradeGivenResource.getStyleClass(), tradeWantedResource.getStyleClass());
+    Message msg =
+        new Message(
+            MessageType.TRADE_OFFER_ACCEPTED, "Now", tradeUsername.getText(), resourceTypes);
+    stompClient.sendCommand(msg);
+    brickResource++;
+    lumberResource--;
+    refreshClientResources();
+    tradeOfferPanel.setVisible(false);
+    tradeAcceptButton.setVisible(false);
+    tradeRejectButton.setVisible(false);
+  }
+
+  public void tradeOfferAccepted(Message msg) {
+    closeTradePanels();
+    String[] resources = msg.getContent().split("/");
+    if (msg.getNickname().equals(this.clientUsername)) {
+      brickResource--;
+      lumberResource++;
+      refreshClientResources();
+    }
   }
 
   public void highlightPlayerInfoBox(String username) {

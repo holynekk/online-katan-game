@@ -5,8 +5,10 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -126,15 +128,18 @@
                   </Button>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="0.0" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="128.0">
+            <VBox alignment="CENTER" prefHeight="98.0" prefWidth="146.0" spacing="10.0">
                <children>
+                  <Button fx:id="tradeButton" mnemonicParsing="false" onAction="#openTradePanel" styleClass="game-button" text="Trade">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                   <Button fx:id="skipTurnButton" disable="true" mnemonicParsing="false" onAction="#skipTurn" styleClass="game-button" text="Skip Turn &gt;">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
                </children>
-            </HBox>
+            </VBox>
          </children></HBox>
    </bottom>
    <right>
@@ -801,7 +806,7 @@
             </cursor></Circle>
 
             <Text fx:id="h1" layoutX="260.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-            <Text fx:id="h2" layoutX="364.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h2" layoutX="364.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T" />
             <Text fx:id="h3" layoutX="468.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h5" layoutX="312.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
@@ -836,6 +841,176 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <AnchorPane fx:id="tradePanel" layoutX="85.0" layoutY="380.0" maxHeight="100.0" maxWidth="275.0" minHeight="100.0" minWidth="275.0" prefHeight="100.0" prefWidth="275.0" styleClass="tradePanel" visible="false">
+               <children>
+                  <Label layoutX="7.0" layoutY="12.0" text="Give">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" layoutX="75.0" layoutY="2.0" prefHeight="52.0" prefWidth="106.0" spacing="5.0">
+                     <children>
+                        <RadioButton fx:id="cpuToggleButton" focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets left="-20.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="resourceGiveGroup" />
+                           </toggleGroup>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="brick" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="lumber" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="ore" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="grain" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="wool" />
+                           </styleClass>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <Label layoutX="8.0" layoutY="60.0" text="Get">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" layoutX="63.0" layoutY="55.0" prefHeight="40.0" prefWidth="86.0" spacing="5.0">
+                     <children>
+                        <RadioButton fx:id="cpuToggleButton1" focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets left="-8.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="resourceGetGroup" />
+                           </toggleGroup>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="brick" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="lumber" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="ore" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="grain" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="wool" />
+                           </styleClass>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <Button fx:id="cancelTradeButton" layoutX="255.0" layoutY="-4.0" mnemonicParsing="false" onAction="#closeTradePanels" styleClass="circularButton" text="X">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="sendTradeButton" layoutX="210.0" layoutY="42.0" minWidth="50.0" mnemonicParsing="false" onAction="#sendTradeOffer" styleClass="tradeButton" text="Send">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="tradeOfferPanel" layoutX="470.0" maxHeight="100.0" maxWidth="200.0" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" styleClass="tradePanel" visible="false">
+               <children>
+                  <HBox layoutX="9.0" layoutY="6.0" prefHeight="16.0" prefWidth="175.0" spacing="2.0">
+                     <children>
+                        <Label fx:id="tradeUsername" text="username" />
+                        <Label text="wants to trade!" />
+                     </children>
+                  </HBox>
+                  <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gives:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="105.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wants:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="tradeAcceptButton" layoutX="69.0" layoutY="88.0" mnemonicParsing="false" onAction="#acceptTradeOffer" styleClass="tradeButton" text="Accept" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="tradeRejectButton" layoutX="137.0" layoutY="88.0" mnemonicParsing="false" onAction="#closeTradePanels" styleClass="tradeButton" text="Reject" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Rectangle fx:id="tradeWantedResource" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="158.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" styleClass="tradeCard" width="25.0" />
+                  <Rectangle fx:id="tradeGivenResource" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="69.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" styleClass="tradeCard" width="25.0" />
+               </children>
+            </AnchorPane>
             <!--
             <Label fx:id="resultBanner" alignment="CENTER" layoutX="295.0" layoutY="83.0" styleClass="result-banner" text="The Result Banner" textFill="WHITE" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="120.0" />
             <Button fx:id="backButton" layoutX="101.0" layoutY="2.0" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" visible="false">

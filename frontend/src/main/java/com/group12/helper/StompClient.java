@@ -161,6 +161,20 @@ public class StompClient implements StompSessionHandler {
               }
             });
         break;
+      case SHOW_ROADS_AT_SETUP_AND_GATHER:
+        Platform.runLater(
+            () -> {
+              gameController.settlementBuilt(finalMsg);
+              if (stompUsername.equals(finalMsg.getNickname())) {
+                gameController.showOptionalRoadsAtSetup();
+                try {
+                  gameController.gatherResourcesAtSetup(finalMsg.getContent());
+                } catch (JsonProcessingException e) {
+                  throw new RuntimeException(e);
+                }
+              }
+            });
+        break;
       case SKIP_SETUP_TURN:
         Platform.runLater(
             () -> {
@@ -185,19 +199,22 @@ public class StompClient implements StompSessionHandler {
         Platform.runLater(
             () -> {
               int d1 = Integer.parseInt(diceResults[0]), d2 = Integer.parseInt(diceResults[1]);
-              gameController.diceThrowAnimation(finalMsg.getTurnUsername(), d1, d2);
               try {
                 gameController.gatherNewResources(d1 + d2);
               } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
               }
+              gameController.diceThrowAnimation(finalMsg.getTurnUsername(), d1, d2);
             });
         break;
       case RESOURCE_CHANGE:
         Platform.runLater(
-            () ->
-                gameController.setPlayerResourceInfoPanel(
-                    finalMsg.getNickname(), finalMsg.getContent()));
+            () -> {
+              gameController.setPlayerResourceInfoPanel(
+                  finalMsg.getNickname(), finalMsg.getContent());
+              gameController.setPlayerScorePanel(finalMsg.getNickname(), finalMsg.getContent());
+            });
+
         break;
       case SKIP_TURN:
         Platform.runLater(
@@ -227,6 +244,12 @@ public class StompClient implements StompSessionHandler {
                   finalMsg.getNickname() + " upgraded a settlement to a city!");
               gameController.settlementUpgraded(finalMsg);
             });
+      case TRADE_OFFER_RECEIVED:
+        Platform.runLater(() -> gameController.showTradeOffer(finalMsg));
+        break;
+      case TRADE_OFFER_ACCEPTED:
+        Platform.runLater(() -> gameController.tradeOfferAccepted(finalMsg));
+        break;
       default:
         break;
     }

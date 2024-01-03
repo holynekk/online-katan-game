@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LeaderboardController">
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/leaderboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LeaderboardController">
    <center>
-      <TableView fx:id="scoreTableView" focusTraversable="false" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" prefHeight="300.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="scoreTableView" focusTraversable="false" maxHeight="270.0" maxWidth="500.0" minHeight="270.0" prefHeight="270.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="displayNameColumn" editable="false" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" resizable="false" styleClass="leaderboard-column" text="Name" />
           <TableColumn fx:id="totalWinsColumn" editable="false" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" styleClass="leaderboard-column" text="Total Wins" />
@@ -44,7 +44,7 @@
                   </Label>
                </children>
             </HBox>
-            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" styleClass="backButton" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

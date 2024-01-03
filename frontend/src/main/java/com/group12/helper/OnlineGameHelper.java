@@ -3,12 +3,8 @@ package com.group12.helper;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class OnlineGameHelper {
   public static ArrayList<String> hexagonList =
@@ -208,5 +204,73 @@ public class OnlineGameHelper {
         node.setVisible(false);
       }
     }
+  }
+
+  public static int findLongestRoadLength(ArrayList<String> edges) {
+    int longestPath = 0;
+
+    for (int i = 1; i <= 54; i++) {
+      String node = "c" + i;
+      Set<String> visited = new HashSet<>();
+      int currentPathLength = dfs(node, visited, edges, 0);
+      longestPath = Math.max(longestPath, currentPathLength);
+    }
+    return longestPath;
+  }
+
+  private static int dfs(
+      String node, Set<String> visited, ArrayList<String> edges, int pathLength) {
+    if (visited.contains(node)) {
+      return pathLength;
+    }
+
+    visited.add(node);
+    int maxLength = pathLength;
+
+    for (String edge : edges) {
+      String[] nodes = edge.split("-");
+      if (nodes[0].equals(node) && !visited.contains(nodes[1])) {
+        maxLength = Math.max(maxLength, dfs(nodes[1], visited, edges, pathLength + 1));
+      } else if (nodes[1].equals(node) && !visited.contains(nodes[0])) {
+        maxLength = Math.max(maxLength, dfs(nodes[0], visited, edges, pathLength + 1));
+      }
+    }
+
+    visited.remove(node); // Backtrack
+    return maxLength;
+  }
+
+  public static String getResourceTypes(
+      List<String> giveResourceStyle, List<String> getResourceStyle) {
+    System.out.println(giveResourceStyle);
+    System.out.println(getResourceStyle);
+    String giveResource = "";
+    String getResource = "";
+
+    if (giveResourceStyle.contains("brick")) {
+      giveResource = "brick";
+    } else if (giveResourceStyle.contains("lumber")) {
+      giveResource = "lumber";
+    } else if (giveResourceStyle.contains("ore")) {
+      giveResource = "ore";
+    } else if (giveResourceStyle.contains("grain")) {
+      giveResource = "grain";
+    } else if (giveResourceStyle.contains("wool")) {
+      giveResource = "wool";
+    }
+
+    if (getResourceStyle.contains("brick")) {
+      getResource = "brick";
+    } else if (getResourceStyle.contains("lumber")) {
+      getResource = "lumber";
+    } else if (getResourceStyle.contains("ore")) {
+      getResource = "ore";
+    } else if (getResourceStyle.contains("grain")) {
+      getResource = "grain";
+    } else if (getResourceStyle.contains("wool")) {
+      getResource = "wool";
+    }
+
+    return giveResource + "/" + getResource;
   }
 }
