@@ -180,6 +180,7 @@ public class OnlineGameController {
 
   public void initialize() {
     gameScene = anchPane.getScene();
+    switchBackgroundMusic(inGameBackgroundMusic);
     clientUsername = getSessionCookie("username");
     chatTextField.setOnKeyPressed(
         event -> {

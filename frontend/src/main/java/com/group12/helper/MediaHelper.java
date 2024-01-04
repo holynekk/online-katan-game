@@ -14,6 +14,7 @@ public class MediaHelper {
   public static double effectVolume;
 
   public static final String menuBackgroundMusic = "aeo2_menu.mp3";
+  public static final String inGameBackgroundMusic = "in_game_background.mp3";
   public static final String diceEffect = "dice_roll.mp3";
   public static final String buttonSound = "button_sound.mp3";
   public static final String turnSound = "turn_effect.mp3";
@@ -36,6 +37,26 @@ public class MediaHelper {
       sound =
           new Media(
               getClass().getResource("../../../sounds/" + menuBackgroundMusic).toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    backgroundPlayer = new MediaPlayer(sound);
+    backgroundPlayer.setVolume(0.2);
+    backgroundPlayer.setOnEndOfMedia(() -> backgroundPlayer.seek(Duration.ZERO));
+    backgroundPlayer.play();
+  }
+
+/**
+* A method to change background music.
+ * @param music - Music name parameter
+*/
+  public static void switchBackgroundMusic(String music) {
+    backgroundPlayer.stop();
+    Media sound = null;
+
+    try {
+      sound =
+          new Media(MediaHelper.class.getResource("../../../sounds/" + music).toURI().toString());
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }

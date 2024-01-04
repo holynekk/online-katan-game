@@ -131,6 +131,7 @@ public class GameController {
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
   public void initialize() {
+    switchBackgroundMusic(inGameBackgroundMusic);
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
     isOver = false;
