@@ -142,9 +142,7 @@ public class OnlineGameController {
 
       HBox hbox = new HBox();
       hbox.setAlignment(Pos.CENTER);
-      //      hbox.setStyle(
-      //          String.format("-fx-border-color: %s; -fx-border-width: 2 0 2 0;",
-      // this.userColor));
+
       Label label1 = new Label("r: ");
       label1.setTextFill(Color.WHITE);
       hbox.getChildren().add(label1);
@@ -207,7 +205,7 @@ public class OnlineGameController {
     playSoundEffect(buttonSound);
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
-    showSettlementOptions(anchPane, occupiedCircles);
+    showSettlementOptions(anchPane, occupiedCircles, ownedEdges);
   }
 
   @FXML
@@ -249,7 +247,8 @@ public class OnlineGameController {
     stompClient.sendCommand(msg);
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
-    toggleOffButtons();
+    toggleOffButtons(true);
+    removeResourceTradeType(tradeGivenResource, tradeWantedResource);
   }
 
   @FXML
@@ -417,15 +416,13 @@ public class OnlineGameController {
 
   public void setupHelper(String turnUsername) {
     if (turnUsername.equals(this.clientUsername)) {
-      showSettlementOptions(anchPane, occupiedCircles);
+      showSettlementOptionsAtSetup(anchPane, occupiedCircles);
     }
   }
 
   public void turnHelper(String turnUsername) {
     closeTradePanels();
-    tradeOfferPanel.setVisible(false);
-    tradeAcceptButton.setVisible(false);
-    tradeRejectButton.setVisible(false);
+    closeOfferPanel();
     if (turnUsername.equals(this.clientUsername)) {
       playSoundEffect(turnSound);
       firstDiceImage.setDisable(false);
@@ -436,23 +433,33 @@ public class OnlineGameController {
   }
 
   public void toggleOnButtons() {
+    ArrayList<String> optionalRoads;
+    ArrayList<String> optionalSettlements =
+        getSettlementOptions(anchPane, occupiedCircles, ownedEdges);
+    ArrayList<String> optionalUpgrades;
     if (brickResource >= 1 && lumberResource >= 1) {
       roadBuildButton.setDisable(false);
     }
-    if (brickResource >= 1 && lumberResource >= 1 && grainResource >= 1 && woolResource >= 1) {
+    if (brickResource >= 1
+        && lumberResource >= 1
+        && grainResource >= 1
+        && woolResource >= 1
+        && !optionalSettlements.isEmpty()) {
       settlementBuildButton.setDisable(false);
     }
     if (grainResource >= 2 && oreResource >= 3 && ownedCities.size() < ownedCircles.size()) {
       settlementUpgradeButton.setDisable(false);
     }
+    tradeButton.setDisable(false);
     skipTurnButton.setDisable(false);
   }
 
-  public void toggleOffButtons() {
+  public void toggleOffButtons(Boolean isAll) {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
-    skipTurnButton.setDisable(true);
+    tradeButton.setDisable(true);
+    skipTurnButton.setDisable(isAll);
   }
 
   @FXML
@@ -463,6 +470,7 @@ public class OnlineGameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
+    tradeButton.setDisable(true);
 
     if (ownedEdges.size() >= 2) {
       brickResource--;
@@ -507,6 +515,7 @@ public class OnlineGameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
+    tradeButton.setDisable(true);
 
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
@@ -551,6 +560,7 @@ public class OnlineGameController {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
     settlementUpgradeButton.setDisable(true);
+    tradeButton.setDisable(true);
 
     clearOptionals(
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
@@ -596,6 +606,13 @@ public class OnlineGameController {
   }
 
   @FXML
+  public void closeOfferPanel() {
+    tradeOfferPanel.setVisible(false);
+    tradeAcceptButton.setVisible(false);
+    tradeRejectButton.setVisible(false);
+  }
+
+  @FXML
   public void sendTradeOffer() throws JsonProcessingException {
     RadioButton resourceGiveButton = (RadioButton) resourceGiveGroup.getSelectedToggle();
     RadioButton resourceGetButton = (RadioButton) resourceGetGroup.getSelectedToggle();
@@ -606,10 +623,13 @@ public class OnlineGameController {
           Alert.AlertType.ERROR, "Error", "Please select resource to crate a trade!");
     } else {
       String resourceTypes =
-          getResourceTypes(resourceGiveButton.getStyleClass(), resourceGetButton.getStyleClass());
+          getResourceTypes(
+              resourceGiveButton.getStyleClass().toString(),
+              resourceGetButton.getStyleClass().toString());
       Message msg =
           new Message(MessageType.TRADE_OFFER_SENT, "Now", this.clientUsername, resourceTypes);
       stompClient.sendCommand(msg);
+      tradeButton.setDisable(true);
     }
   }
 
@@ -629,26 +649,45 @@ public class OnlineGameController {
   @FXML
   public void acceptTradeOffer() throws JsonProcessingException {
     String resourceTypes =
-        getResourceTypes(tradeGivenResource.getStyleClass(), tradeWantedResource.getStyleClass());
+        getResourceTypes(
+            tradeGivenResource.getStyleClass().toString(),
+            tradeWantedResource.getStyleClass().toString());
     Message msg =
         new Message(
             MessageType.TRADE_OFFER_ACCEPTED, "Now", tradeUsername.getText(), resourceTypes);
     stompClient.sendCommand(msg);
-    brickResource++;
-    lumberResource--;
+    String[] resources = resourceTypes.split("/");
+    updateResourcesAfterTrade(resources[0], resources[1]);
     refreshClientResources();
-    tradeOfferPanel.setVisible(false);
-    tradeAcceptButton.setVisible(false);
-    tradeRejectButton.setVisible(false);
+    closeOfferPanel();
   }
 
   public void tradeOfferAccepted(Message msg) {
-    closeTradePanels();
+    closeOfferPanel();
     String[] resources = msg.getContent().split("/");
     if (msg.getNickname().equals(this.clientUsername)) {
-      brickResource--;
-      lumberResource++;
+      updateResourcesAfterTrade(resources[1], resources[0]);
       refreshClientResources();
+    }
+    removeResourceTradeType(tradeGivenResource, tradeWantedResource);
+  }
+
+  public void updateResourcesAfterTrade(String gainedResource, String lostResource) {
+
+    switch (gainedResource) {
+      case "brick" -> brickResource++;
+      case "lumber" -> lumberResource++;
+      case "ore" -> oreResource++;
+      case "grain" -> grainResource++;
+      case "wool" -> woolResource++;
+    }
+
+    switch (lostResource) {
+      case "brick" -> brickResource--;
+      case "lumber" -> lumberResource--;
+      case "ore" -> oreResource--;
+      case "grain" -> grainResource--;
+      case "wool" -> woolResource--;
     }
   }
 
@@ -693,7 +732,7 @@ public class OnlineGameController {
   }
 
   public void addChatMessage(String message) {
-    chatBox.getChildren().add(new Label(message));
+    chatBox.getChildren().add(new Text(message));
     chatScrollPane.setVvalue(1D);
   }
 

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameCreationController">
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/leaderboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.GameCreationController">
    <top>
       <AnchorPane maxHeight="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -22,7 +22,7 @@
                   <Font size="54.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToLobby" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToLobby" styleClass="generalButton" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -101,8 +101,8 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <TextField fx:id="lobbyNameText" focusTraversable="false" />
-                        <TextField fx:id="lobbyDescriptionText" focusTraversable="false" />
+                        <TextField fx:id="lobbyNameText" focusTraversable="false" styleClass="newGameTextField" />
+                        <TextField fx:id="lobbyDescriptionText" focusTraversable="false" styleClass="newGameTextField" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <RadioButton focusTraversable="false" mnemonicParsing="false" onAction="#passwordRequiredAction" text="Yes">
@@ -126,12 +126,12 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <TextField fx:id="passwordText" disable="true" focusTraversable="false" />
+                        <TextField fx:id="passwordText" disable="true" focusTraversable="false" styleClass="newGameTextField" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <Button fx:id="createButton" focusTraversable="false" mnemonicParsing="false" onAction="#createGame" text="Create">
+            <Button fx:id="createButton" focusTraversable="false" mnemonicParsing="false" onAction="#createGame" styleClass="generalButton" text="Create">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>

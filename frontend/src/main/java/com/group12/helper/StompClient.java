@@ -214,7 +214,6 @@ public class StompClient implements StompSessionHandler {
                   finalMsg.getNickname(), finalMsg.getContent());
               gameController.setPlayerScorePanel(finalMsg.getNickname(), finalMsg.getContent());
             });
-
         break;
       case SKIP_TURN:
         Platform.runLater(
@@ -244,6 +243,7 @@ public class StompClient implements StompSessionHandler {
                   finalMsg.getNickname() + " upgraded a settlement to a city!");
               gameController.settlementUpgraded(finalMsg);
             });
+        break;
       case TRADE_OFFER_RECEIVED:
         Platform.runLater(() -> gameController.showTradeOffer(finalMsg));
         break;

@@ -97,7 +97,7 @@ public class RoomController {
   }
 
   public void addChatMessage(String message) {
-    chatBox.getChildren().add(new Label(message));
+    chatBox.getChildren().add(new Text(message));
     chatScrollPane.setVvalue(1D);
   }
 
@@ -124,13 +124,17 @@ public class RoomController {
     hBox.setAlignment(Pos.CENTER_LEFT);
     hBox.setPrefHeight(80);
     hBox.setPrefWidth(300);
+    hBox.setBackground(
+        new Background(
+            new BackgroundFill(Color.rgb(188, 157, 126), CornerRadii.EMPTY, Insets.EMPTY)));
     hBox.setBorder(
         new Border(
             new BorderStroke(
-                Color.valueOf("#000000"),
+                    Color.rgb(47, 14, 6),
                 BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY,
                 BorderWidths.DEFAULT)));
+    hBox.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);");
 
     VBox readyBox = new VBox();
     readyBox.setPrefHeight(50);
@@ -138,6 +142,7 @@ public class RoomController {
     readyBox.setStyle("-fx-background-color: red;");
 
     Label label = new Label(username);
+    label.setStyle("-fx-font-weight: bold");
 
     hBox.getChildren().add(readyBox);
     hBox.getChildren().add(label);

@@ -130,7 +130,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="98.0" prefWidth="146.0" spacing="10.0">
                <children>
-                  <Button fx:id="tradeButton" mnemonicParsing="false" onAction="#openTradePanel" styleClass="game-button" text="Trade">
+                  <Button fx:id="tradeButton" disable="true" mnemonicParsing="false" onAction="#openTradePanel" styleClass="game-button" text="Trade">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
@@ -1003,7 +1003,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="tradeRejectButton" layoutX="137.0" layoutY="88.0" mnemonicParsing="false" onAction="#closeTradePanels" styleClass="tradeButton" text="Reject" visible="false">
+                  <Button fx:id="tradeRejectButton" layoutX="137.0" layoutY="88.0" mnemonicParsing="false" onAction="#closeOfferPanel" styleClass="tradeButton" text="Reject" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

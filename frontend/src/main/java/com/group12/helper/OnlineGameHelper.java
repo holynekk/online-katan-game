@@ -3,6 +3,7 @@ package com.group12.helper;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 
 import java.util.*;
 
@@ -98,7 +99,7 @@ public class OnlineGameHelper {
         }
       };
 
-  public static void showSettlementOptions(
+  public static void showSettlementOptionsAtSetup(
       AnchorPane anchorPane, ArrayList<String> occupiedCircles) {
     ArrayList<String> circleOptionList = new ArrayList<>(circleList);
     ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
@@ -114,6 +115,49 @@ public class OnlineGameHelper {
       }
     }
     circleOptionList.removeAll(occupiedOptionalList);
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Circle")) {
+        if (circleOptionList.contains(node.getId())) {
+          node.setVisible(true);
+        }
+      }
+    }
+  }
+
+  public static ArrayList<String> getSettlementOptions(
+      AnchorPane anchorPane, ArrayList<String> occupiedCircles, ArrayList<String> ownedEdges) {
+    ArrayList<String> optionalSettlements = new ArrayList<>();
+    ArrayList<String> occupiedOptionalList = new ArrayList<>(occupiedCircles);
+
+    for (String edge : ownedEdges) {
+      String[] temp = edge.split("-");
+      if (!optionalSettlements.contains(temp[0])) {
+        optionalSettlements.add(temp[0]);
+      }
+      if (!optionalSettlements.contains(temp[1])) {
+        optionalSettlements.add(temp[1]);
+      }
+    }
+
+    for (Node node : anchorPane.getChildren()) {
+      if (node.getClass().getName().contains("Rectangle")) {
+        String[] temp = node.getId().split("-");
+        if (occupiedCircles.contains(temp[0])) {
+          occupiedOptionalList.add(temp[1]);
+        } else if (occupiedCircles.contains(temp[1])) {
+          occupiedOptionalList.add(temp[0]);
+        }
+      }
+    }
+
+    optionalSettlements.removeAll(occupiedOptionalList);
+    return optionalSettlements;
+  }
+
+  public static void showSettlementOptions(
+      AnchorPane anchorPane, ArrayList<String> occupiedCircles, ArrayList<String> ownedEdges) {
+    ArrayList<String> circleOptionList =
+        getSettlementOptions(anchorPane, occupiedCircles, ownedEdges);
     for (Node node : anchorPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
         if (circleOptionList.contains(node.getId())) {
@@ -240,10 +284,7 @@ public class OnlineGameHelper {
     return maxLength;
   }
 
-  public static String getResourceTypes(
-      List<String> giveResourceStyle, List<String> getResourceStyle) {
-    System.out.println(giveResourceStyle);
-    System.out.println(getResourceStyle);
+  public static String getResourceTypes(String giveResourceStyle, String getResourceStyle) {
     String giveResource = "";
     String getResource = "";
 
@@ -272,5 +313,20 @@ public class OnlineGameHelper {
     }
 
     return giveResource + "/" + getResource;
+  }
+
+  public static void removeResourceTradeType(
+      Rectangle tradeGivenResource, Rectangle tradeWantedResource) {
+    tradeGivenResource.getStyleClass().remove("brickTrade");
+    tradeGivenResource.getStyleClass().remove("lumberTrade");
+    tradeGivenResource.getStyleClass().remove("oreTrade");
+    tradeGivenResource.getStyleClass().remove("grainTrade");
+    tradeGivenResource.getStyleClass().remove("woolTrade");
+
+    tradeWantedResource.getStyleClass().remove("brickTrade");
+    tradeWantedResource.getStyleClass().remove("lumberTrade");
+    tradeWantedResource.getStyleClass().remove("oreTrade");
+    tradeWantedResource.getStyleClass().remove("grainTrade");
+    tradeWantedResource.getStyleClass().remove("woolTrade");
   }
 }
