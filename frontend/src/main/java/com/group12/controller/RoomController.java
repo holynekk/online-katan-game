@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
@@ -35,6 +36,8 @@ public class RoomController {
   private String userColor;
   private String gameLeader;
   private String[] playerUsernameList;
+  private String[] userColorList;
+  private String[] userReadyList;
 
   @FXML private Button sendMessageButton;
   @FXML private TextField chatTextField;
@@ -45,6 +48,7 @@ public class RoomController {
   @FXML private Label gameName;
   @FXML private Button readyButton;
   @FXML private Button startGameButton;
+  @FXML private Button backButton;
 
   public void initData(GameData gameData) {
     this.gameLeader = gameData.getGameLeader();
@@ -80,7 +84,6 @@ public class RoomController {
   public void addChatMessage(Message msg) {
     Text txt1 = new Text(msg.getNickname() + ": ");
     Text txt2 = new Text(msg.getContent());
-
     Color clr =
         switch (msg.getUserColor()) {
           case "red" -> Color.RED;
@@ -102,19 +105,18 @@ public class RoomController {
   }
 
   public void refreshPlayerList(Message msg) {
-    String usernameList = msg.getContent();
-    String color = msg.getUserColor();
-    playerUsernameList = usernameList.split("/");
-    if (this.playerList.getChildren().size() == playerUsernameList.length - 1) {
-      addPlayerToTheList(playerUsernameList[playerUsernameList.length - 1], color);
-    } else {
-      for (String username : playerUsernameList) {
-        addPlayerToTheList(username, color);
-      }
+    playerUsernameList = msg.getContent().split("/");
+    userColorList = msg.getUserColorList().split("/");
+    userReadyList = msg.getUserReadyList().split("/");
+
+    this.playerList.getChildren().clear();
+    for (int i = 0; i < playerUsernameList.length; i++) {
+      addPlayerToTheList(playerUsernameList[i], userColorList[i], userReadyList);
     }
+    startGameButton.setDisable(userReadyList.length != 2);
   }
 
-  public void addPlayerToTheList(String username, String color) {
+  public void addPlayerToTheList(String username, String color, String[] readyList) {
     if (username.equals(getSessionCookie("username"))) {
       this.userColor = color;
     }
@@ -130,7 +132,7 @@ public class RoomController {
     hBox.setBorder(
         new Border(
             new BorderStroke(
-                    Color.rgb(47, 14, 6),
+                Color.rgb(47, 14, 6),
                 BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY,
                 BorderWidths.DEFAULT)));
@@ -139,7 +141,10 @@ public class RoomController {
     VBox readyBox = new VBox();
     readyBox.setPrefHeight(50);
     readyBox.setPrefWidth(50);
-    readyBox.setStyle("-fx-background-color: red;");
+    readyBox.setStyle(
+        String.format(
+            "-fx-background-color: %s;",
+            (Arrays.asList(readyList).contains(username) ? "green" : "red")));
 
     Label label = new Label(username);
     label.setStyle("-fx-font-weight: bold");
@@ -206,5 +211,19 @@ public class RoomController {
 
     chatTextField.setText("");
     stompClient.sendChatMessage(msg);
+  }
+
+  @FXML
+  public void leaveRoom() throws IOException {
+    Message msg =
+        new Message(MessageType.LEAVE, "Now", getSessionCookie("username"), "Yo I'm leaving!");
+    stompClient.sendCommand(msg);
+    stompClient.disconnect();
+
+    Stage stage = (Stage) backButton.getScene().getWindow();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/lobbyView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    stage.show();
   }
 }

@@ -5,6 +5,8 @@ public enum MessageType {
   CONNECT_OK,
   CONNECT_FAILED,
   USER_JOINED,
+  LEAVE,
+  USER_LEFT,
   USER_LIST,
   READY,
   DISCONNECT,

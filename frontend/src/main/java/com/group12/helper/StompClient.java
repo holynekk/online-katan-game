@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group12.controller.OnlineGameController;
 import com.group12.controller.RoomController;
 import com.group12.model.chat.Message;
+import com.group12.model.chat.MessageType;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
@@ -28,6 +29,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.group12.helper.HttpClientHelper.getSessionCookie;
 
 public class StompClient implements StompSessionHandler {
   private static final Logger LOG = LoggerFactory.getLogger(StompClient.class);
@@ -127,6 +130,13 @@ public class StompClient implements StompSessionHandler {
               roomController.addChatMessage(
                   playerUsernameList[playerUsernameList.length - 1]
                       + " has joined into the lobby!");
+            });
+        break;
+      case USER_LEFT:
+        Platform.runLater(
+            () -> {
+              roomController.refreshPlayerList(finalMsg);
+              roomController.addChatMessage(finalMsg.getNickname() + " has left the room!");
             });
         break;
       case READY:
@@ -282,11 +292,21 @@ public class StompClient implements StompSessionHandler {
 
   public void disconnect() {
     if (stompSession != null) {
-      LOG.info("Disconnecting from  stomp session {}", stompSession.getSessionId());
+      LOG.info("Disconnecting from stomp session {}", stompSession.getSessionId());
       stompSession.disconnect();
     }
 
     Platform.runLater(() -> connected.set(false));
+  }
+
+  public static void exitGame() throws JsonProcessingException {
+    if (stompSession != null) {
+      ObjectMapper objectMapper = new ObjectMapper();
+      Message msg =
+          new Message(MessageType.LEAVE, "Now", getSessionCookie("username"), "Yo I'm leaving!");
+      stompSession.send("/app/room", objectMapper.writeValueAsString(msg));
+      stompSession.disconnect();
+    }
   }
 
   public void sendChatMessage(Message message) throws JsonProcessingException {

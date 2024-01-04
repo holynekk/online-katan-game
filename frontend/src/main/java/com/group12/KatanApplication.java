@@ -1,11 +1,14 @@
 package com.group12;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import static com.group12.helper.StompClient.exitGame;
 
 public class KatanApplication extends Application {
 
@@ -22,7 +25,8 @@ public class KatanApplication extends Application {
   }
 
   @Override
-  public void stop() {
+  public void stop() throws JsonProcessingException {
+    exitGame();
     applicationContext.close();
     Platform.exit();
   }

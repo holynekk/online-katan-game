@@ -28,6 +28,11 @@
                   </Label>
                </children>
             </HBox>
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#leaveRoom" styleClass="generalButton" text="&lt;" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="110.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
    </top>
