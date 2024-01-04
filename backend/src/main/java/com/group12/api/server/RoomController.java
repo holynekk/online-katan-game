@@ -10,7 +10,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 import static com.group12.util.GameUtil.*;
 
@@ -21,16 +23,22 @@ public class RoomController {
   private int turnCount;
 
   private List<String> playerList;
-  private List<String> readyPlayerList;
+  private List<String> userColorList;
+  private List<String> userReadyList;
 
   private final ObjectMapper objectMapper;
+
+  private Stack<String> playerColors;
 
   public RoomController() {
     this.turnUsername = "";
     this.turnCount = 0;
     this.objectMapper = new ObjectMapper();
     this.playerList = new ArrayList<>();
-    this.readyPlayerList = new ArrayList<>();
+    this.userColorList = new ArrayList<>();
+    this.userReadyList = new ArrayList<>();
+    playerColors = new Stack<>();
+    playerColors.addAll(Arrays.asList("pink", "purple", "blue", "green", "orange", "red"));
   }
 
   @MessageMapping("/room")
@@ -39,9 +47,22 @@ public class RoomController {
     Message msg = objectMapper.readValue(message, Message.class);
     switch (msg.getMsgType()) {
       case USER_JOINED:
+        String clr = playerColors.pop();
         playerList.add(msg.getNickname());
+        userColorList.add(clr);
         msg.setContent(StringUtils.join(this.playerList, "/"));
-        msg.setUserColor(playerColors.get(this.playerList.size() - 1));
+        msg.setUserColorList(StringUtils.join(this.userColorList, "/"));
+        msg.setUserReadyList(StringUtils.join(this.userReadyList, "/"));
+        break;
+      case LEAVE:
+        playerList.remove(msg.getNickname());
+        userColorList.remove(msg.getUserColor());
+        userReadyList.remove(msg.getNickname());
+        playerColors.add(msg.getUserColor());
+        msg.setContent(StringUtils.join(this.playerList, "/"));
+        msg.setUserColorList(StringUtils.join(this.userColorList, "/"));
+        msg.setUserReadyList(StringUtils.join(this.userReadyList, "/"));
+        msg.setMsgType(MessageType.USER_LEFT);
         break;
       case START_GAME:
         turnUsername = playerList.get(0);
@@ -49,8 +70,8 @@ public class RoomController {
         msg.setTurnUsername(this.turnUsername);
         break;
       case READY:
-        readyPlayerList.add(msg.getNickname());
-        msg.setContent(Boolean.toString(this.readyPlayerList.size() == 2));
+        userReadyList.add(msg.getNickname());
+        msg.setContent(Boolean.toString(this.userReadyList.size() == 2));
         break;
       case THROW_DICE:
         msg.setContent(throwDice());

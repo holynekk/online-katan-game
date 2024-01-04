@@ -32,9 +32,6 @@ public class GameUtil {
               "2", "12", "3", "3", "4", "4", "5", "5", "6", "6", "8", "8", "9", "9", "10", "10",
               "11", "11"));
 
-  public static final ArrayList<String> playerColors =
-      new ArrayList<>(Arrays.asList("red", "orange", "green", "pink"));
-
   public static String throwDice() {
     List<String> diceResult = new ArrayList<>();
     Random rnd = new Random();

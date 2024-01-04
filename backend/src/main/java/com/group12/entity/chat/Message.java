@@ -9,6 +9,8 @@ public class Message {
   private String turnUsername;
   private String userColor;
   private Boolean atSetup;
+  private String userColorList;
+  private String userReadyList;
   private String content;
 
   public Message() {}
@@ -75,6 +77,22 @@ public class Message {
     this.atSetup = atSetup;
   }
 
+  public String getUserColorList() {
+    return userColorList;
+  }
+
+  public void setUserColorList(String userColorList) {
+    this.userColorList = userColorList;
+  }
+
+  public String getUserReadyList() {
+    return userReadyList;
+  }
+
+  public void setUserReadyList(String userReadyList) {
+    this.userReadyList = userReadyList;
+  }
+
   public String getContent() {
     return content;
   }
@@ -93,6 +111,9 @@ public class Message {
         + '\''
         + ", nickname='"
         + nickname
+        + '\''
+        + ", userColor='"
+        + userColor
         + '\''
         + ", content='"
         + content

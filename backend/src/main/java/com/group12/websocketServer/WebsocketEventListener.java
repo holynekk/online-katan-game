@@ -1,12 +1,9 @@
 package com.group12.websocketServer;
 
-import com.group12.entity.chat.Message;
-import com.group12.entity.chat.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
@@ -23,16 +20,15 @@ public class WebsocketEventListener {
     LOG.info("New connection has been established!");
   }
 
-  //    @EventListener
-  //    public void handleWebSocketDisconnectListener(final SessionConnectedEvent event) {
-  //        final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-  //
-  //        final String username = (String) headerAccessor.getSessionAttributes().get("username");
-  //
-  //        final Message message =
-  // Message.builder().type(MessageType.DISCONNECT).sender(username).build();
-  //
-  //        sendingOperations.convertAndSend("/topic/public", message);
-  //    }
-
+  @EventListener
+  public void handleWebSocketDisconnectListener(final SessionConnectedEvent event) {
+    LOG.info("Connection has been closed!");
+//    final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+//
+//    final String username = (String) headerAccessor.getSessionAttributes().get("username");
+//
+//    final Message message = Message.builder().type(MessageType.DISCONNECT).sender(username).build();
+//
+//    sendingOperations.convertAndSend("/topic/public", message);
+  }
 }
