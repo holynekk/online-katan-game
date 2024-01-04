@@ -6,6 +6,7 @@ import com.group12.helper.StompClient;
 import com.group12.model.GameData;
 import com.group12.model.chat.Message;
 import com.group12.model.chat.MessageType;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -28,6 +29,8 @@ import java.util.Arrays;
 import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
+import static com.group12.helper.MediaHelper.buttonSound;
+import static com.group12.helper.MediaHelper.playSoundEffect;
 
 @Component
 public class RoomController {
@@ -90,6 +93,8 @@ public class RoomController {
           case "orange" -> Color.ORANGE;
           case "green" -> Color.GREEN;
           case "pink" -> Color.PINK;
+          case "blue" -> Color.BLUE;
+          case "purple" -> Color.PURPLE;
           default -> Color.BLACK;
         };
     txt1.setFill(clr);
@@ -152,11 +157,44 @@ public class RoomController {
     hBox.getChildren().add(readyBox);
     hBox.getChildren().add(label);
 
+    if (this.gameLeader.equals(getSessionCookie("username")) && !username.equals(this.gameLeader)) {
+      Button kickButton = new Button("Kick");
+      kickButton.setStyle(
+          "-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);-fx-cursor: hand;-fx-background-color: #2f0e06;-fx-text-fill: white;");
+      kickButton.setOnAction(this::kickUser);
+      hBox.getChildren().add(kickButton);
+    }
+
     playerList.getChildren().add(hBox);
   }
 
   @FXML
+  public void kickUser(ActionEvent event) {
+    playSoundEffect(buttonSound);
+    Button kickButton = (Button) event.getSource();
+    String kickedUsername = kickButton.getParent().getId();
+    try {
+      Message msg =
+          new Message(MessageType.KICK, "Now", getSessionCookie("username"), kickedUsername);
+      stompClient.sendCommand(msg);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void userKicked(Message msg) {
+    try {
+      if (msg.getContent().equals(getSessionCookie("username"))) {
+        leaveRoom();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
   public void readyAction() throws JsonProcessingException {
+    playSoundEffect(buttonSound);
     Message msg =
         new Message(MessageType.READY, "Now", getSessionCookie("username"), "User is ready!");
     stompClient.sendCommand(msg);
@@ -184,6 +222,7 @@ public class RoomController {
 
   @FXML
   public void startGame() throws JsonProcessingException {
+    playSoundEffect(buttonSound);
     Message msg =
         new Message(
             MessageType.START_GAME, "Now", getSessionCookie("username"), "The game is starting!");
@@ -204,6 +243,7 @@ public class RoomController {
 
   @FXML
   public void sendChatMessage() throws JsonProcessingException {
+    playSoundEffect(buttonSound);
     Message msg =
         new Message(
             MessageType.LOBBY_CHAT, "Now", getSessionCookie("username"), chatTextField.getText());
@@ -217,13 +257,23 @@ public class RoomController {
   public void leaveRoom() throws IOException {
     Message msg =
         new Message(MessageType.LEAVE, "Now", getSessionCookie("username"), "Yo I'm leaving!");
+    msg.setUserColor(this.userColor);
     stompClient.sendCommand(msg);
-    stompClient.disconnect();
+  }
 
-    Stage stage = (Stage) backButton.getScene().getWindow();
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/lobbyView.fxml"));
-    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-    stage.setScene(scene);
-    stage.show();
+  public void leftRoom(Message msg) {
+    if (msg.getNickname().equals(getSessionCookie("username"))) {
+      stompClient.disconnect();
+
+      try {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/lobbyView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setScene(scene);
+        stage.show();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }

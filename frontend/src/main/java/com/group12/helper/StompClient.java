@@ -137,6 +137,14 @@ public class StompClient implements StompSessionHandler {
             () -> {
               roomController.refreshPlayerList(finalMsg);
               roomController.addChatMessage(finalMsg.getNickname() + " has left the room!");
+              roomController.leftRoom(finalMsg);
+            });
+        break;
+      case USER_KICKED:
+        Platform.runLater(
+            () -> {
+              roomController.addChatMessage(finalMsg.getContent() + " got kicked!");
+              roomController.userKicked(finalMsg);
             });
         break;
       case READY:
