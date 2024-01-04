@@ -18,7 +18,6 @@ import static com.group12.util.GameUtil.*;
 
 @Controller
 public class RoomController {
-
   private String turnUsername;
   private int turnCount;
 
@@ -63,6 +62,9 @@ public class RoomController {
         msg.setUserColorList(StringUtils.join(this.userColorList, "/"));
         msg.setUserReadyList(StringUtils.join(this.userReadyList, "/"));
         msg.setMsgType(MessageType.USER_LEFT);
+        break;
+      case KICK:
+        msg.setMsgType(MessageType.USER_KICKED);
         break;
       case START_GAME:
         turnUsername = playerList.get(0);
