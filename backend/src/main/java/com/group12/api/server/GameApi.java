@@ -105,4 +105,19 @@ public class GameApi {
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
   }
+
+  @PutMapping(
+      value = "/closeGame",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.TEXT_PLAIN_VALUE)
+  public ResponseEntity<String> closeGame(@RequestParam(required = true) Integer gameId) {
+    Optional<Game> gameOptional = repository.findGameById(gameId);
+    if (gameOptional.isPresent()) {
+      Game game = gameOptional.get();
+      game.setIsOnline(false);
+      repository.save(game);
+      return ResponseEntity.status(HttpStatus.OK).body("The game has been closed!");
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+  }
 }

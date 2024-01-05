@@ -11,6 +11,8 @@ public class Message {
   private Boolean atSetup;
   private String userColorList;
   private String userReadyList;
+  private int longestRoadLength;
+  private String userWithLongestRoad;
   private String content;
 
   public Message() {}
@@ -91,6 +93,22 @@ public class Message {
 
   public void setUserReadyList(String userReadyList) {
     this.userReadyList = userReadyList;
+  }
+
+  public int getLongestRoadLength() {
+    return longestRoadLength;
+  }
+
+  public void setLongestRoadLength(int longestRoadLength) {
+    this.longestRoadLength = longestRoadLength;
+  }
+
+  public String getUserWithLongestRoad() {
+    return userWithLongestRoad;
+  }
+
+  public void setUserWithLongestRoad(String userWithLongestRoad) {
+    this.userWithLongestRoad = userWithLongestRoad;
   }
 
   public String getContent() {

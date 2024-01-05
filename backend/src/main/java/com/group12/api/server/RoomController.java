@@ -20,18 +20,21 @@ import static com.group12.util.GameUtil.*;
 public class RoomController {
   private String turnUsername;
   private int turnCount;
+  private int longestRoadLength;
+  private String longestRoadUser;
 
   private List<String> playerList;
   private List<String> userColorList;
   private List<String> userReadyList;
+  private Stack<String> playerColors;
 
   private final ObjectMapper objectMapper;
-
-  private Stack<String> playerColors;
 
   public RoomController() {
     this.turnUsername = "";
     this.turnCount = 0;
+    this.longestRoadLength = -1;
+    this.longestRoadUser = "";
     this.objectMapper = new ObjectMapper();
     this.playerList = new ArrayList<>();
     this.userColorList = new ArrayList<>();
@@ -96,16 +99,28 @@ public class RoomController {
       case BUILD_ROAD:
         if (this.turnCount < this.playerList.size() - 1) {
           msg.setMsgType(MessageType.SKIP_SETUP_TURN);
+          msg.setAtSetup(true);
           msg.setTurnUsername(this.playerList.get(++turnCount % this.playerList.size()));
         } else if (this.turnCount < (this.playerList.size() * 2 - 1)) {
           msg.setMsgType(MessageType.SKIP_SETUP_TURN);
+          msg.setAtSetup(true);
           msg.setTurnUsername(
               this.playerList.get(
                   this.playerList.size() - 1 - (++turnCount % this.playerList.size())));
         } else if (this.turnCount < (this.playerList.size() * 2)) {
           this.turnCount++;
+          msg.setAtSetup(true);
           msg.setMsgType(MessageType.END_SETUP);
           msg.setTurnUsername(this.playerList.get(0));
+        } else {
+          msg.setAtSetup(false);
+          if (msg.getLongestRoadLength() > longestRoadLength) {
+            longestRoadUser = msg.getNickname();
+            longestRoadLength = msg.getLongestRoadLength();
+            msg.setUserWithLongestRoad(longestRoadUser);
+          } else {
+            msg.setUserWithLongestRoad(longestRoadUser);
+          }
         }
         break;
       case TRADE_OFFER_SENT:
