@@ -38,6 +38,7 @@ public class RoomController {
   private StompClient stompClient;
   private String userColor;
   private String gameLeader;
+  private int gameId;
   private String[] playerUsernameList;
   private String[] userColorList;
   private String[] userReadyList;
@@ -55,6 +56,7 @@ public class RoomController {
 
   public void initData(GameData gameData) {
     this.gameLeader = gameData.getGameLeader();
+    this.gameId = gameData.getGameId();
     gameName.setText(gameData.getGameName());
     startGameButton.setVisible(getSessionCookie("username").equals(gameLeader));
   }
@@ -237,7 +239,7 @@ public class RoomController {
     stage.setScene(scene);
     OnlineGameController gameController = fxmlLoader.getController();
     stompClient.setGameController(gameController);
-    gameController.initData(this.stompClient, this.userColor, this.playerUsernameList);
+    gameController.initData(this.stompClient, this.userColor, this.playerUsernameList, this.gameId);
     stage.show();
   }
 

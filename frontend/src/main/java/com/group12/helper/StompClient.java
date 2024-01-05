@@ -268,6 +268,9 @@ public class StompClient implements StompSessionHandler {
       case TRADE_OFFER_ACCEPTED:
         Platform.runLater(() -> gameController.tradeOfferAccepted(finalMsg));
         break;
+      case GAME_ENDED:
+        Platform.runLater(() -> gameController.gameEnded(finalMsg));
+        break;
       default:
         break;
     }

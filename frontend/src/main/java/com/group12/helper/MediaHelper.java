@@ -18,8 +18,8 @@ public class MediaHelper {
   public static final String diceEffect = "dice_roll.mp3";
   public static final String buttonSound = "button_sound.mp3";
   public static final String turnSound = "turn_effect.mp3";
-  public static final String victoriousSound = "victorious_effect.mp3";
-  public static final String defeatedSound = "defeated_effect.mp3";
+  public static final String victoriousSound = "victorious_sound.mp3";
+  public static final String defeatedSound = "defeated_sound.mp3";
 
   /**
    * Constructor of the global media player for the application. Plays the main background music in
@@ -46,10 +46,11 @@ public class MediaHelper {
     backgroundPlayer.play();
   }
 
-/**
-* A method to change background music.
- * @param music - Music name parameter
-*/
+  /**
+   * A method to change background music.
+   *
+   * @param music - Music name parameter
+   */
   public static void switchBackgroundMusic(String music) {
     backgroundPlayer.stop();
     Media sound = null;

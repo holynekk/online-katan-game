@@ -806,7 +806,7 @@
             </cursor></Circle>
 
             <Text fx:id="h1" layoutX="260.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-            <Text fx:id="h2" layoutX="364.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T" />
+            <Text fx:id="h2" layoutX="364.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h3" layoutX="468.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
             <Text fx:id="h5" layoutX="312.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
@@ -1011,14 +1011,12 @@
                   <Rectangle fx:id="tradeGivenResource" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="69.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" styleClass="tradeCard" width="25.0" />
                </children>
             </AnchorPane>
-            <!--
             <Label fx:id="resultBanner" alignment="CENTER" layoutX="295.0" layoutY="83.0" styleClass="result-banner" text="The Result Banner" textFill="WHITE" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="120.0" />
-            <Button fx:id="backButton" layoutX="101.0" layoutY="2.0" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" visible="false">
+            <Button fx:id="backButton" layoutX="101.0" layoutY="2.0" mnemonicParsing="false" onAction="#backToMenu" style="-fx-pref-width: 30;" styleClass="game-button" text="&lt;" visible="false">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
--->
          </children>
          <BorderPane.margin>
             <Insets left="-80.0" top="20.0" />

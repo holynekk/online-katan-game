@@ -1,6 +1,7 @@
 package com.group12.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.group12.helper.HttpClientHelper;
 import com.group12.helper.NotificationHelper;
 import com.group12.helper.StompClient;
 import com.group12.model.chat.Message;
@@ -29,6 +30,10 @@ import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +47,8 @@ import static com.group12.helper.OnlineGameHelper.*;
 public class OnlineGameController {
 
   private Scene gameScene;
+
+  private int gameId;
 
   @FXML private Polygon hexagon;
 
@@ -117,18 +124,21 @@ public class OnlineGameController {
   private ArrayList<String> ownedCities = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
-  private int brickResource = 0;
-  private int lumberResource = 0;
-  private int oreResource = 0;
-  private int grainResource = 0;
-  private int woolResource = 0;
+  private int brickResource = 10;
+  private int lumberResource = 10;
+  private int oreResource = 10;
+  private int grainResource = 10;
+  private int woolResource = 10;
 
   private int score = 0;
   private int longestRoad = 0;
+  private boolean haveLongestRoad = false;
 
-  public void initData(StompClient stompClient, String color, String[] playerUsernameList) {
+  public void initData(
+      StompClient stompClient, String color, String[] playerUsernameList, int gameId) {
     this.stompClient = stompClient;
     this.userColor = color;
+    this.gameId = gameId;
 
     for (String username : playerUsernameList) {
       VBox vbox = new VBox();
@@ -350,7 +360,11 @@ public class OnlineGameController {
             MessageType.RESOURCE_CHANGE,
             "Now",
             this.clientUsername,
-            totalGain + "/" + longestRoad + "/" + score);
+            totalGain
+                + "/"
+                + longestRoad
+                + "/"
+                + (score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)));
     stompClient.sendCommand(msg);
   }
 
@@ -362,14 +376,18 @@ public class OnlineGameController {
     woolText.setText(Integer.toString(woolResource));
   }
 
-  public void updateScorePanel() throws JsonProcessingException {
+  public void updateScorePanel() throws IOException, InterruptedException {
     Message msg =
         new Message(
             MessageType.RESOURCE_CHANGE,
             "Now",
             this.clientUsername,
-            "0/" + longestRoad + "/" + score);
+            "0/"
+                + this.longestRoad
+                + "/"
+                + (score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)));
     stompClient.sendCommand(msg);
+    checkScore();
   }
 
   public void setPlayerResourceInfoPanel(String username, String msgContent) {
@@ -464,7 +482,7 @@ public class OnlineGameController {
   }
 
   @FXML
-  public void buildSettlement(MouseEvent event) throws JsonProcessingException {
+  public void buildSettlement(MouseEvent event) throws IOException, InterruptedException {
     Circle eventCircle = (Circle) event.getSource();
     String circleId = eventCircle.getId();
 
@@ -491,6 +509,7 @@ public class OnlineGameController {
     Message msg = new Message(MessageType.BUILD_SETTLEMENT, "Now", clientUsername, circleId);
     msg.setUserColor(this.userColor);
     stompClient.sendCommand(msg);
+    checkScore();
   }
 
   public void settlementBuilt(Message msg) {
@@ -509,7 +528,7 @@ public class OnlineGameController {
   }
 
   @FXML
-  public void buildRoad(MouseEvent event) throws JsonProcessingException {
+  public void buildRoad(MouseEvent event) throws IOException, InterruptedException {
     Rectangle eventCircle = (Rectangle) event.getSource();
     String rectangleId = eventCircle.getId();
 
@@ -532,6 +551,7 @@ public class OnlineGameController {
     updateScorePanel();
 
     Message msg = new Message(MessageType.BUILD_ROAD, "Now", clientUsername, rectangleId);
+    msg.setLongestRoadLength(longestRoad);
     msg.setUserColor(this.userColor);
     stompClient.sendCommand(msg);
   }
@@ -548,6 +568,15 @@ public class OnlineGameController {
         }
       }
     }
+    if (!msg.getAtSetup()) {
+      this.haveLongestRoad = msg.getUserWithLongestRoad().equals(this.clientUsername);
+    }
+    try {
+      updateScorePanel();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     occupiedEdges.add(msg.getContent());
   }
 
@@ -575,7 +604,8 @@ public class OnlineGameController {
       Message msg = new Message(MessageType.UPGRADE_SETTLEMENT, "Now", clientUsername, circleId);
       msg.setUserColor(this.userColor);
       stompClient.sendCommand(msg);
-    } catch (JsonProcessingException e) {
+      checkScore();
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -674,7 +704,6 @@ public class OnlineGameController {
   }
 
   public void updateResourcesAfterTrade(String gainedResource, String lostResource) {
-
     switch (gainedResource) {
       case "brick" -> brickResource++;
       case "lumber" -> lumberResource++;
@@ -690,6 +719,48 @@ public class OnlineGameController {
       case "grain" -> grainResource--;
       case "wool" -> woolResource--;
     }
+  }
+
+  public void checkScore() throws IOException, InterruptedException {
+    if ((this.score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)) >= 3) {
+      Message msg =
+          new Message(MessageType.GAME_ENDED, "Now", this.clientUsername, this.clientUsername);
+      stompClient.sendCommand(msg);
+
+      HttpRequest request =
+          HttpRequest.newBuilder()
+              .uri(
+                  URI.create(
+                      String.format(
+                          "http://localhost:8080/api/game/closeGame?gameId=%s", this.gameId)))
+              .header("Content-Type", "application/json")
+              .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
+              .PUT(HttpRequest.BodyPublishers.ofString(""))
+              .build();
+
+      HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+    }
+  }
+
+  public void gameEnded(Message msg) {
+    addChatMessage(msg.getContent() + " won the game!");
+    toggleOffButtons(true);
+    resultBanner.setVisible(true);
+    backButton.setVisible(true);
+    backgroundPlayer.stop();
+    if (msg.getContent().equals(this.clientUsername)) {
+      playSoundEffect(victoriousSound);
+      resultBanner.setText("You are victorious!");
+      addChatMessage(this.clientUsername + " has won the game!");
+    } else {
+      playSoundEffect(defeatedSound);
+      resultBanner.setText("You have been defeated!");
+    }
+  }
+
+  @FXML
+  public void backToMenu() {
+    System.out.println("Game ended!");
   }
 
   public void highlightPlayerInfoBox(String username) {
@@ -735,9 +806,5 @@ public class OnlineGameController {
   public void addChatMessage(String message) {
     chatBox.getChildren().add(new Text(message));
     chatScrollPane.setVvalue(1D);
-  }
-
-  public String getClientUsername() {
-    return this.clientUsername;
   }
 }
