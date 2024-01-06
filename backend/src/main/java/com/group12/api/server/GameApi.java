@@ -55,29 +55,32 @@ public class GameApi {
   public ResponseEntity<GameResponse> getGameById(@RequestBody GameCreateRequest request) {
     Optional<User> user = userRepository.findById(request.getGameLeader());
     if (user.isPresent()) {
-      Game newGame =
-          new Game(
-              request.getGameName(),
-              request.getGameDescription(),
-              request.getGamePassword(),
-              request.getPasswordRequired(),
-              user.get(),
-              request.getOnline(),
-              false,
-              false);
-      repository.save(newGame);
+      Game savedGame =
+          repository.saveAndFlush(
+              new Game(
+                  request.getGameName(),
+                  request.getGameDescription(),
+                  request.getGamePassword(),
+                  request.getPasswordRequired(),
+                  user.get(),
+                  request.getOnline(),
+                  false,
+                  false));
+
+      GameResponse response =
+          new GameResponse(
+              savedGame.getGameId(),
+              savedGame.getGameName(),
+              savedGame.getGameDescription(),
+              savedGame.getPasswordRequired(),
+              savedGame.getGameLeader().getDisplayName(),
+              savedGame.getOnline(),
+              savedGame.getStarted(),
+              savedGame.getFinished());
+      System.out.println(savedGame.getGameId());
       return ResponseEntity.status(HttpStatus.OK)
           .contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
-          .body(
-              new GameResponse(
-                  newGame.getGameId(),
-                  newGame.getGameName(),
-                  newGame.getGameDescription(),
-                  newGame.getPasswordRequired(),
-                  newGame.getGameLeader().getDisplayName(),
-                  newGame.getOnline(),
-                  newGame.getStarted(),
-                  newGame.getFinished()));
+          .body(response);
     }
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
   }

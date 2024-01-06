@@ -2,126 +2,119 @@ package com.group12.api.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group12.entity.OnlineGame;
 import com.group12.entity.chat.Message;
 import com.group12.entity.chat.MessageType;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import static com.group12.util.GameUtil.*;
 
 @Controller
 public class RoomController {
-  private String turnUsername;
-  private int turnCount;
-  private int longestRoadLength;
-  private String longestRoadUser;
-
-  private List<String> playerList;
-  private List<String> userColorList;
-  private List<String> userReadyList;
-  private Stack<String> playerColors;
 
   private final ObjectMapper objectMapper;
 
+  HashMap<String, OnlineGame> gameList = new HashMap<>();
+
   public RoomController() {
-    this.turnUsername = "";
-    this.turnCount = 0;
-    this.longestRoadLength = -1;
-    this.longestRoadUser = "";
     this.objectMapper = new ObjectMapper();
-    this.playerList = new ArrayList<>();
-    this.userColorList = new ArrayList<>();
-    this.userReadyList = new ArrayList<>();
-    playerColors = new Stack<>();
-    playerColors.addAll(Arrays.asList("pink", "purple", "blue", "green", "orange", "red"));
   }
 
-  @MessageMapping("/room")
-  @SendTo("/topic/room")
-  public String room(String message) throws JsonProcessingException {
+  @MessageMapping("/room/{gameId}")
+  @SendTo("/topic/room/{gameId}")
+  public String room(@DestinationVariable String gameId, String message)
+      throws JsonProcessingException {
     Message msg = objectMapper.readValue(message, Message.class);
+    OnlineGame onlineGame = gameList.get(gameId);
     switch (msg.getMsgType()) {
+      case GAME_CREATED:
+        OnlineGame newOnlineGame = new OnlineGame();
+        gameList.put(gameId, newOnlineGame);
+        break;
       case USER_JOINED:
-        String clr = playerColors.pop();
-        playerList.add(msg.getNickname());
-        userColorList.add(clr);
-        msg.setContent(StringUtils.join(this.playerList, "/"));
-        msg.setUserColorList(StringUtils.join(this.userColorList, "/"));
-        msg.setUserReadyList(StringUtils.join(this.userReadyList, "/"));
+        String clr = onlineGame.getNewColor();
+        onlineGame.addPlayer(msg.getNickname());
+        onlineGame.addUserColor(clr);
+        msg.setContent(StringUtils.join(onlineGame.getPlayerList(), "/"));
+        msg.setUserColorList(StringUtils.join(onlineGame.getUserColorList(), "/"));
+        msg.setUserReadyList(StringUtils.join(onlineGame.getUserReadyList(), "/"));
+        gameList.put(gameId, onlineGame);
         break;
       case LEAVE:
-        playerList.remove(msg.getNickname());
-        userColorList.remove(msg.getUserColor());
-        userReadyList.remove(msg.getNickname());
-        playerColors.add(msg.getUserColor());
-        msg.setContent(StringUtils.join(this.playerList, "/"));
-        msg.setUserColorList(StringUtils.join(this.userColorList, "/"));
-        msg.setUserReadyList(StringUtils.join(this.userReadyList, "/"));
+        onlineGame.removePlayer(msg.getNickname());
+        onlineGame.removeUserColor(msg.getUserColor());
+        onlineGame.removeUserReady(msg.getNickname());
+        onlineGame.addPlayerColors(msg.getUserColor());
+        msg.setContent(StringUtils.join(onlineGame.getPlayerList(), "/"));
+        msg.setUserColorList(StringUtils.join(onlineGame.getUserColorList(), "/"));
+        msg.setUserReadyList(StringUtils.join(onlineGame.getUserReadyList(), "/"));
         msg.setMsgType(MessageType.USER_LEFT);
+        gameList.put(gameId, onlineGame);
         break;
       case KICK:
         msg.setMsgType(MessageType.USER_KICKED);
         break;
       case START_GAME:
-        turnUsername = playerList.get(0);
+        String turnUsername = onlineGame.getFirstTurnUsername();
         msg.setContent(shuffleBoardTiles());
-        msg.setTurnUsername(this.turnUsername);
+        msg.setTurnUsername(turnUsername);
+        gameList.put(gameId, onlineGame);
         break;
       case READY:
-        userReadyList.add(msg.getNickname());
-        msg.setContent(Boolean.toString(this.userReadyList.size() == 2));
+        onlineGame.addUserReady(msg.getNickname());
+        msg.setContent(Boolean.toString(onlineGame.getUserReadyList().size() == 2));
+        gameList.put(gameId, onlineGame);
         break;
       case THROW_DICE:
         msg.setContent(throwDice());
-        msg.setTurnUsername(this.playerList.get(turnCount % this.playerList.size()));
+        msg.setTurnUsername(onlineGame.getTurnUsername());
+        gameList.put(gameId, onlineGame);
         break;
       case RESOURCE_CHANGE:
         break;
       case SKIP_TURN:
-        msg.setTurnUsername(this.playerList.get(++turnCount % this.playerList.size()));
+        msg.setTurnUsername(onlineGame.getSkipTurnUsername());
         break;
       case BUILD_SETTLEMENT:
-        if (this.turnCount < this.playerList.size()) {
+        if (onlineGame.getTurnCount() < onlineGame.getPlayerList().size()) {
           msg.setMsgType(MessageType.SHOW_ROADS_AT_SETUP);
           break;
-        } else if (this.turnCount < this.playerList.size() * 2) {
+        } else if (onlineGame.getTurnCount() < onlineGame.getPlayerList().size() * 2) {
           msg.setMsgType(MessageType.SHOW_ROADS_AT_SETUP_AND_GATHER);
           break;
         }
         break;
       case BUILD_ROAD:
-        if (this.turnCount < this.playerList.size() - 1) {
+        if (onlineGame.getTurnCount() < onlineGame.getPlayerList().size() - 1) {
           msg.setMsgType(MessageType.SKIP_SETUP_TURN);
           msg.setAtSetup(true);
-          msg.setTurnUsername(this.playerList.get(++turnCount % this.playerList.size()));
-        } else if (this.turnCount < (this.playerList.size() * 2 - 1)) {
+          msg.setTurnUsername(onlineGame.getSkipTurnUsername());
+        } else if (onlineGame.getTurnCount() < (onlineGame.getPlayerList().size() * 2 - 1)) {
           msg.setMsgType(MessageType.SKIP_SETUP_TURN);
           msg.setAtSetup(true);
-          msg.setTurnUsername(
-              this.playerList.get(
-                  this.playerList.size() - 1 - (++turnCount % this.playerList.size())));
-        } else if (this.turnCount < (this.playerList.size() * 2)) {
-          this.turnCount++;
+          msg.setTurnUsername(onlineGame.getSetupTurnUsername());
+        } else if (onlineGame.getTurnCount() < (onlineGame.getPlayerList().size() * 2)) {
+          onlineGame.incrementTurnCount();
           msg.setAtSetup(true);
           msg.setMsgType(MessageType.END_SETUP);
-          msg.setTurnUsername(this.playerList.get(0));
+          msg.setTurnUsername(onlineGame.getFirstTurnUsername());
         } else {
           msg.setAtSetup(false);
-          if (msg.getLongestRoadLength() > longestRoadLength) {
-            longestRoadUser = msg.getNickname();
-            longestRoadLength = msg.getLongestRoadLength();
-            msg.setUserWithLongestRoad(longestRoadUser);
+          if (msg.getLongestRoadLength() > onlineGame.getLongestRoadLength()) {
+            onlineGame.setLongestRoadUser(msg.getNickname());
+            onlineGame.setLongestRoadLength(msg.getLongestRoadLength());
+            msg.setUserWithLongestRoad(msg.getNickname());
           } else {
-            msg.setUserWithLongestRoad(longestRoadUser);
+            msg.setUserWithLongestRoad(msg.getNickname());
           }
         }
+        gameList.put(gameId, onlineGame);
         break;
       case TRADE_OFFER_SENT:
         msg.setMsgType(MessageType.TRADE_OFFER_RECEIVED);
@@ -133,9 +126,10 @@ public class RoomController {
     return objectMapper.writeValueAsString(msg);
   }
 
-  @MessageMapping("/chat")
-  @SendTo("/topic/chat")
-  public String chat(String message) throws JsonProcessingException {
+  @MessageMapping("/chat/{gameId}")
+  @SendTo("/topic/chat/{gameId}")
+  public String chat(@DestinationVariable String gameId, String message)
+      throws JsonProcessingException {
     Message msg = objectMapper.readValue(message, Message.class);
     msg.setContent(msg.getContent());
     return objectMapper.writeValueAsString(msg);
