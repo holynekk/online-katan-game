@@ -1,5 +1,6 @@
 package com.group12.api.response;
 
+/** Custom response type to validate request body object for game history response. */
 public class GameHistoryResponse {
 
   private int gameId;

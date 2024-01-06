@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value = "/api/auth")
@@ -22,7 +21,6 @@ public class AuthenticationApi {
 
   @Autowired private SessionCookieTokenService tokenService;
   @Autowired private UserRepository userRepository;
-
   @Autowired private PasswordResetService passwordResetService;
 
   /**
@@ -48,16 +46,6 @@ public class AuthenticationApi {
     } else {
       return ResponseEntity.badRequest().body("Username or Password is incorrect!");
     }
-
-    //    LocalDateTime lastPasswordChange =
-    //        userRepository.findByUsername(encryptedUsername).get().getLastPasswordUpdate();
-    //    if (lastPasswordChange.plusDays(90).isBefore(LocalDateTime.now())) {
-    //      return        "Logged in with tokenId: "
-    //          + tokenId
-    //          + ".\nYou have not changed your password for more than 90 days. "
-    //          + "Please change your password.";
-    //    }
-
   }
 
   /**

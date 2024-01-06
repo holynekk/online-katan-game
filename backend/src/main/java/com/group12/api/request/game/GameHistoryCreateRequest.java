@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
+/** Custom request type to validate request body object for game history creation. */
 public class GameHistoryCreateRequest {
 
   private int gameId;

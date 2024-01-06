@@ -1,5 +1,6 @@
 package com.group12.entity.chat;
 
+/** Message object to use while providing information between websocket server and clients. */
 public class Message {
   private static final long serialVersionUID = 1L;
 

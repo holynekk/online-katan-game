@@ -1,5 +1,9 @@
 package com.group12.api.response;
 
+/**
+ * Represents a response for game instance requests. This class holds the gameId and multiple
+ * different game configuration parameters.
+ */
 public class GameResponse {
 
   private int gameId;

@@ -15,6 +15,7 @@ import java.util.*;
 
 import static com.group12.util.GameUtil.*;
 
+/** Controller used by the websocket server for incoming stomp messages. */
 @Controller
 public class RoomController {
 
@@ -26,6 +27,15 @@ public class RoomController {
     this.objectMapper = new ObjectMapper();
   }
 
+  /**
+   * A websocket endpoint to receive and process the messages that are coming. Used to process game
+   * commands to provide message channels between clients who are in the same lobby.
+   *
+   * @param gameId - Game id to specify where did the message come from (which topic branch)
+   * @param message - Message instance as JSON string.
+   * @return - A JSON string message to send back through websocket connection.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @MessageMapping("/room/{gameId}")
   @SendTo("/topic/room/{gameId}")
   public String room(@DestinationVariable String gameId, String message)
@@ -126,6 +136,15 @@ public class RoomController {
     return objectMapper.writeValueAsString(msg);
   }
 
+  /**
+   * A websocket endpoint to receive and process the messages that are coming. Used to process chat
+   * messages to provide message channels between clients who are in the same lobby.
+   *
+   * @param gameId - Game id to specify where did the message come from (which topic branch)
+   * @param message - Message instance as JSON string.
+   * @return - A JSON string message to send back through websocket connection.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @MessageMapping("/chat/{gameId}")
   @SendTo("/topic/chat/{gameId}")
   public String chat(@DestinationVariable String gameId, String message)
@@ -133,11 +152,5 @@ public class RoomController {
     Message msg = objectMapper.readValue(message, Message.class);
     msg.setContent(msg.getContent());
     return objectMapper.writeValueAsString(msg);
-  }
-
-  @MessageMapping("/hello")
-  @SendTo("/topic/room")
-  public void greeting(String message) throws JsonProcessingException {
-    Message msg = objectMapper.readValue(message, Message.class);
   }
 }

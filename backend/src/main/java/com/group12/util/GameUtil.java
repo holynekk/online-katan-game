@@ -2,6 +2,7 @@ package com.group12.util;
 
 import java.util.*;
 
+/** Game utility class with methods to set the board up for the online part of the game. */
 public class GameUtil {
 
   private static final ArrayList<String> tileList =

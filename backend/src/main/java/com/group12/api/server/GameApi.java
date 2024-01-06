@@ -37,6 +37,12 @@ public class GameApi {
 
   @Autowired GameHistoryRepository gameHistoryRepository;
 
+  /**
+   * A get request to fetch a game data for a specific game with its id.
+   *
+   * @param providedGameId - provided game id with request parameters.
+   * @return - GameResponse instance.
+   */
   @GetMapping(value = "", produces = MediaType.TEXT_PLAIN_VALUE)
   public ResponseEntity<GameResponse> getGameById(
       @RequestParam(name = "gameId") int providedGameId) {
@@ -61,11 +67,17 @@ public class GameApi {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
   }
 
+  /**
+   * A post request to create a game.
+   *
+   * @param request - http request sent by client
+   * @return - GameResponse instance.
+   */
   @PostMapping(
       value = "",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<GameResponse> getGameById(@RequestBody GameCreateRequest request) {
+  public ResponseEntity<GameResponse> createGame(@RequestBody GameCreateRequest request) {
     Optional<User> user = userRepository.findById(request.getGameLeader());
     if (user.isPresent()) {
       Game savedGame =
@@ -97,6 +109,11 @@ public class GameApi {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
   }
 
+  /**
+   * An endpoint to return all active (currently online games).
+   *
+   * @return - List of GameResponse which contains active games.
+   */
   @GetMapping(value = "/list", produces = MediaType.TEXT_PLAIN_VALUE)
   public ResponseEntity<List<GameResponse>> getActiveGamesList() {
     Optional<List<Game>> optionalActiveGames = repository.findAllActiveGames();
@@ -121,6 +138,12 @@ public class GameApi {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
   }
 
+  /**
+   * An endpoint to change game's online status from still playing to finished.
+   *
+   * @param gameId - Provided game's id which will be closed.
+   * @return - A string message about the result.
+   */
   @PutMapping(
       value = "/closeGame",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -136,6 +159,12 @@ public class GameApi {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
   }
 
+  /**
+   * An endpoint to log game result for a specific user and a game.
+   *
+   * @param request - http request sent by client
+   * @return - GameHistory instance that has been created.
+   */
   @PostMapping(value = "/game-history", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<GameHistory> createGameHistoryByUsername(
       @RequestBody(required = true) GameHistoryCreateRequest request)
