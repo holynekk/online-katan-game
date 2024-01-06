@@ -48,7 +48,7 @@ public class OnlineGameController {
 
   private Scene gameScene;
 
-  private int gameId;
+  private String gameId;
 
   @FXML private Polygon hexagon;
 
@@ -124,18 +124,18 @@ public class OnlineGameController {
   private ArrayList<String> ownedCities = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
-  private int brickResource = 10;
-  private int lumberResource = 10;
-  private int oreResource = 10;
-  private int grainResource = 10;
-  private int woolResource = 10;
+  private int brickResource = 0;
+  private int lumberResource = 0;
+  private int oreResource = 0;
+  private int grainResource = 0;
+  private int woolResource = 0;
 
   private int score = 0;
   private int longestRoad = 0;
   private boolean haveLongestRoad = false;
 
   public void initData(
-      StompClient stompClient, String color, String[] playerUsernameList, int gameId) {
+      StompClient stompClient, String color, String[] playerUsernameList, String gameId) {
     this.stompClient = stompClient;
     this.userColor = color;
     this.gameId = gameId;

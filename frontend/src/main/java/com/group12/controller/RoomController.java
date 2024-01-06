@@ -28,6 +28,7 @@ import java.util.Arrays;
 
 import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
+import static com.group12.helper.HttpClientHelper.addNewSessionCookie;
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
@@ -38,7 +39,7 @@ public class RoomController {
   private StompClient stompClient;
   private String userColor;
   private String gameLeader;
-  private int gameId;
+  private String gameId;
   private String[] playerUsernameList;
   private String[] userColorList;
   private String[] userReadyList;
@@ -54,26 +55,31 @@ public class RoomController {
   @FXML private Button startGameButton;
   @FXML private Button backButton;
 
-  public void initData(GameData gameData) {
+  public void initData(GameData gameData, String gameId, Boolean isGameCreated)
+      throws JsonProcessingException {
     this.gameLeader = gameData.getGameLeader();
-    this.gameId = gameData.getGameId();
     gameName.setText(gameData.getGameName());
     startGameButton.setVisible(getSessionCookie("username").equals(gameLeader));
+    this.gameId = gameId;
+    addNewSessionCookie("gameId", gameId);
+    stompClient = new StompClient(this, getSessionCookie("username"), this.gameId);
+    stompClient.connect();
+    if (isGameCreated) {
+      stompClient.sendCommand(
+          new Message(
+              MessageType.GAME_CREATED,
+              "NOW",
+              getSessionCookie("username"),
+              "A new game has been created!"));
+    } else {
+      stompClient.sendCommand(
+          new Message(
+              MessageType.USER_JOINED, "NOW", getSessionCookie("username"), "New user joined!"));
+    }
   }
 
-  public void initialize() throws JsonProcessingException, URISyntaxException {
+  public void initialize() throws URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
-
-    stompClient = new StompClient(this, getSessionCookie("username"));
-    stompClient.connect();
-    stompClient.sendCommand(
-        new Message(
-            MessageType.USER_JOINED, "NOW", getSessionCookie("username"), "New user joined!"));
-
-    stompClient.sendCommand(
-        new Message(
-            MessageType.USER_LIST, "NOW", getSessionCookie("username"), "Get player list!"));
-
     chatTextField.setOnKeyPressed(
         event -> {
           if (event.getCode() == KeyCode.ENTER) {
@@ -84,6 +90,16 @@ public class RoomController {
             }
           }
         });
+  }
+
+  public void gameCreated() {
+    try {
+      stompClient.sendCommand(
+          new Message(
+              MessageType.USER_JOINED, "NOW", getSessionCookie("username"), "New user joined!"));
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
   }
 
   public void addChatMessage(Message msg) {

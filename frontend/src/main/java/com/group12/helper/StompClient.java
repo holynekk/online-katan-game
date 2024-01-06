@@ -40,6 +40,7 @@ public class StompClient implements StompSessionHandler {
   private static StompSession stompSession;
   public static WebSocketStompClient stompClient;
   private String stompUsername;
+  private String gameId;
 
   private final ReadOnlyBooleanWrapper connected = new ReadOnlyBooleanWrapper(false);
   private final ObservableList<Message> greetings = FXCollections.observableArrayList();
@@ -48,10 +49,11 @@ public class StompClient implements StompSessionHandler {
   private final RoomController roomController;
   private OnlineGameController gameController;
 
-  public StompClient(RoomController roomController, String stompUsername) {
+  public StompClient(RoomController roomController, String stompUsername, String gameId) {
     this.objectMapper = new ObjectMapper();
     this.roomController = roomController;
     this.stompUsername = stompUsername;
+    this.gameId = gameId;
 
     StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
     List<Transport> transports = new ArrayList<>();
@@ -93,9 +95,8 @@ public class StompClient implements StompSessionHandler {
         " Connection to STOMP server established Session: {} Headers: {}",
         session.getSessionId(),
         connectedHeaders);
-
-    subscribe("/topic/room");
-    subscribe("/topic/chat");
+    subscribe(String.format("/topic/room/%s", this.gameId));
+    subscribe(String.format("/topic/chat/%s", this.gameId));
 
     Platform.runLater(() -> connected.set(true));
   }
@@ -121,6 +122,9 @@ public class StompClient implements StompSessionHandler {
         break;
       case IN_GAME_CHAT:
         Platform.runLater(() -> gameController.addChatMessage(finalMsg));
+        break;
+      case GAME_CREATED:
+        Platform.runLater(roomController::gameCreated);
         break;
       case USER_JOINED:
         Platform.runLater(
@@ -310,23 +314,27 @@ public class StompClient implements StompSessionHandler {
     Platform.runLater(() -> connected.set(false));
   }
 
-  public static void exitGame() throws JsonProcessingException {
+  public static void exitGame(String gameId) throws JsonProcessingException {
     if (stompSession != null) {
       ObjectMapper objectMapper = new ObjectMapper();
       Message msg =
           new Message(MessageType.LEAVE, "Now", getSessionCookie("username"), "Yo I'm leaving!");
-      stompSession.send("/app/room", objectMapper.writeValueAsString(msg));
+      stompSession.send(
+          String.format("/app/room/%s", gameId.isEmpty() ? "none" : gameId),
+          objectMapper.writeValueAsString(msg));
       stompSession.disconnect();
     }
   }
 
   public void sendChatMessage(Message message) throws JsonProcessingException {
     if (!message.getContent().trim().isEmpty()) {
-      stompSession.send("/app/chat", objectMapper.writeValueAsString(message));
+      stompSession.send(
+          String.format("/app/chat/%s", this.gameId), objectMapper.writeValueAsString(message));
     }
   }
 
   public void sendCommand(Message message) throws JsonProcessingException {
-    stompSession.send("/app/room", objectMapper.writeValueAsString(message));
+    stompSession.send(
+        String.format("/app/room/%s", this.gameId), objectMapper.writeValueAsString(message));
   }
 }

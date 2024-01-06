@@ -103,7 +103,7 @@ public class LobbyController {
   }
 
   @FXML
-  public void joinRoom() throws IOException, InterruptedException {
+  public void joinRoom() throws IOException, InterruptedException, URISyntaxException {
     //  TODO: Join logic should be rewritten later.
 
     playSoundEffect(buttonSound);
@@ -130,7 +130,7 @@ public class LobbyController {
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
     stage.setScene(scene);
     RoomController roomController = fxmlLoader.getController();
-    roomController.initData(gData);
+    roomController.initData(gData, Integer.toString(gData.getGameId()), false);
     stage.show();
   }
 

@@ -4,6 +4,7 @@ public enum MessageType {
   CONNECT,
   CONNECT_OK,
   CONNECT_FAILED,
+  GAME_CREATED,
   USER_JOINED,
   LEAVE,
   USER_LEFT,

@@ -120,7 +120,7 @@ public class GameCreationController {
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setScene(scene);
         RoomController roomController = fxmlLoader.getController();
-        roomController.initData(gData);
+        roomController.initData(gData, Integer.toString(gData.getGameId()), true);
         stage.show();
       } else {
         NotificationHelper.showAlert(

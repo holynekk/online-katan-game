@@ -8,6 +8,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import static com.group12.helper.HttpClientHelper.getAllSessionCookies;
+import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.StompClient.exitGame;
 
 public class KatanApplication extends Application {
@@ -26,7 +28,7 @@ public class KatanApplication extends Application {
 
   @Override
   public void stop() throws JsonProcessingException {
-    exitGame();
+    exitGame(getSessionCookie("gameId"));
     applicationContext.close();
     Platform.exit();
   }
