@@ -1,7 +1,5 @@
 package com.group12.controller;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -34,22 +32,14 @@ public class SettingsController {
     backgroundMusicSlider
         .valueProperty()
         .addListener(
-            new InvalidationListener() {
-              @Override
-              public void invalidated(Observable observable) {
-                backgroundPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
-              }
+            observable -> {
+              backgroundPlayer.setVolume(backgroundMusicSlider.getValue() / 100);
+              backgroundPlayer2.setVolume(backgroundMusicSlider.getValue() / 100);
             });
     effectsMusicSlider.setValue(effectVolume);
     effectsMusicSlider
         .valueProperty()
-        .addListener(
-            new InvalidationListener() {
-              @Override
-              public void invalidated(Observable observable) {
-                effectVolume = effectsMusicSlider.getValue();
-              }
-            });
+        .addListener(observable -> effectVolume = effectsMusicSlider.getValue());
     setTheBackground(borderpn, parchmentBackgroundImage);
   }
 

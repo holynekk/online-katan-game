@@ -213,7 +213,7 @@ public class OnlineGameController {
 
   public void initialize() {
     gameScene = anchPane.getScene();
-    switchBackgroundMusic(inGameBackgroundMusic);
+    switchBackgroundMusic(true);
     clientUsername = getSessionCookie("username");
     chatTextField.setOnKeyPressed(
         event -> {
@@ -780,7 +780,7 @@ public class OnlineGameController {
     toggleOffButtons(true);
     resultBanner.setVisible(true);
     backButton.setVisible(true);
-    backgroundPlayer.stop();
+    backgroundPlayer2.stop();
 
     ObjectMapper objectMapper = new ObjectMapper();
     Map<String, Object> body = new HashMap<>();
@@ -817,6 +817,7 @@ public class OnlineGameController {
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);
+    switchBackgroundMusic(false);
     Stage stage = (Stage) backButton.getScene().getWindow();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/lobbyView.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
