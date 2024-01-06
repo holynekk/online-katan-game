@@ -68,7 +68,11 @@ public class RoomController {
         break;
       case READY:
         onlineGame.addUserReady(msg.getNickname());
-        msg.setContent(Boolean.toString(onlineGame.getUserReadyList().size() == 2));
+        msg.setContent(
+            Boolean.toString(
+                onlineGame.getUserReadyList().size() >= 2
+                    && onlineGame.getUserReadyList().size() <= 4
+                    && onlineGame.getUserReadyList().size() <= onlineGame.getPlayerList().size()));
         gameList.put(gameId, onlineGame);
         break;
       case THROW_DICE:
@@ -76,18 +80,14 @@ public class RoomController {
         msg.setTurnUsername(onlineGame.getTurnUsername());
         gameList.put(gameId, onlineGame);
         break;
-      case RESOURCE_CHANGE:
-        break;
       case SKIP_TURN:
         msg.setTurnUsername(onlineGame.getSkipTurnUsername());
         break;
       case BUILD_SETTLEMENT:
         if (onlineGame.getTurnCount() < onlineGame.getPlayerList().size()) {
           msg.setMsgType(MessageType.SHOW_ROADS_AT_SETUP);
-          break;
         } else if (onlineGame.getTurnCount() < onlineGame.getPlayerList().size() * 2) {
           msg.setMsgType(MessageType.SHOW_ROADS_AT_SETUP_AND_GATHER);
-          break;
         }
         break;
       case BUILD_ROAD:

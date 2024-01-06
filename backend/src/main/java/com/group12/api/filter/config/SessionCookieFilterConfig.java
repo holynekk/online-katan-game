@@ -50,6 +50,7 @@ public class SessionCookieFilterConfig {
     registrationBean.addUrlPatterns("/api/leaderboard");
     registrationBean.addUrlPatterns("/api/auth/logout");
     registrationBean.addUrlPatterns("/api/user/game-history");
+    registrationBean.addUrlPatterns("/api/game/game-history");
     registrationBean.addUrlPatterns("/api/game/game-history/closeGame");
 
     return registrationBean;

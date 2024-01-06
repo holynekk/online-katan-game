@@ -1,20 +1,31 @@
 package com.group12.api.server;
 
 import com.group12.api.request.game.GameCreateRequest;
+import com.group12.api.request.game.GameHistoryCreateRequest;
+import com.group12.api.response.GameHistoryResponse;
 import com.group12.api.response.GameResponse;
 import com.group12.entity.Game;
+import com.group12.entity.GameHistory;
 import com.group12.entity.User;
+import com.group12.repository.GameHistoryRepository;
 import com.group12.repository.GameRepository;
 import com.group12.repository.UserRepository;
+import com.group12.util.EncryptDecryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.group12.api.server.UserApi.SECRET_KEY;
 
 @RestController
 @RequestMapping("/api/game")
@@ -23,6 +34,8 @@ public class GameApi {
   @Autowired GameRepository repository;
 
   @Autowired UserRepository userRepository;
+
+  @Autowired GameHistoryRepository gameHistoryRepository;
 
   @GetMapping(value = "", produces = MediaType.TEXT_PLAIN_VALUE)
   public ResponseEntity<GameResponse> getGameById(
@@ -77,7 +90,6 @@ public class GameApi {
               savedGame.getOnline(),
               savedGame.getStarted(),
               savedGame.getFinished());
-      System.out.println(savedGame.getGameId());
       return ResponseEntity.status(HttpStatus.OK)
           .contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
           .body(response);
@@ -120,6 +132,32 @@ public class GameApi {
       game.setIsOnline(false);
       repository.save(game);
       return ResponseEntity.status(HttpStatus.OK).body("The game has been closed!");
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+  }
+
+  @PostMapping(value = "/game-history", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<GameHistory> createGameHistoryByUsername(
+      @RequestBody(required = true) GameHistoryCreateRequest request)
+      throws InvalidAlgorithmParameterException,
+          IllegalBlockSizeException,
+          BadPaddingException,
+          InvalidKeyException {
+    String encryptedUsername =
+        EncryptDecryptUtil.encryptAes(request.getUsername().toLowerCase(), SECRET_KEY);
+    Optional<User> optionalUser = userRepository.findByUsername(encryptedUsername);
+    Optional<Game> optionalGame = repository.findGameById(request.getGameId());
+    if (optionalUser.isPresent() && optionalGame.isPresent()) {
+      GameHistory newGameHistory =
+          gameHistoryRepository.saveAndFlush(
+              new GameHistory(
+                  request.getTotalScore(),
+                  request.getDidWon(),
+                  request.getTime(),
+                  optionalUser.get(),
+                  optionalGame.get()));
+
+      return ResponseEntity.status(HttpStatus.OK).body(newGameHistory);
     }
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
   }

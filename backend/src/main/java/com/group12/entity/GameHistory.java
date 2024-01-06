@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 public class GameHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private int gameId;
 
     private int totalScore;
@@ -29,6 +30,14 @@ public class GameHistory {
     @OneToOne
     @JoinColumn(name = "game_id", referencedColumnName = "game_id")
     private Game game;
+
+    public GameHistory(int totalScore, int didWon, LocalDateTime history, User user, Game game) {
+        this.totalScore = totalScore;
+        this.didWon = didWon;
+        this.history = history;
+        this.user = user;
+        this.game = game;
+    }
 
     public int getId() {
         return gameId;

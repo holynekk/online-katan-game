@@ -1,53 +1,51 @@
 package com.group12.api.response;
 
-import java.time.LocalDateTime;
-
 public class GameHistoryResponse {
 
-    private int gameId;
+  private int gameId;
 
-    private String history;
+  private String history;
 
-    private boolean didWon;
+  private boolean didWon;
 
-    private int score;
+  private int score;
 
-    public GameHistoryResponse(int gameId, String history, boolean didWon, int score) {
-        this.gameId = gameId;
-        this.history = history;
-        this.didWon = didWon;
-        this.score = score;
-    }
+  public GameHistoryResponse(int gameId, String history, boolean didWon, int score) {
+    this.gameId = gameId;
+    this.history = history;
+    this.didWon = didWon;
+    this.score = score;
+  }
 
-    public int getGameId() {
-        return gameId;
-    }
+  public int getGameId() {
+    return gameId;
+  }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
-    }
+  public void setGameId(int gameId) {
+    this.gameId = gameId;
+  }
 
-    public String getHistory() {
-        return history;
-    }
+  public String getHistory() {
+    return history;
+  }
 
-    public void setHistory(String history) {
-        this.history = history;
-    }
+  public void setHistory(String history) {
+    this.history = history;
+  }
 
-    public boolean isDidWon() {
-        return didWon;
-    }
+  public boolean isDidWon() {
+    return didWon;
+  }
 
-    public void setDidWon(boolean didWon) {
-        this.didWon = didWon;
-    }
+  public void setDidWon(boolean didWon) {
+    this.didWon = didWon;
+  }
 
-    public int getScore() {
-        return score;
-    }
+  public int getScore() {
+    return score;
+  }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+  public void setScore(int score) {
+    this.score = score;
+  }
 }
