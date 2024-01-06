@@ -7,10 +7,7 @@ import com.group12.controller.RoomController;
 import com.group12.model.chat.Message;
 import com.group12.model.chat.MessageType;
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.converter.StringMessageConverter;
@@ -43,7 +40,6 @@ public class StompClient implements StompSessionHandler {
   private String gameId;
 
   private final ReadOnlyBooleanWrapper connected = new ReadOnlyBooleanWrapper(false);
-  private final ObservableList<Message> greetings = FXCollections.observableArrayList();
 
   private final ObjectMapper objectMapper;
   private final RoomController roomController;
@@ -73,14 +69,7 @@ public class StompClient implements StompSessionHandler {
     this.gameController = controller;
   }
 
-  public ObservableList<Message> getGreetings() {
-    return greetings;
-  }
-
-  public ReadOnlyBooleanProperty connectedProperty() {
-    return connected.getReadOnlyProperty();
-  }
-
+  /** A method to connect a websocket with the predefined variables. */
   public void connect() {
     try {
       stompSession = stompClient.connectAsync(ENDPOINT_URL, this).get();
@@ -89,6 +78,11 @@ public class StompClient implements StompSessionHandler {
     }
   }
 
+/**
+* A method to call after websocket connection has been established. Allows client to subscribe to some specific websocket topics.
+ * @param session  - Current session instance.
+ * @param connectedHeaders - Stomp headers
+*/
   @Override
   public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
     LOG.info(
@@ -101,11 +95,23 @@ public class StompClient implements StompSessionHandler {
     Platform.runLater(() -> connected.set(true));
   }
 
+  /**
+   * A method to subscribe to a specific topic with the provided topic path.
+   *
+   * @param topic - Topic path.
+   */
   public void subscribe(String topic) {
     LOG.info("Subscribing to topic {} for session {}", topic, stompSession.getSessionId());
     stompSession.subscribe(topic, this);
   }
 
+  /**
+   * A method to process messages which comes from the websocket server. All game commands and chat
+   * messages are processed here and the relevant helper methods in controllers are called.
+   *
+   * @param headers - Stomp headers.
+   * @param payload - Message payload that comes from the websocket server.
+   */
   @Override
   public void handleFrame(StompHeaders headers, Object payload) {
     Message msg = null;
@@ -281,6 +287,15 @@ public class StompClient implements StompSessionHandler {
     LOG.info("{} Received message: {}", stompUsername, msg);
   }
 
+  /**
+   * A method to handle exceptions.
+   *
+   * @param session - Current session instance.
+   * @param command - Stomp command.
+   * @param headers - Stomp headers.
+   * @param payload - Exception payload.
+   * @param exception - Exception that will be thrown.
+   */
   @Override
   public void handleException(
       StompSession session,
@@ -293,6 +308,12 @@ public class StompClient implements StompSessionHandler {
     Platform.runLater(() -> connected.set(false));
   }
 
+  /**
+   * A method to handle message transport errors.
+   *
+   * @param session - Current session instance.
+   * @param exception - Exception that will be thrown.
+   */
   @Override
   public void handleTransportError(StompSession session, Throwable exception) {
     LOG.error("Retrieved a transport error: ", exception);
@@ -300,11 +321,18 @@ public class StompClient implements StompSessionHandler {
     Platform.runLater(() -> connected.set(false));
   }
 
+  /**
+   * A method to get type of messages.
+   *
+   * @param headers - Stomp headers
+   * @return - The type of messages
+   */
   @Override
   public Type getPayloadType(StompHeaders headers) {
     return String.class;
   }
 
+  /** A method to terminate the current session between client and the websocket server. */
   public void disconnect() {
     if (stompSession != null) {
       LOG.info("Disconnecting from stomp session {}", stompSession.getSessionId());
@@ -314,6 +342,12 @@ public class StompClient implements StompSessionHandler {
     Platform.runLater(() -> connected.set(false));
   }
 
+  /**
+   * A method to exit a game successfully while in game or lobby.
+   *
+   * @param gameId - Game's id to redirect exit game message/command to a specific websocket topic.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public static void exitGame(String gameId) throws JsonProcessingException {
     if (stompSession != null) {
       ObjectMapper objectMapper = new ObjectMapper();
@@ -326,6 +360,12 @@ public class StompClient implements StompSessionHandler {
     }
   }
 
+  /**
+   * A method to send chat messages to a specific chat topic with a room/game id.
+   *
+   * @param message - Message object that will be sent to websocket server.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public void sendChatMessage(Message message) throws JsonProcessingException {
     if (!message.getContent().trim().isEmpty()) {
       stompSession.send(
@@ -333,6 +373,12 @@ public class StompClient implements StompSessionHandler {
     }
   }
 
+  /**
+   * A method to send game commands to a specific room topic with a room/game id.
+   *
+   * @param message - Message object that will be sent to websocket server.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public void sendCommand(Message message) throws JsonProcessingException {
     stompSession.send(
         String.format("/app/room/%s", this.gameId), objectMapper.writeValueAsString(message));

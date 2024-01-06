@@ -139,6 +139,16 @@ public class OnlineGameController {
 
   private boolean gameEndedAlready = false;
 
+  /**
+   * A controller method to initialize some data about the game at the very beginning.
+   *
+   * @param stompClient - Stomp client which will be used to send game commands through websocket
+   *     connection.
+   * @param color - Client's color code to initialize it's color on the board.
+   * @param playerUsernameList - List of players usernames in the lobby.
+   * @param userColorList - List of players colors in the lobby.
+   * @param gameId - Current game instance's id.
+   */
   public void initData(
       StompClient stompClient,
       String color,
@@ -215,10 +225,11 @@ public class OnlineGameController {
             "-fx-background-color: D3D3D3; -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0); -fx-background-color: #bc9d7e;");
   }
 
+  /** A method to set and initialize some data (setting client username, background image, etc.) */
   public void initialize() {
     gameScene = anchPane.getScene();
     switchBackgroundMusic(true);
-    clientUsername = getSessionCookie("username");
+    this.clientUsername = getSessionCookie("username");
     chatTextField.setOnKeyPressed(
         event -> {
           if (event.getCode() == KeyCode.ENTER) {
@@ -238,6 +249,7 @@ public class OnlineGameController {
     secondDiceImage.setDisable(true);
   }
 
+  /** A button action to show optional settlements. */
   @FXML
   public void showOptionalSettlements() {
     playSoundEffect(buttonSound);
@@ -246,6 +258,7 @@ public class OnlineGameController {
     showSettlementOptions(anchPane, occupiedCircles, ownedEdges);
   }
 
+  /** A button action to show optional roads. */
   @FXML
   public void showOptionalRoads() {
     playSoundEffect(buttonSound);
@@ -254,6 +267,7 @@ public class OnlineGameController {
     showRoadOptions(anchPane, ownedCircles, ownedEdges, occupiedEdges);
   }
 
+  /** A button action to show optional roads specifically for the setup phase. */
   public void showOptionalRoadsAtSetup() {
     playSoundEffect(buttonSound);
     clearOptionals(
@@ -261,6 +275,7 @@ public class OnlineGameController {
     showRoadOptions(anchPane, ownedCircles.get(ownedCircles.size() - 1));
   }
 
+  /** A button action to show optional upgrades from a settlement to a city. */
   @FXML
   public void showOptionalUpgrades() {
     playSoundEffect(buttonSound);
@@ -279,6 +294,11 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A button action to skip turn.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void skipTurn() throws JsonProcessingException {
     Message msg = new Message(MessageType.SKIP_TURN, "Now", clientUsername, "skip_turn!");
@@ -290,6 +310,12 @@ public class OnlineGameController {
     playSoundEffect(buttonSound);
   }
 
+  /**
+   * A button action to show optional settlements.
+   *
+   * @param event - Mouse event when the image get clicked.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void throwDice(MouseEvent event) throws JsonProcessingException {
     Message msg =
@@ -299,6 +325,13 @@ public class OnlineGameController {
     secondDiceImage.setDisable(true);
   }
 
+  /**
+   * A method to run dice rolling animation.
+   *
+   * @param turnUsername - Current turn's username.
+   * @param firstDiceResult - First dice result
+   * @param secondDiceResult - Second dice result
+   */
   public void diceThrowAnimation(String turnUsername, int firstDiceResult, int secondDiceResult) {
     rollDice(firstDiceImage, firstDiceResult);
     rollDice(secondDiceImage, secondDiceResult);
@@ -308,6 +341,13 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to gather new resources from the tiles that are adjacent to the owned
+   * settlements/cities.
+   *
+   * @param diceResult - Sum of first and the second dice results.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public void gatherNewResources(int diceResult) throws JsonProcessingException {
     if (diceResult == 7) {
       return;
@@ -351,8 +391,13 @@ public class OnlineGameController {
     updateResourcePanels(totalGain);
   }
 
+  /**
+   * A method to gather resources at the second turn of the setup phase.
+   *
+   * @param circleId - Settlement that is built in the setup phase
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public void gatherResourcesAtSetup(String circleId) throws JsonProcessingException {
-
     List<String> styleList;
     int totalGain = 0;
     for (String resourceTile : circleNeighbours.get(circleId).split("-")) {
@@ -381,6 +426,12 @@ public class OnlineGameController {
     updateResourcePanels(totalGain);
   }
 
+  /**
+   * A method to update resource panels after gathering or losing resources.
+   *
+   * @param totalGain - Total gain or lose of resources.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public void updateResourcePanels(int totalGain) throws JsonProcessingException {
     refreshClientResources();
     Message msg =
@@ -396,6 +447,7 @@ public class OnlineGameController {
     stompClient.sendCommand(msg);
   }
 
+  /** A method to refresh resources board at the bottom of the scene. */
   public void refreshClientResources() {
     brickText.setText(Integer.toString(brickResource));
     oreText.setText(Integer.toString(oreResource));
@@ -404,6 +456,12 @@ public class OnlineGameController {
     woolText.setText(Integer.toString(woolResource));
   }
 
+  /**
+   * A method to refresh score board on the right side of the scene.
+   *
+   * @throws IOException - Exception while sending the message.
+   * @throws InterruptedException - Exception while sending the message.
+   */
   public void updateScorePanel() throws IOException, InterruptedException {
     Message msg =
         new Message(
@@ -418,6 +476,12 @@ public class OnlineGameController {
     checkScore();
   }
 
+  /**
+   * A method to update user resources related information on the right panel.
+   *
+   * @param username - Player username whose resources will be updated.
+   * @param msgContent - Message content.
+   */
   public void setPlayerResourceInfoPanel(String username, String msgContent) {
     String[] playerInfo = msgContent.split("/");
 
@@ -426,6 +490,12 @@ public class OnlineGameController {
         Integer.toString(Integer.parseInt(text.getText()) + Integer.parseInt(playerInfo[0])));
   }
 
+  /**
+   * A method to update user score related information on the right panel.
+   *
+   * @param username - Player username whose resources will be updated.
+   * @param msgContent - Message content.
+   */
   public void setPlayerScorePanel(String username, String msgContent) {
     String[] playerInfo = msgContent.split("/");
 
@@ -436,6 +506,12 @@ public class OnlineGameController {
     text.setText(Integer.toString(Integer.parseInt(playerInfo[2])));
   }
 
+  /**
+   * A method to roll the dice for all players at the same time.
+   *
+   * @param diceImage - Dice image which is clicked on.
+   * @param diceResult - Sum of dice result one and two.
+   */
   public void rollDice(ImageView diceImage, int diceResult) {
     File file = new File("src/main/resources/assets/dice" + diceResult + ".png");
     RotateTransition rt = new RotateTransition();
@@ -446,6 +522,11 @@ public class OnlineGameController {
     rt.setOnFinished(j -> diceImage.setImage(new Image(file.toURI().toString())));
   }
 
+  /**
+   * A method to set the board tiles with random resource types and numbers.
+   *
+   * @param boardData - Board data which comes from the websocket server.
+   */
   public void setBoard(String boardData) {
     int dataIndex = 0;
     String[] boardTiles = boardData.split("/");
@@ -461,6 +542,11 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * Setup phase skip turn helper.
+   *
+   * @param turnUsername - Current turn's username.
+   */
   public void setupHelper(String turnUsername) {
     if (turnUsername.equals(this.clientUsername)) {
       playSoundEffect(turnSound);
@@ -468,6 +554,11 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * Skip turn helper function to handle button toggle actions, panel on/off etc.
+   *
+   * @param turnUsername - Current turn's username.
+   */
   public void turnHelper(String turnUsername) {
     closeTradePanels();
     closeOfferPanel();
@@ -480,11 +571,10 @@ public class OnlineGameController {
     }
   }
 
+  /** A method to toggle on buttons according to resource constraints. */
   public void toggleOnButtons() {
-    ArrayList<String> optionalRoads;
     ArrayList<String> optionalSettlements =
         getSettlementOptions(anchPane, occupiedCircles, ownedEdges);
-    ArrayList<String> optionalUpgrades;
     if (brickResource >= 1 && lumberResource >= 1) {
       roadBuildButton.setDisable(false);
     }
@@ -502,6 +592,12 @@ public class OnlineGameController {
     skipTurnButton.setDisable(false);
   }
 
+  /**
+   * A method to toggle off all the functional button in the game interface.
+   *
+   * @param isAll - Boolean value to decide if all the button should be turned off including
+   *     skipTurn.
+   */
   public void toggleOffButtons(Boolean isAll) {
     roadBuildButton.setDisable(true);
     settlementBuildButton.setDisable(true);
@@ -510,6 +606,11 @@ public class OnlineGameController {
     skipTurnButton.setDisable(isAll);
   }
 
+  /**
+   * A method to build a settlement.
+   *
+   * @param event - JavaFX mouse event (clicking on the optional circles).
+   */
   @FXML
   public void buildSettlement(MouseEvent event) throws IOException, InterruptedException {
     Circle eventCircle = (Circle) event.getSource();
@@ -542,6 +643,11 @@ public class OnlineGameController {
     playSoundEffect(buildSound);
   }
 
+  /**
+   * A method to build settlements and visually represent it on the board for all players.
+   *
+   * @param msg - Message instance which contains the built settlement's information.
+   */
   public void settlementBuilt(Message msg) {
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
@@ -557,6 +663,11 @@ public class OnlineGameController {
     occupiedCircles.add(msg.getContent());
   }
 
+  /**
+   * A method to build a road.
+   *
+   * @param event - JavaFX mouse event (clicking on the optional rectangle).
+   */
   @FXML
   public void buildRoad(MouseEvent event) throws IOException, InterruptedException {
     Rectangle eventCircle = (Rectangle) event.getSource();
@@ -587,6 +698,11 @@ public class OnlineGameController {
     playSoundEffect(buildSound);
   }
 
+  /**
+   * A method to build road and visually represent it on the board for all players.
+   *
+   * @param msg - Message instance which contains the built road's information.
+   */
   public void roadBuilt(Message msg) {
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Rectangle")) {
@@ -611,6 +727,11 @@ public class OnlineGameController {
     occupiedEdges.add(msg.getContent());
   }
 
+  /**
+   * A method to upgrade settlement to a city.
+   *
+   * @param event - JavaFX mouse event (clicking on the optional circle).
+   */
   @FXML
   public void upgradeSettlement(MouseEvent event) {
     Circle eventCircle = (Circle) event.getSource();
@@ -642,6 +763,12 @@ public class OnlineGameController {
     playSoundEffect(buildSound);
   }
 
+  /**
+   * A method to upgrade settlement to a city and visually represent it on the board for all
+   * players.
+   *
+   * @param msg - Message instance which contains the upgraded settlement's information.
+   */
   public void settlementUpgraded(Message msg) {
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
@@ -658,16 +785,19 @@ public class OnlineGameController {
     occupiedEdges.add(msg.getContent());
   }
 
+  /** A method to open trade panel in the bottom-left corner of the screen. */
   @FXML
   public void openTradePanel() {
     tradePanel.setVisible(true);
   }
 
+  /** A method to close trade offer panel in the bottom-left corner of the screen. */
   @FXML
   public void closeTradePanels() {
     tradePanel.setVisible(false);
   }
 
+  /** A method to close trade offer panel in the top-right corner of the screen. */
   @FXML
   public void closeOfferPanel() {
     tradeOfferPanel.setVisible(false);
@@ -675,6 +805,11 @@ public class OnlineGameController {
     tradeRejectButton.setVisible(false);
   }
 
+  /**
+   * A method to send trade offer through websocket connection.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void sendTradeOffer() throws JsonProcessingException {
     RadioButton resourceGiveButton = (RadioButton) resourceGiveGroup.getSelectedToggle();
@@ -697,6 +832,12 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to show trade offer panel after getting TRADE_OFFER_RECEIVED message through websocket
+   * connection.
+   *
+   * @param msg - Message instance came from websocket connection.
+   */
   public void showTradeOffer(Message msg) {
     tradeUsername.setText(msg.getNickname());
     String[] resources = msg.getContent().split("/");
@@ -717,6 +858,12 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to call after accepting a trade. Sends a message back to websocket with message type
+   * TRADE_OFFER_ACCEPTED.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void acceptTradeOffer() throws JsonProcessingException {
     String resourceTypes =
@@ -733,6 +880,11 @@ public class OnlineGameController {
     closeOfferPanel();
   }
 
+  /**
+   * A method called after trade offer has been accepted. Refreshes client resource panels.
+   *
+   * @param msg - Message instance which contains resource type that are used in trade.
+   */
   public void tradeOfferAccepted(Message msg) {
     closeOfferPanel();
     String[] resources = msg.getContent().split("/");
@@ -743,6 +895,12 @@ public class OnlineGameController {
     removeResourceTradeType(tradeGivenResource, tradeWantedResource);
   }
 
+  /**
+   * A method to update resources if the trade offer is accepted.
+   *
+   * @param gainedResource - Gained resource type by the trade.
+   * @param lostResource - Lost resource type by the trade.
+   */
   public void updateResourcesAfterTrade(String gainedResource, String lostResource) {
     switch (gainedResource) {
       case "brick" -> brickResource++;
@@ -761,6 +919,13 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to check the score and decide if the game is ended by the current player. If score is
+   * high enough GAME_ENDED message is sent through the websocket connection.
+   *
+   * @throws IOException - This is an exception for creating the request.
+   * @throws InterruptedException - This is an exception for sending the request.
+   */
   public void checkScore() throws IOException, InterruptedException {
     if ((this.score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)) >= 8) {
       Message msg =
@@ -782,6 +947,13 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to call when the game has been finished. According to results, different actions are
+   * taken. Winners and losers see and hear different result banners and sounds. GameHistory is
+   * logged at the end of the game for each player.
+   *
+   * @param msg - Message instance.
+   */
   public void gameEnded(Message msg) {
     if (gameEndedAlready) {
       return;
@@ -825,6 +997,11 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to allow user to get back to the lobby screen at the end of the game.
+   *
+   * @throws IOException - This is an exception for the scene load function.
+   */
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);
@@ -836,6 +1013,11 @@ public class OnlineGameController {
     stage.show();
   }
 
+  /**
+   * A method to highlight player info box at the right panel.
+   *
+   * @param username - Username of the players which will be highlighted.
+   */
   public void highlightPlayerInfoBox(String username) {
     for (Node node : playerInfoBox.getChildren()) {
       if (node.getClass().getName().contains("VBox")) {
@@ -849,6 +1031,11 @@ public class OnlineGameController {
     }
   }
 
+  /**
+   * A method to send chat messages through websocket connection.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void sendChatMessage() throws JsonProcessingException {
     Message msg =
@@ -858,6 +1045,11 @@ public class OnlineGameController {
     stompClient.sendChatMessage(msg);
   }
 
+  /**
+   * A method to add a chat message with a color.
+   *
+   * @param msg - Message instance.
+   */
   public void addChatMessage(Message msg) {
     Text txt1 = new Text(msg.getNickname() + ": ");
     Text txt2 = new Text(msg.getContent());
@@ -877,6 +1069,11 @@ public class OnlineGameController {
     chatScrollPane.setVvalue(1D);
   }
 
+  /**
+   * A method to add a generic chat message.
+   *
+   * @param message - Message instance.
+   */
   public void addChatMessage(String message) {
     chatBox.getChildren().add(new Text(message));
     chatScrollPane.setVvalue(1D);

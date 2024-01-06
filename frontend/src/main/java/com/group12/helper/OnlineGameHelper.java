@@ -99,6 +99,12 @@ public class OnlineGameHelper {
         }
       };
 
+  /**
+   * A method to show all optional settlement points for specifically setup phase.
+   *
+   * @param anchorPane - Game board with tiles in the scene.
+   * @param occupiedCircles - Circles that are already occupied by all players.
+   */
   public static void showSettlementOptionsAtSetup(
       AnchorPane anchorPane, ArrayList<String> occupiedCircles) {
     ArrayList<String> circleOptionList = new ArrayList<>(circleList);
@@ -124,6 +130,14 @@ public class OnlineGameHelper {
     }
   }
 
+  /**
+   * A method to return the list of optional settlement points (circles).
+   *
+   * @param anchorPane - Game board with tiles in the scene.
+   * @param occupiedCircles - Circles that are already occupied by all players.
+   * @param ownedEdges - Roads built by the player so far.
+   * @return - List of optional settlement ids
+   */
   public static ArrayList<String> getSettlementOptions(
       AnchorPane anchorPane, ArrayList<String> occupiedCircles, ArrayList<String> ownedEdges) {
     ArrayList<String> optionalSettlements = new ArrayList<>();
@@ -154,6 +168,13 @@ public class OnlineGameHelper {
     return optionalSettlements;
   }
 
+  /**
+   * A method to show all optional roads on the game board.
+   *
+   * @param anchorPane - Game board with tiles in the scene.
+   * @param occupiedCircles - Circles that are already occupied by all players.
+   * @param ownedEdges - Roads built by the player so far.
+   */
   public static void showSettlementOptions(
       AnchorPane anchorPane, ArrayList<String> occupiedCircles, ArrayList<String> ownedEdges) {
     ArrayList<String> circleOptionList =
@@ -167,6 +188,14 @@ public class OnlineGameHelper {
     }
   }
 
+  /**
+   * A method to show all optional roads on the game board.
+   *
+   * @param anchorPane - Game board with tiles in the scene.
+   * @param ownedCircles - Settlements built by the player so far.
+   * @param ownedEdges - Roads built by the player so far.
+   * @param occupiedEdges - Roads that are already occupied by all players.
+   */
   public static void showRoadOptions(
       AnchorPane anchorPane,
       ArrayList<String> ownedCircles,
@@ -204,6 +233,12 @@ public class OnlineGameHelper {
     }
   }
 
+  /**
+   * A method to show optional roads specifically for the setup phase.
+   *
+   * @param anchorPane - Game board with tiles in the scene.
+   * @param circleId - Settlement id which the optional roads will be around.
+   */
   public static void showRoadOptions(AnchorPane anchorPane, String circleId) {
     ArrayList<String> optionalRoads = new ArrayList<>();
     for (Node node : anchorPane.getChildren()) {
@@ -223,6 +258,14 @@ public class OnlineGameHelper {
     }
   }
 
+  /**
+   * @param anchorPane - Game board with tiles in the scene.
+   * @param ownedCircles - Settlements built by the player so far.
+   * @param ownedCities - Cities built by the player so far.
+   * @param occupiedCircles - Settlements that are already occupied by all players.
+   * @param occupiedEdges - Roads that are already occupied by all players.
+   * @param color - player's color
+   */
   public static void clearOptionals(
       AnchorPane anchorPane,
       ArrayList<String> ownedCircles,
@@ -250,6 +293,12 @@ public class OnlineGameHelper {
     }
   }
 
+  /**
+   * A method to calculate the longest road length.
+   *
+   * @param edges - List of roads built by the player.
+   * @return - Longest consecutive road length.
+   */
   public static int findLongestRoadLength(ArrayList<String> edges) {
     int longestPath = 0;
 
@@ -262,6 +311,15 @@ public class OnlineGameHelper {
     return longestPath;
   }
 
+  /**
+   * DFS algorithm to calculate path length.
+   *
+   * @param node - current node that will be worked on.
+   * @param visited - Hashset of already visited circle points so far.
+   * @param edges - Available paths to continue searching.
+   * @param pathLength - the length of path achieved so far.
+   * @return
+   */
   private static int dfs(
       String node, Set<String> visited, ArrayList<String> edges, int pathLength) {
     if (visited.contains(node)) {
@@ -284,6 +342,15 @@ public class OnlineGameHelper {
     return maxLength;
   }
 
+  /**
+   * A helper method to extract resource types within the style list.
+   *
+   * @param giveResourceStyle - Style list which includes the selected resources type as a style
+   *     attribute.
+   * @param getResourceStyle - Style list which includes the selected resources type as a style
+   *     attribute.
+   * @return - A pair of resource type to send with a trade offer message.
+   */
   public static String getResourceTypes(String giveResourceStyle, String getResourceStyle) {
     String giveResource = "";
     String getResource = "";
@@ -315,6 +382,12 @@ public class OnlineGameHelper {
     return giveResource + "/" + getResource;
   }
 
+  /**
+   * A helper method to clear the trade offer panel's old data.
+   *
+   * @param tradeGivenResource - GivenResource's type by the trade offer sender.
+   * @param tradeWantedResource - WantedResource's type by the trade offer sender.
+   */
   public static void removeResourceTradeType(
       Rectangle tradeGivenResource, Rectangle tradeWantedResource) {
     tradeGivenResource.getStyleClass().remove("brickTrade");
@@ -330,6 +403,17 @@ public class OnlineGameHelper {
     tradeWantedResource.getStyleClass().remove("woolTrade");
   }
 
+  /**
+   * A helper method to decide if the trade offer accept button should be visible or not.
+   *
+   * @param wantedResource - Type of resource that is requested.
+   * @param brick - Amount of brick resource.
+   * @param lumber - Amount of lumber resource.
+   * @param ore - Amount of ore resource.
+   * @param grain - Amount of grain resource.
+   * @param wool - Amount of wool resource.
+   * @return - A boolean value which specifies if the accept button should be visible or not.
+   */
   public static Boolean showTradeAcceptButton(
       String wantedResource, int brick, int lumber, int ore, int grain, int wool) {
     return switch (wantedResource) {

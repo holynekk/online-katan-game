@@ -69,6 +69,11 @@ public class MediaHelper {
     backgroundPlayer.play();
   }
 
+  /**
+   * A method to switch background musics while going in and out game lobbies.
+   *
+   * @param isInGame - A boolean field to specify the background music.
+   */
   public static void switchBackgroundMusic(Boolean isInGame) {
     if (isInGame) {
       backgroundPlayer.stop();
@@ -123,6 +128,7 @@ public class MediaHelper {
     }
   }
 
+  /** Method to initialize all sound effect players. */
   public void initEffectPlayers() {
     Media sound = null;
     try {
