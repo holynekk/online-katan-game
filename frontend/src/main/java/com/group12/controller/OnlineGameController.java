@@ -1,6 +1,7 @@
 package com.group12.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group12.helper.HttpClientHelper;
 import com.group12.helper.NotificationHelper;
 import com.group12.helper.StompClient;
@@ -8,6 +9,7 @@ import com.group12.model.chat.Message;
 import com.group12.model.chat.MessageType;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -26,6 +28,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
@@ -34,9 +37,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import static com.group12.helper.GameHelper.circleNeighbours;
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
@@ -124,23 +127,31 @@ public class OnlineGameController {
   private ArrayList<String> ownedCities = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
-  private int brickResource = 0;
-  private int lumberResource = 0;
-  private int oreResource = 0;
-  private int grainResource = 0;
-  private int woolResource = 0;
+  private int brickResource = 10;
+  private int lumberResource = 10;
+  private int oreResource = 10;
+  private int grainResource = 10;
+  private int woolResource = 10;
 
   private int score = 0;
   private int longestRoad = 0;
   private boolean haveLongestRoad = false;
 
+  private boolean gameEndedAlready = false;
+
   public void initData(
-      StompClient stompClient, String color, String[] playerUsernameList, String gameId) {
+      StompClient stompClient,
+      String color,
+      String[] playerUsernameList,
+      String[] userColorList,
+      String gameId) {
     this.stompClient = stompClient;
     this.userColor = color;
     this.gameId = gameId;
 
-    for (String username : playerUsernameList) {
+    for (int i = 0; i < playerUsernameList.length; i++) {
+      String username = playerUsernameList[i];
+      String panelColor = userColorList[i];
       VBox vbox = new VBox();
       vbox.setAlignment(Pos.CENTER);
       vbox.setPrefHeight(60);
@@ -149,26 +160,38 @@ public class OnlineGameController {
 
       Label usernameLabel = new Label(username);
       usernameLabel.setTextFill(Color.WHITE);
+      usernameLabel.setAlignment(Pos.CENTER);
+      usernameLabel.setStyle(
+          String.format(
+              "-fx-font-weight: bold; -fx-border-width: 2 0 2 0; -fx-border-color: %s;",
+              panelColor));
+      usernameLabel.setPrefWidth(195);
 
-      HBox hbox = new HBox();
+      HBox hbox = new HBox(15);
       hbox.setAlignment(Pos.CENTER);
 
-      Label label1 = new Label("r: ");
+      AnchorPane resourceBox = new AnchorPane();
+      resourceBox.setStyle("-fx-background-color: rgb(50, 50, 50, 0.9); -fx-background-radius: 5;");
+      resourceBox.setPrefWidth(20);
+      resourceBox.setPrefHeight(15);
+
+      Label label1 = new Label("?");
       label1.setTextFill(Color.WHITE);
-      hbox.getChildren().add(label1);
+      label1.setLayoutX(9);
+      label1.setLayoutY(12);
+      resourceBox.getChildren().add(label1);
 
       Label label2 = new Label("0");
       label2.setTextFill(Color.WHITE);
       label2.setId(username + "Resource");
-      hbox.getChildren().add(label2);
-
-      Label label3 = new Label("l: ");
-      label3.setTextFill(Color.WHITE);
-      hbox.getChildren().add(label3);
+      label2.setLayoutX(15);
+      resourceBox.getChildren().add(label2);
+      hbox.getChildren().add(resourceBox);
 
       Label label4 = new Label("0");
       label4.setTextFill(Color.WHITE);
       label4.setId(username + "LongestRoad");
+      label4.setStyle(String.format("-fx-border-width: 0 0 3 0; -fx-border-color: %s", panelColor));
       hbox.getChildren().add(label4);
 
       Label label5 = new Label("Score: ");
@@ -260,6 +283,7 @@ public class OnlineGameController {
         anchPane, ownedCircles, ownedCities, occupiedCircles, occupiedEdges, this.userColor);
     toggleOffButtons(true);
     removeResourceTradeType(tradeGivenResource, tradeWantedResource);
+    playSoundEffect(buttonSound);
   }
 
   @FXML
@@ -435,6 +459,7 @@ public class OnlineGameController {
 
   public void setupHelper(String turnUsername) {
     if (turnUsername.equals(this.clientUsername)) {
+      playSoundEffect(turnSound);
       showSettlementOptionsAtSetup(anchPane, occupiedCircles);
     }
   }
@@ -510,6 +535,7 @@ public class OnlineGameController {
     msg.setUserColor(this.userColor);
     stompClient.sendCommand(msg);
     checkScore();
+    playSoundEffect(buildSound);
   }
 
   public void settlementBuilt(Message msg) {
@@ -554,6 +580,7 @@ public class OnlineGameController {
     msg.setLongestRoadLength(longestRoad);
     msg.setUserColor(this.userColor);
     stompClient.sendCommand(msg);
+    playSoundEffect(buildSound);
   }
 
   public void roadBuilt(Message msg) {
@@ -608,6 +635,7 @@ public class OnlineGameController {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    playSoundEffect(buildSound);
   }
 
   public void settlementUpgraded(Message msg) {
@@ -648,6 +676,7 @@ public class OnlineGameController {
     RadioButton resourceGiveButton = (RadioButton) resourceGiveGroup.getSelectedToggle();
     RadioButton resourceGetButton = (RadioButton) resourceGetGroup.getSelectedToggle();
     closeTradePanels();
+    playSoundEffect(buttonSound);
 
     if (resourceGiveButton == null || resourceGetButton == null) {
       NotificationHelper.showAlert(
@@ -743,11 +772,25 @@ public class OnlineGameController {
   }
 
   public void gameEnded(Message msg) {
+    if (gameEndedAlready) {
+      return;
+    }
+    gameEndedAlready = true;
     addChatMessage(msg.getContent() + " won the game!");
     toggleOffButtons(true);
     resultBanner.setVisible(true);
     backButton.setVisible(true);
     backgroundPlayer.stop();
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    Map<String, Object> body = new HashMap<>();
+    body.put("gameId", this.gameId);
+    body.put("username", this.clientUsername);
+    body.put(
+        "time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    body.put("didWon", msg.getContent().equals(this.clientUsername) ? 1 : 0);
+    body.put("totalScore", (score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)));
+
     if (msg.getContent().equals(this.clientUsername)) {
       playSoundEffect(victoriousSound);
       resultBanner.setText("You are victorious!");
@@ -756,18 +799,37 @@ public class OnlineGameController {
       playSoundEffect(defeatedSound);
       resultBanner.setText("You have been defeated!");
     }
+    try {
+      HttpRequest request =
+          HttpRequest.newBuilder()
+              .uri(URI.create("http://localhost:8080/api/game/game-history"))
+              .header("Content-Type", "application/json")
+              .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
+              .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))
+              .build();
+      HttpResponse<String> response =
+          HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
-  public void backToMenu() {
-    System.out.println("Game ended!");
+  public void backToMenu() throws IOException {
+    playSoundEffect(buttonSound);
+    Stage stage = (Stage) backButton.getScene().getWindow();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/lobbyView.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    stage.setScene(scene);
+    stage.show();
   }
 
   public void highlightPlayerInfoBox(String username) {
     for (Node node : playerInfoBox.getChildren()) {
       if (node.getClass().getName().contains("VBox")) {
         if (node.getId().equals(username)) {
-          node.setStyle("-fx-background-color: D3D3D3;");
+          node.setStyle(
+              "-fx-background-color: D3D3D3; -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0); -fx-background-color: #bc9d7e;");
         } else {
           node.setStyle("-fx-background-color: transparent;");
         }

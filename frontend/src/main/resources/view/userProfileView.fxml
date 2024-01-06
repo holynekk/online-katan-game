@@ -41,7 +41,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="userProfileImage" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 5;">
+                  <ImageView fx:id="userProfileImage" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

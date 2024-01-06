@@ -50,7 +50,7 @@ public class UserProfileController {
 
   @FXML private TableColumn<GameHistoryModel, String> historyColumn;
 
-  @FXML private TableColumn<GameHistoryModel, Boolean> didWonColumn;
+  @FXML private TableColumn<GameHistoryModel, String> didWonColumn;
 
   @FXML private TableColumn<GameHistoryModel, Integer> scoreColumn;
 
@@ -93,7 +93,7 @@ public class UserProfileController {
     gameIdColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, Integer>("gameId"));
     historyColumn.setCellValueFactory(
         new PropertyValueFactory<GameHistoryModel, String>("history"));
-    didWonColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, Boolean>("didWon"));
+    didWonColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, String>("didWon"));
     scoreColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, Integer>("score"));
 
     request =
@@ -117,7 +117,7 @@ public class UserProfileController {
                 new GameHistoryModel(
                     data.getGameId(),
                     data.getHistory().toString(),
-                    data.isDidWon(),
+                    data.isDidWon() ? "Won" : "Lost",
                     data.getScore()));
       }
     }

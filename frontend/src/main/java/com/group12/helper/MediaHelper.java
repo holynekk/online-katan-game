@@ -17,6 +17,7 @@ public class MediaHelper {
   public static final String inGameBackgroundMusic = "in_game_background.mp3";
   public static final String diceEffect = "dice_roll.mp3";
   public static final String buttonSound = "button_sound.mp3";
+  public static final String buildSound = "build_sound.mp3";
   public static final String turnSound = "turn_effect.mp3";
   public static final String victoriousSound = "victorious_sound.mp3";
   public static final String defeatedSound = "defeated_sound.mp3";

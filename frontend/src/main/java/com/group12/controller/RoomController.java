@@ -255,7 +255,7 @@ public class RoomController {
     stage.setScene(scene);
     OnlineGameController gameController = fxmlLoader.getController();
     stompClient.setGameController(gameController);
-    gameController.initData(this.stompClient, this.userColor, this.playerUsernameList, this.gameId);
+    gameController.initData(this.stompClient, this.userColor, this.playerUsernameList, this.userColorList, this.gameId);
     stage.show();
   }
 
