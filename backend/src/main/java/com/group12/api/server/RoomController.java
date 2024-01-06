@@ -72,7 +72,7 @@ public class RoomController {
             Boolean.toString(
                 onlineGame.getUserReadyList().size() >= 2
                     && onlineGame.getUserReadyList().size() <= 4
-                    && onlineGame.getUserReadyList().size() <= onlineGame.getPlayerList().size()));
+                    && onlineGame.getUserReadyList().size() == onlineGame.getPlayerList().size()));
         gameList.put(gameId, onlineGame);
         break;
       case THROW_DICE:
