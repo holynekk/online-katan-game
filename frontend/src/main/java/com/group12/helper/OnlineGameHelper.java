@@ -8,19 +8,19 @@ import javafx.scene.shape.Rectangle;
 import java.util.*;
 
 public class OnlineGameHelper {
-  public static ArrayList<String> hexagonList =
+  public static final ArrayList<String> hexagonList =
       new ArrayList<>(
           Arrays.asList(
               "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "h11", "h12", "h13",
               "h14", "h15", "h16", "h17", "h18", "h19"));
 
-  public static ArrayList<String> rectangleList =
+  public static final ArrayList<String> rectangleList =
       new ArrayList<>(
           Arrays.asList(
               "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "h11", "h12", "h13",
               "h14", "h15", "h16", "h17", "h18", "h19"));
 
-  public static ArrayList<String> circleList =
+  public static final ArrayList<String> circleList =
       new ArrayList<>(
           Arrays.asList(
               "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13",
@@ -280,7 +280,7 @@ public class OnlineGameHelper {
       }
     }
 
-    visited.remove(node); // Backtrack
+    visited.remove(node);
     return maxLength;
   }
 
@@ -328,5 +328,17 @@ public class OnlineGameHelper {
     tradeWantedResource.getStyleClass().remove("oreTrade");
     tradeWantedResource.getStyleClass().remove("grainTrade");
     tradeWantedResource.getStyleClass().remove("woolTrade");
+  }
+
+  public static Boolean showTradeAcceptButton(
+      String wantedResource, int brick, int lumber, int ore, int grain, int wool) {
+    return switch (wantedResource) {
+      case "brick" -> brick >= 1;
+      case "lumber" -> lumber >= 1;
+      case "ore" -> ore >= 1;
+      case "grain" -> grain >= 1;
+      case "wool" -> wool >= 1;
+      default -> false;
+    };
   }
 }

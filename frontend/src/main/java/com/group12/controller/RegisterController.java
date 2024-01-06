@@ -77,20 +77,12 @@ public class RegisterController {
             Alert.AlertType.INFORMATION, "Success", "New user has been created!");
         showLoginScene();
       } else if (response.statusCode() == 400) {
-        NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Error", response.body());
+        NotificationHelper.showAlert(Alert.AlertType.ERROR, "Error", response.body());
       }
     }
   }
 
-  private boolean isAlreadyRegistered() throws IOException, InterruptedException {
-    boolean usernameExist = false;
-    // Check if user is already exists
-
-    return usernameExist;
-  }
-
   private boolean isValidated() throws IOException, InterruptedException {
-
     window = registerButton.getScene().getWindow();
     if (email.getText().isEmpty()) {
       NotificationHelper.showAlert(
@@ -118,10 +110,6 @@ public class RegisterController {
           "Error",
           "Password and confirm password text fields does not match.");
       password.requestFocus();
-    } else if (isAlreadyRegistered()) {
-      NotificationHelper.showAlert(
-          Alert.AlertType.ERROR, "Error", "The username is already taken by someone else.");
-      username.requestFocus();
     } else {
       return true;
     }

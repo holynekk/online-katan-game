@@ -127,11 +127,11 @@ public class OnlineGameController {
   private ArrayList<String> ownedCities = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
-  private int brickResource = 10;
-  private int lumberResource = 10;
-  private int oreResource = 10;
-  private int grainResource = 10;
-  private int woolResource = 10;
+  private int brickResource = 0;
+  private int lumberResource = 0;
+  private int oreResource = 0;
+  private int grainResource = 0;
+  private int woolResource = 0;
 
   private int score = 0;
   private int longestRoad = 0;
@@ -208,7 +208,11 @@ public class OnlineGameController {
 
       playerInfoBox.getChildren().add(vbox);
     }
-    playerInfoBox.getChildren().get(1).setStyle("-fx-fill: #808080;");
+    playerInfoBox
+        .getChildren()
+        .get(1)
+        .setStyle(
+            "-fx-background-color: D3D3D3; -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0); -fx-background-color: #bc9d7e;");
   }
 
   public void initialize() {
@@ -701,7 +705,14 @@ public class OnlineGameController {
 
     tradeOfferPanel.setVisible(true);
     if (!msg.getNickname().equals(this.clientUsername)) {
-      tradeAcceptButton.setVisible(true);
+      tradeAcceptButton.setVisible(
+          showTradeAcceptButton(
+              resources[1],
+              brickResource,
+              lumberResource,
+              oreResource,
+              grainResource,
+              woolResource));
       tradeRejectButton.setVisible(true);
     }
   }
@@ -751,7 +762,7 @@ public class OnlineGameController {
   }
 
   public void checkScore() throws IOException, InterruptedException {
-    if ((this.score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)) >= 3) {
+    if ((this.score + (this.haveLongestRoad && this.longestRoad >= 5 ? 2 : 0)) >= 8) {
       Message msg =
           new Message(MessageType.GAME_ENDED, "Now", this.clientUsername, this.clientUsername);
       stompClient.sendCommand(msg);

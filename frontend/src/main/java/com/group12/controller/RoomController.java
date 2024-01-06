@@ -136,7 +136,10 @@ public class RoomController {
     for (int i = 0; i < playerUsernameList.length; i++) {
       addPlayerToTheList(playerUsernameList[i], userColorList[i], userReadyList);
     }
-    startGameButton.setDisable(userReadyList.length != 2);
+    startGameButton.setDisable(
+        userReadyList.length < 2
+            || userReadyList.length > 4
+            || userReadyList.length != playerUsernameList.length);
   }
 
   public void addPlayerToTheList(String username, String color, String[] readyList) {
@@ -255,7 +258,8 @@ public class RoomController {
     stage.setScene(scene);
     OnlineGameController gameController = fxmlLoader.getController();
     stompClient.setGameController(gameController);
-    gameController.initData(this.stompClient, this.userColor, this.playerUsernameList, this.userColorList, this.gameId);
+    gameController.initData(
+        this.stompClient, this.userColor, this.playerUsernameList, this.userColorList, this.gameId);
     stage.show();
   }
 

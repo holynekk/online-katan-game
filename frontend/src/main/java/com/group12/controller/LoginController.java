@@ -65,10 +65,10 @@ public class LoginController {
         HttpClientHelper.addNewSessionCookie(
             "userId", response.headers().allValues("userId").get(0));
         this.showMenuScene();
-      } else if (response.statusCode() == 400) {
+      } else {
+        username.requestFocus();
         NotificationHelper.showAlert(
             Alert.AlertType.ERROR, "Error", "Username or password is wrong! Please try again.");
-        username.requestFocus();
       }
     }
   }
