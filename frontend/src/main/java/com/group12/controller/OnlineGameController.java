@@ -825,10 +825,21 @@ public class OnlineGameController {
           getResourceTypes(
               resourceGiveButton.getStyleClass().toString(),
               resourceGetButton.getStyleClass().toString());
-      Message msg =
-          new Message(MessageType.TRADE_OFFER_SENT, "Now", this.clientUsername, resourceTypes);
-      stompClient.sendCommand(msg);
-      tradeButton.setDisable(true);
+      if (checkResourcesForTrade(
+          resourceTypes.split("/")[0],
+          this.brickResource,
+          this.lumberResource,
+          this.oreResource,
+          this.grainResource,
+          this.woolResource)) {
+        Message msg =
+            new Message(MessageType.TRADE_OFFER_SENT, "Now", this.clientUsername, resourceTypes);
+        stompClient.sendCommand(msg);
+        tradeButton.setDisable(true);
+      } else {
+        NotificationHelper.showAlert(
+            Alert.AlertType.ERROR, "Error", "You don't have enough resource for this trade!");
+      }
     }
   }
 
@@ -847,7 +858,7 @@ public class OnlineGameController {
     tradeOfferPanel.setVisible(true);
     if (!msg.getNickname().equals(this.clientUsername)) {
       tradeAcceptButton.setVisible(
-          showTradeAcceptButton(
+          checkResourcesForTrade(
               resources[1],
               brickResource,
               lumberResource,

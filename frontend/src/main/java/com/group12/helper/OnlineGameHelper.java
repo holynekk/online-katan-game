@@ -406,7 +406,7 @@ public class OnlineGameHelper {
   /**
    * A helper method to decide if the trade offer accept button should be visible or not.
    *
-   * @param wantedResource - Type of resource that is requested.
+   * @param resourceType - Type of resource that will be traded.
    * @param brick - Amount of brick resource.
    * @param lumber - Amount of lumber resource.
    * @param ore - Amount of ore resource.
@@ -414,9 +414,9 @@ public class OnlineGameHelper {
    * @param wool - Amount of wool resource.
    * @return - A boolean value which specifies if the accept button should be visible or not.
    */
-  public static Boolean showTradeAcceptButton(
-      String wantedResource, int brick, int lumber, int ore, int grain, int wool) {
-    return switch (wantedResource) {
+  public static Boolean checkResourcesForTrade(
+      String resourceType, int brick, int lumber, int ore, int grain, int wool) {
+    return switch (resourceType) {
       case "brick" -> brick >= 1;
       case "lumber" -> lumber >= 1;
       case "ore" -> ore >= 1;
