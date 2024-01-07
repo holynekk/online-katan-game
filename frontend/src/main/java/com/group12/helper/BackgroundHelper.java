@@ -5,6 +5,10 @@ import javafx.scene.layout.*;
 
 import java.net.URISyntaxException;
 
+/**
+ * The {@code BackgroundHelper} class provides utility methods to set background images for
+ * different scenes.
+ */
 public class BackgroundHelper {
 
   public static String menuBackgroundImage = "menu_background.jpg";

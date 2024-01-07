@@ -25,6 +25,14 @@ import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code LobbyController} class handles the user interface and interactions within the game
+ * lobby. This controller manages the display of available game rooms, allows users to create new
+ * lobbies, join existing ones, and navigate back to the main menu.
+ *
+ * <p>The class communicates with a REST API to fetch and display the list of game lobbies and
+ * handles the lobby joining process.
+ */
 @Component
 public class LobbyController {
 

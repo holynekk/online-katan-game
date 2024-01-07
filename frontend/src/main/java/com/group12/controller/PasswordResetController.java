@@ -22,6 +22,11 @@ import java.net.http.HttpResponse;
 import static com.group12.helper.BackgroundHelper.menuBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
 
+/**
+ * The {@code PasswordResetController} class is responsible for handling the user interface and
+ * logic for resetting a user's password. This includes verifying the token, setting a new password,
+ * and displaying appropriate notifications.
+ */
 @Component
 public class PasswordResetController {
 
@@ -35,10 +40,23 @@ public class PasswordResetController {
 
   @FXML private BorderPane borderpn;
 
+  /**
+   * Initializes the controller. Sets the background of the password reset view.
+   *
+   * @throws URISyntaxException if the URI for the background image is incorrect.
+   */
   public void initialize() throws URISyntaxException {
     setTheBackground(borderpn, menuBackgroundImage);
   }
 
+  /**
+   * Handles the password reset process. This method is called when the reset password button is
+   * clicked. It sends a password reset request to the server with the provided token and new
+   * password. Displays success or error notifications based on the server response.
+   *
+   * @throws IOException if there's an error in sending the HTTP request or loading the login scene.
+   * @throws InterruptedException if the HTTP client is interrupted while sending a request.
+   */
   @FXML
   public void resetPassword() throws IOException, InterruptedException {
     if (passwordField.getText().equals(confirmPasswordField.getText())) {
@@ -65,6 +83,12 @@ public class PasswordResetController {
     }
   }
 
+  /**
+   * Transitions to the login scene. This method is invoked after a successful password reset or
+   * when the user chooses to return to the login screen.
+   *
+   * @throws IOException if there's an error in loading the login view FXML.
+   */
   @FXML
   public void showLoginScene() throws IOException {
     Stage stage = (Stage) resetPasswordButton.getScene().getWindow();

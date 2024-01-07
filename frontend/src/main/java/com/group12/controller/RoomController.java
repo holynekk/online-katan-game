@@ -33,6 +33,11 @@ import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code RoomController} is responsible for managing the room or lobby interactions in a
+ * multiplayer game setting. This component handles functionalities like sending and receiving
+ * messages, managing the player list, handling game readiness and kick actions.
+ */
 @Component
 public class RoomController {
 

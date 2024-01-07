@@ -26,6 +26,12 @@ import static com.group12.helper.BackgroundHelper.menuBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.*;
 
+/**
+ * The {@code RegisterController} is a Spring component that manages the user interface and
+ * interactions for the registration process in an application. This controller is responsible for
+ * handling user input for registration details such as email, username, display name, and password.
+ * It validates the input, sends registration requests to the server, and handles the response.
+ */
 @Component
 public class RegisterController {
 

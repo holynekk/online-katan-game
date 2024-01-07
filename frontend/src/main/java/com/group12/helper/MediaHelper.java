@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 
 import java.net.URISyntaxException;
 
+/**
+ * The {@code MediaHelper} class is to manage and play media assets like background music and sound
+ * effects. It handles the initialization and control of media players.
+ */
 @Component
 public class MediaHelper {
   public static MediaPlayer backgroundPlayer;

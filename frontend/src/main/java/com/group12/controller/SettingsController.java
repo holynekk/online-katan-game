@@ -16,6 +16,13 @@ import static com.group12.helper.BackgroundHelper.parchmentBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.*;
 
+/**
+ * The {@code SettingsController} is responsible for managing the settings interface. This
+ * controller allows users to adjust settings, background music volume and sound effects volume.
+ *
+ * <p>It uses {@link Slider} controls for adjusting volume levels and a {@link Button} to navigate
+ * back to the main menu. The class also manages the initialization of these settings.
+ */
 @Component
 public class SettingsController {
 

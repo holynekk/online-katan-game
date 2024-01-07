@@ -29,6 +29,16 @@ import java.util.List;
 
 import static com.group12.helper.HttpClientHelper.getSessionCookie;
 
+/**
+ * The {@code StompClient} class is responsible for WebSocket communication using the STOMP
+ * protocol. It provides methods for connecting to a STOMP server, sending and receiving messages,
+ * and handling exceptions.
+ *
+ * <p>This class implements {@link StompSessionHandler} to manage WebSocket sessions and handle
+ * messages related to game and chat functions. It supports asynchronous communication with the game
+ * server, allowing for real-time updates in the application. The class uses {@link RoomController}
+ * and {@link OnlineGameController} to update the UI based on the messages received.
+ */
 public class StompClient implements StompSessionHandler {
   private static final Logger LOG = LoggerFactory.getLogger(StompClient.class);
 

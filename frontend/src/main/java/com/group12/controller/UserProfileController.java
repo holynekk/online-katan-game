@@ -31,6 +31,10 @@ import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code UserProfileController} manages the user profile interface. It is responsible for
+ * displaying user-specific information such as user ID, display name, email, and game history.
+ */
 @Component
 public class UserProfileController {
 

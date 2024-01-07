@@ -30,6 +30,12 @@ import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code LeaderboardController} class manages the leaderboard UI and its functionalities. This
+ * controller handles the display of the leaderboard, including score data and player rankings.
+ *
+ * <p>The leaderboard data is fetched from a REST API and displayed in a TableView.
+ */
 @Component
 public class LeaderboardController {
 
@@ -51,6 +57,15 @@ public class LeaderboardController {
 
   private ObservableList<ScoreModel> scores;
 
+  /**
+   * Initializes the controller. Sets up the table columns and populates the leaderboard. Also sets
+   * the background for the leaderboard view. This method is automatically called after the FXML
+   * fields have been injected.
+   *
+   * @throws IOException if there's an error in loading data for the leaderboard.
+   * @throws InterruptedException if the thread is interrupted during an ongoing operation.
+   * @throws URISyntaxException if the URI for the background image is incorrect.
+   */
   public void initialize() throws IOException, InterruptedException, URISyntaxException {
     tmInterval = "All";
     displayNameColumn.setCellValueFactory(
@@ -62,6 +77,11 @@ public class LeaderboardController {
     setTheBackground(borderpn, parchmentBackgroundImage);
   }
 
+  /**
+   * Handles the action to go back to the main menu. Called when the back button is pressed.
+   *
+   * @throws IOException if there's an error in loading the main menu view.
+   */
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);
@@ -72,6 +92,14 @@ public class LeaderboardController {
     stage.show();
   }
 
+  /**
+   * Changes the time interval for the leaderboard based on user selection. Called when a different
+   * time interval is selected from the menu.
+   *
+   * @param event The action event triggered by selecting a time interval.
+   * @throws IOException if there's an error in fetching data for the new time interval.
+   * @throws InterruptedException if the thread is interrupted during an ongoing operation.
+   */
   @FXML
   public void changeTimeInterval(ActionEvent event) throws IOException, InterruptedException {
     playSoundEffect(buttonSound);
@@ -82,6 +110,13 @@ public class LeaderboardController {
     populateTable();
   }
 
+  /**
+   * Populates the leaderboard table with data. Fetches the leaderboard data from the server based
+   * on the selected time interval and updates the table view.
+   *
+   * @throws IOException if there's an error in fetching leaderboard data.
+   * @throws InterruptedException if the thread is interrupted during an ongoing operation.
+   */
   public void populateTable() throws IOException, InterruptedException {
     ObjectMapper objectMapper = new ObjectMapper();
 

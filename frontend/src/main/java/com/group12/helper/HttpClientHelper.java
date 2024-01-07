@@ -7,6 +7,10 @@ import java.net.http.HttpClient;
 import java.time.Duration;
 import java.util.List;
 
+/**
+ * The {@code HttpClientHelper} is class that conducts HTTP communication. It provides utility
+ * methods for managing an HttpClient instance, handling cookies, and maintaining HTTP sessions.
+ */
 @Component
 public class HttpClientHelper {
   private static HttpClient httpClient;

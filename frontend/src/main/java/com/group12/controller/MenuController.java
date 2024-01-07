@@ -26,6 +26,11 @@ import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code MenuController} class is responsible for handling the interactions in the main menu of
+ * the application. This includes navigating between different scenes like play, leaderboard,
+ * settings, user profile, and logout.
+ */
 @Component
 public class MenuController {
 
