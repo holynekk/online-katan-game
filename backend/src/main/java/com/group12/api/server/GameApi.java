@@ -2,7 +2,6 @@ package com.group12.api.server;
 
 import com.group12.api.request.game.GameCreateRequest;
 import com.group12.api.request.game.GameHistoryCreateRequest;
-import com.group12.api.response.GameHistoryResponse;
 import com.group12.api.response.GameResponse;
 import com.group12.entity.Game;
 import com.group12.entity.GameHistory;
@@ -26,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.group12.api.server.UserApi.SECRET_KEY;
+import static com.group12.util.EncryptDecryptUtil.decryptAes;
 
 /**
  * The {@code GameApi} class handles HTTP requests related to game management in an online gaming
@@ -49,8 +49,11 @@ public class GameApi {
    * @return - GameResponse instance.
    */
   @GetMapping(value = "", produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<GameResponse> getGameById(
-      @RequestParam(name = "gameId") int providedGameId) {
+  public ResponseEntity<GameResponse> getGameById(@RequestParam(name = "gameId") int providedGameId)
+      throws InvalidAlgorithmParameterException,
+          IllegalBlockSizeException,
+          BadPaddingException,
+          InvalidKeyException {
     Optional<Game> optionalGame = repository.findGameById(providedGameId);
     if (optionalGame.isPresent()) {
       Game game = optionalGame.get();
@@ -60,7 +63,7 @@ public class GameApi {
               game.getGameName(),
               game.getGameDescription(),
               game.getPasswordRequired(),
-              game.getGameLeader().getDisplayName(),
+              decryptAes(game.getGameLeader().getUsername(), SECRET_KEY),
               game.getOnline(),
               game.getStarted(),
               game.getFinished());
@@ -82,7 +85,11 @@ public class GameApi {
       value = "",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<GameResponse> createGame(@RequestBody GameCreateRequest request) {
+  public ResponseEntity<GameResponse> createGame(@RequestBody GameCreateRequest request)
+      throws InvalidAlgorithmParameterException,
+          IllegalBlockSizeException,
+          BadPaddingException,
+          InvalidKeyException {
     Optional<User> user = userRepository.findById(request.getGameLeader());
     if (user.isPresent()) {
       Game savedGame =
@@ -103,7 +110,7 @@ public class GameApi {
               savedGame.getGameName(),
               savedGame.getGameDescription(),
               savedGame.getPasswordRequired(),
-              savedGame.getGameLeader().getDisplayName(),
+              decryptAes(savedGame.getGameLeader().getUsername(), SECRET_KEY),
               savedGame.getOnline(),
               savedGame.getStarted(),
               savedGame.getFinished());
@@ -120,7 +127,11 @@ public class GameApi {
    * @return - List of GameResponse which contains active games.
    */
   @GetMapping(value = "/list", produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<List<GameResponse>> getActiveGamesList() {
+  public ResponseEntity<List<GameResponse>> getActiveGamesList()
+      throws InvalidAlgorithmParameterException,
+          IllegalBlockSizeException,
+          BadPaddingException,
+          InvalidKeyException {
     Optional<List<Game>> optionalActiveGames = repository.findAllActiveGames();
     if (optionalActiveGames.isPresent()) {
       List<GameResponse> gameList = new ArrayList<>();
@@ -131,7 +142,7 @@ public class GameApi {
                 gm.getGameName(),
                 gm.getGameDescription(),
                 gm.getPasswordRequired(),
-                gm.getGameLeader().getDisplayName(),
+                decryptAes(gm.getGameLeader().getUsername(), SECRET_KEY),
                 gm.getOnline(),
                 gm.getStarted(),
                 gm.getFinished()));

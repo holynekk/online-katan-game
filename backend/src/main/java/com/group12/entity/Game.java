@@ -129,4 +129,12 @@ public class Game {
   public void setFinished(Boolean finished) {
     isFinished = finished;
   }
+
+  public Boolean getIsFinished() {
+    return this.isFinished;
+  }
+
+  public void setIsFinished(Boolean isFinished) {
+    this.isFinished = isFinished;
+  }
 }
