@@ -56,6 +56,14 @@ public class RoomController {
   @FXML private Button startGameButton;
   @FXML private Button backButton;
 
+  /**
+   * A controller method to initialize some data about the game at the very beginning.
+   *
+   * @param gameData - Game data that is fetched from the database.
+   * @param gameId - Game id.
+   * @param isGameCreated - Boolean variable to know if the game is created by the client user.
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   public void initData(GameData gameData, String gameId, Boolean isGameCreated)
       throws JsonProcessingException {
     this.gameLeader = gameData.getGameLeader();
@@ -68,6 +76,11 @@ public class RoomController {
     stompClient.connect();
   }
 
+  /**
+   * A method to set and initialize some data (button actions, background image, etc.)
+   *
+   * @throws URISyntaxException - Throws exception.
+   */
   public void initialize() throws URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
     chatTextField.setOnKeyPressed(
@@ -82,6 +95,7 @@ public class RoomController {
         });
   }
 
+  /** A method to send GAME_CREATED or USER_JOINED messages according to joining room. */
   public void sendAfterConnection() {
     try {
       if (this.isGameCreated) {
@@ -101,6 +115,10 @@ public class RoomController {
     }
   }
 
+  /**
+   * A method to send JOIN message over websocket connection after the game is created by the
+   * leader.
+   */
   public void gameCreated() {
     try {
       stompClient.sendCommand(
@@ -111,6 +129,11 @@ public class RoomController {
     }
   }
 
+  /**
+   * A message with colored text to add into the chat box.
+   *
+   * @param msg - Message instance.
+   */
   public void addChatMessage(Message msg) {
     Text txt1 = new Text(msg.getNickname() + ": ");
     Text txt2 = new Text(msg.getContent());
@@ -131,11 +154,21 @@ public class RoomController {
     chatScrollPane.setVvalue(1D);
   }
 
+  /**
+   * A generic message with black text to add into the chat box.
+   *
+   * @param message - Message instance.
+   */
   public void addChatMessage(String message) {
     chatBox.getChildren().add(new Text(message));
     chatScrollPane.setVvalue(1D);
   }
 
+  /**
+   * A method to refresh user list of the room whenever a player is joined or left.
+   *
+   * @param msg - Message instance.
+   */
   public void refreshPlayerList(Message msg) {
     playerUsernameList = msg.getContent().split("/");
     userColorList = msg.getUserColorList().split("/");
@@ -151,6 +184,13 @@ public class RoomController {
             || userReadyList.length != playerUsernameList.length);
   }
 
+  /**
+   * A method to add a new player to the room's user list.
+   *
+   * @param username - Username that will be added.
+   * @param color - User color that will be added.
+   * @param readyList - Users ready status as a list.
+   */
   public void addPlayerToTheList(String username, String color, String[] readyList) {
     if (username.equals(getSessionCookie("username"))) {
       this.userColor = color;
@@ -198,6 +238,11 @@ public class RoomController {
     playerList.getChildren().add(hBox);
   }
 
+  /**
+   * A button action to send a message to the room topic via websocket connection to kick a player.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void kickUser(ActionEvent event) {
     playSoundEffect(buttonSound);
@@ -212,6 +257,11 @@ public class RoomController {
     }
   }
 
+  /**
+   * A method to kick user for all clients.
+   *
+   * @param msg - Message instance.
+   */
   public void userKicked(Message msg) {
     try {
       if (msg.getContent().equals(getSessionCookie("username"))) {
@@ -222,6 +272,12 @@ public class RoomController {
     }
   }
 
+  /**
+   * A button action to send a message to the room topic via websocket connection to set player
+   * status as READY.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void readyAction() throws JsonProcessingException {
     playSoundEffect(buttonSound);
@@ -230,6 +286,11 @@ public class RoomController {
     stompClient.sendCommand(msg);
   }
 
+  /**
+   * A method to switch color of ready status box from red to green.
+   *
+   * @param username - Provided username with the read status is achieved with the last ws message.
+   */
   @FXML
   public void setReadyColor(String username) {
     if (username.equals(getSessionCookie("username"))) {
@@ -245,11 +306,22 @@ public class RoomController {
     }
   }
 
+  /**
+   * A method to toggle on/off the start game button.
+   *
+   * @param isFull - Boolean variable to parametrize if the lobby is full or not.
+   */
   @FXML
   public void toggleStartGameButton(Boolean isFull) {
     startGameButton.setDisable(!isFull);
   }
 
+  /**
+   * A button action to send a message to the room topic via websocket connection to let everyone in
+   * the lobby know the game is started.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void startGame() throws JsonProcessingException {
     playSoundEffect(buttonSound);
@@ -259,6 +331,11 @@ public class RoomController {
     stompClient.sendCommand(msg);
   }
 
+  /**
+   * A method to load game screen after game isi started by the leader.
+   *
+   * @throws IOException - throws an exception while sending a message.
+   */
   public void showGameScene() throws IOException {
     NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Success", "The game has started!");
     Stage stage = (Stage) startGameButton.getScene().getWindow();
@@ -272,6 +349,11 @@ public class RoomController {
     stage.show();
   }
 
+  /**
+   * A button action to send a message to the chat topic via websocket connection.
+   *
+   * @throws JsonProcessingException - exception of json serialize/deserialize function.
+   */
   @FXML
   public void sendChatMessage() throws JsonProcessingException {
     playSoundEffect(buttonSound);
@@ -284,6 +366,12 @@ public class RoomController {
     stompClient.sendChatMessage(msg);
   }
 
+  /**
+   * A button action to leave the room. Sends a message to the websocket with LEAVE message type to
+   * let everyone knowing.
+   *
+   * @throws IOException - throws an exception while sending a message.
+   */
   @FXML
   public void leaveRoom() throws IOException {
     Message msg =
@@ -292,6 +380,11 @@ public class RoomController {
     stompClient.sendCommand(msg);
   }
 
+  /**
+   * A method to leave a room by disconnecting from the websocket.
+   *
+   * @param msg - Message instance
+   */
   public void leftRoom(Message msg) {
     if (msg.getNickname().equals(getSessionCookie("username"))) {
       stompClient.disconnect();

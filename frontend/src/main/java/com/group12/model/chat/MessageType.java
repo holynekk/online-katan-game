@@ -1,5 +1,6 @@
 package com.group12.model.chat;
 
+/** Message types to classify different types of messaging while processing it. */
 public enum MessageType {
   CONNECT,
   CONNECT_OK,

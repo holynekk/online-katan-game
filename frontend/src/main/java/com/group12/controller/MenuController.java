@@ -43,11 +43,25 @@ public class MenuController {
 
   private String nextScene;
 
+  /**
+   * An initialize method to set the background.
+   *
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading *
+   *     background images.
+   */
   public void initialize() throws URISyntaxException {
     userProfileButton.setText(getSessionCookie("username"));
     setTheBackground(borderpn, menuBackgroundImage);
   }
 
+  /**
+   * A button action to load the relevant scene according to the button id.
+   *
+   * @param event - Button action event.
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading fxml
+   *     file.
+   */
   @FXML
   private void changeMenuScene(ActionEvent event) throws IOException, InterruptedException {
     final Node source = (Node) event.getSource();
@@ -81,6 +95,11 @@ public class MenuController {
     stage.show();
   }
 
+  /**
+   * A button action to load user profile screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   private void openUserProfile() throws IOException {
     playSoundEffect(buttonSound);

@@ -60,6 +60,16 @@ public class UserProfileController {
 
   @FXML private ImageView userProfileImage;
 
+  /**
+   * An initialize method to populate tables, user information, background image, etc.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading * * background
+   *     images.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading * * *
+   *     background images.
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading * * *
+   *     background images.
+   */
   public void initialize() throws IOException, InterruptedException, URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
     File file = new File("src/main/resources/assets/villager.png");
@@ -123,6 +133,11 @@ public class UserProfileController {
     }
   }
 
+  /**
+   * A button action to get back to the menu screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);

@@ -45,10 +45,22 @@ public class RegisterController {
 
   Window window;
 
+  /**
+   * An initialize method to set the background.
+   *
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading *
+   *     background images.
+   */
   public void initialize() throws URISyntaxException {
     setTheBackground(borderpn, menuBackgroundImage);
   }
 
+  /**
+   * A button action to send request to the server with the data of register form.
+   *
+   * @throws IOException - exception of json serialize/deserialize function.
+   * @throws InterruptedException - Throws an exception.
+   */
   @FXML
   private void register() throws IOException, InterruptedException {
     playSoundEffect(buttonSound);
@@ -82,6 +94,13 @@ public class RegisterController {
     }
   }
 
+  /**
+   * A method to validate the given credentials on the textFields.
+   *
+   * @return - Boolean value if the all form is valid or not.
+   * @throws IOException - Throws exception.
+   * @throws InterruptedException - Throws exception.
+   */
   private boolean isValidated() throws IOException, InterruptedException {
     window = registerButton.getScene().getWindow();
     if (email.getText().isEmpty()) {
@@ -116,6 +135,11 @@ public class RegisterController {
     return false;
   }
 
+  /**
+   * A button action to get back to the login screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   private void showLoginScene() throws IOException {
     Stage stage = (Stage) registerButton.getScene().getWindow();

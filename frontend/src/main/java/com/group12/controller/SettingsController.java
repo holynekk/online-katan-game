@@ -27,6 +27,12 @@ public class SettingsController {
 
   @FXML private BorderPane borderpn;
 
+  /**
+   * A method to initialize slider values according to static variables of mediaPlayer.
+   *
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading
+   *     background images.
+   */
   public void initialize() throws URISyntaxException {
     backgroundMusicSlider.setValue(backgroundPlayer.getVolume() * 100);
     backgroundMusicSlider
@@ -43,6 +49,11 @@ public class SettingsController {
     setTheBackground(borderpn, parchmentBackgroundImage);
   }
 
+  /**
+   * A button action to get back to the menu.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   private void backToMenu() throws IOException {
     playSoundEffect(buttonSound);

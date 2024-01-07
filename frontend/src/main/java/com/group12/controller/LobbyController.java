@@ -46,6 +46,16 @@ public class LobbyController {
 
   @FXML private BorderPane borderpn;
 
+  /**
+   * An initialize method to populate tables, user information, background image, etc.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading * * background
+   *     images.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading * *
+   *     background images.
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading * *
+   *     background images.
+   */
   public void initialize() throws IOException, InterruptedException, URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
 
@@ -72,6 +82,10 @@ public class LobbyController {
     }
   }
 
+  /**
+   * A button action to set the information at the center after clicking to a listed lobby name at
+   * the left panel.
+   */
   @FXML
   public void handleClickListView() {
     playSoundEffect(buttonSound);
@@ -82,6 +96,11 @@ public class LobbyController {
     lobbyGameLeaderLabel.setText(gameData.getGameLeader());
   }
 
+  /**
+   * A button action to show leaderboard screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void showLeaderboard() throws IOException {
     playSoundEffect(buttonSound);
@@ -92,6 +111,11 @@ public class LobbyController {
     stage.show();
   }
 
+  /**
+   * A button action to show game create screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void showGameCreation() throws IOException {
     playSoundEffect(buttonSound);
@@ -102,10 +126,17 @@ public class LobbyController {
     stage.show();
   }
 
+  /**
+   * A button action to join a specific room.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading fxml
+   *     file.
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading sound
+   *     files.
+   */
   @FXML
   public void joinRoom() throws IOException, InterruptedException, URISyntaxException {
-    //  TODO: Join logic should be rewritten later.
-
     playSoundEffect(buttonSound);
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -134,6 +165,11 @@ public class LobbyController {
     stage.show();
   }
 
+  /**
+   * A button action to get back to the menu.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);

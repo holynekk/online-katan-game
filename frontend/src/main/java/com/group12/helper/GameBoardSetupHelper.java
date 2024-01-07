@@ -94,6 +94,13 @@ public class GameBoardSetupHelper {
     }
   }
 
+  /**
+   * A helper method for cpu to gather resources at the second turn of the setup phase.
+   *
+   * @param anchorPane - Main pane of the gameView scene.
+   * @param cpuPlayer - The cpu player which is playing.
+   * @param cpuCircleId - Circle id which cpu player has built its settlement on.
+   */
   public static void setResourceAtSetup(
       AnchorPane anchorPane, CPUPlayer cpuPlayer, String cpuCircleId) {
     List<String> styleList;
