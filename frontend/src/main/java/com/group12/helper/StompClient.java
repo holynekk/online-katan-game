@@ -78,11 +78,13 @@ public class StompClient implements StompSessionHandler {
     }
   }
 
-/**
-* A method to call after websocket connection has been established. Allows client to subscribe to some specific websocket topics.
- * @param session  - Current session instance.
- * @param connectedHeaders - Stomp headers
-*/
+  /**
+   * A method to call after websocket connection has been established. Allows client to subscribe to
+   * some specific websocket topics.
+   *
+   * @param session - Current session instance.
+   * @param connectedHeaders - Stomp headers
+   */
   @Override
   public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
     LOG.info(
@@ -92,7 +94,11 @@ public class StompClient implements StompSessionHandler {
     subscribe(String.format("/topic/room/%s", this.gameId));
     subscribe(String.format("/topic/chat/%s", this.gameId));
 
-    Platform.runLater(() -> connected.set(true));
+    Platform.runLater(
+        () -> {
+          connected.set(true);
+          roomController.sendAfterConnection();
+        });
   }
 
   /**

@@ -40,6 +40,7 @@ public class RoomController {
   private String userColor;
   private String gameLeader;
   private String gameId;
+  private Boolean isGameCreated;
   private String[] playerUsernameList;
   private String[] userColorList;
   private String[] userReadyList;
@@ -61,21 +62,10 @@ public class RoomController {
     gameName.setText(gameData.getGameName());
     startGameButton.setVisible(getSessionCookie("username").equals(gameLeader));
     this.gameId = gameId;
+    this.isGameCreated = isGameCreated;
     addNewSessionCookie("gameId", gameId);
     stompClient = new StompClient(this, getSessionCookie("username"), this.gameId);
     stompClient.connect();
-    if (isGameCreated) {
-      stompClient.sendCommand(
-          new Message(
-              MessageType.GAME_CREATED,
-              "NOW",
-              getSessionCookie("username"),
-              "A new game has been created!"));
-    } else {
-      stompClient.sendCommand(
-          new Message(
-              MessageType.USER_JOINED, "NOW", getSessionCookie("username"), "New user joined!"));
-    }
   }
 
   public void initialize() throws URISyntaxException {
@@ -90,6 +80,25 @@ public class RoomController {
             }
           }
         });
+  }
+
+  public void sendAfterConnection() {
+    try {
+      if (this.isGameCreated) {
+        stompClient.sendCommand(
+            new Message(
+                MessageType.GAME_CREATED,
+                "NOW",
+                getSessionCookie("username"),
+                "A new game has been created!"));
+      } else {
+        stompClient.sendCommand(
+            new Message(
+                MessageType.USER_JOINED, "NOW", getSessionCookie("username"), "New user joined!"));
+      }
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
   }
 
   public void gameCreated() {
