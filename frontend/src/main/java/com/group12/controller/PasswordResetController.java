@@ -65,7 +65,7 @@ public class PasswordResetController {
               .uri(
                   URI.create(
                       String.format(
-                          "http://localhost:8080/api/auth/set-new-password?token=%s&password=%s",
+                          "https://group12-katan-backend.onrender.com/api/auth/set-new-password?token=%s&password=%s",
                           tokenField.getText(), passwordField.getText())))
               .build();
       HttpResponse<String> response =

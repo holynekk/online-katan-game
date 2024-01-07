@@ -60,7 +60,7 @@ public class PasswordResetRequestController {
             .uri(
                 URI.create(
                     String.format(
-                        "http://localhost:8080/api/auth/password-reset-request?email=%s",
+                        "https://group12-katan-backend.onrender.com/api/auth/password-reset-request?email=%s",
                         emailField.getText())))
             .POST(HttpRequest.BodyPublishers.ofString(""))
             .build();

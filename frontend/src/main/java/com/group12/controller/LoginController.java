@@ -52,7 +52,7 @@ public class LoginController {
 
       HttpRequest request =
           HttpRequest.newBuilder()
-              .uri(URI.create("http://localhost:8080/api/auth/login"))
+              .uri(URI.create("https://group12-katan-backend.onrender.com/api/auth/login"))
               .header("Authorization", basicAuthString)
               .build();
       HttpResponse<String> response =

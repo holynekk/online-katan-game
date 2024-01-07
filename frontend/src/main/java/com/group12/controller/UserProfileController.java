@@ -88,7 +88,7 @@ public class UserProfileController {
             .uri(
                 URI.create(
                     String.format(
-                        "http://localhost:8080/api/user?username=%s",
+                        "https://group12-katan-backend.onrender.com/api/user?username=%s",
                         HttpClientHelper.getSessionCookie("username"))))
             .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
             .build();
@@ -115,7 +115,7 @@ public class UserProfileController {
             .uri(
                 URI.create(
                     String.format(
-                        "http://localhost:8080/api/user/game-history?username=%s",
+                        "https://group12-katan-backend.onrender.com/api/user/game-history?username=%s",
                         HttpClientHelper.getSessionCookie("username"))))
             .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
             .build();

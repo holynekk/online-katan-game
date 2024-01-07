@@ -70,7 +70,7 @@ public class LobbyController {
     ObjectMapper objectMapper = new ObjectMapper();
     HttpRequest request =
         HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080/api/game/list"))
+            .uri(URI.create("https://group12-katan-backend.onrender.com/api/game/list"))
             .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
             .build();
     HttpResponse<String> response =
@@ -153,7 +153,7 @@ public class LobbyController {
             .uri(
                 URI.create(
                     String.format(
-                        "http://localhost:8080/api/game?gameId=%s", lobbyIdLabel.getText())))
+                        "https://group12-katan-backend.onrender.com/api/game?gameId=%s", lobbyIdLabel.getText())))
             .header("Content-Type", "application/json")
             .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
             .build();

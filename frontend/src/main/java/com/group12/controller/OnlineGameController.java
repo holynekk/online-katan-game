@@ -948,7 +948,7 @@ public class OnlineGameController {
               .uri(
                   URI.create(
                       String.format(
-                          "http://localhost:8080/api/game/closeGame?gameId=%s", this.gameId)))
+                          "https://group12-katan-backend.onrender.com/api/game/closeGame?gameId=%s", this.gameId)))
               .header("Content-Type", "application/json")
               .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
               .PUT(HttpRequest.BodyPublishers.ofString(""))
@@ -996,7 +996,7 @@ public class OnlineGameController {
     try {
       HttpRequest request =
           HttpRequest.newBuilder()
-              .uri(URI.create("http://localhost:8080/api/game/game-history"))
+              .uri(URI.create("https://group12-katan-backend.onrender.com/api/game/game-history"))
               .header("Content-Type", "application/json")
               .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
               .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))

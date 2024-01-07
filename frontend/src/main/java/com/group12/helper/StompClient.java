@@ -42,7 +42,7 @@ import static com.group12.helper.HttpClientHelper.getSessionCookie;
 public class StompClient implements StompSessionHandler {
   private static final Logger LOG = LoggerFactory.getLogger(StompClient.class);
 
-  private static final String ENDPOINT_URL = "ws://localhost:8080/ws";
+  private static final String ENDPOINT_URL = "wss://group12-katan-backend.onrender.com/ws";
 
   private static StompSession stompSession;
   public static WebSocketStompClient stompClient;
