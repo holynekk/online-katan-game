@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * The {@code OnlineGame} class represents the state of an online game session. It holds information
+ * about the players, the turn count, the longest road length, and the longest road user.
+ */
 public class OnlineGame {
   private int turnCount;
   private int longestRoadLength;

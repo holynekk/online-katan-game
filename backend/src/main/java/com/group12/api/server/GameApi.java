@@ -27,6 +27,11 @@ import java.util.Optional;
 
 import static com.group12.api.server.UserApi.SECRET_KEY;
 
+/**
+ * The {@code GameApi} class handles HTTP requests related to game management in an online gaming
+ * platform. It provides endpoints for functionalities such as fetching game data, creating new
+ * games, listing active games, closing a game, and recording game history for users.
+ */
 @RestController
 @RequestMapping("/api/game")
 public class GameApi {
