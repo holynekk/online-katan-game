@@ -7,6 +7,10 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.*;
 
+/**
+ * The {@code OnlineGameHelper} class is responsible for having helper methods about game logic and
+ * setting up the board for online games.
+ */
 public class OnlineGameHelper {
   public static final ArrayList<String> hexagonList =
       new ArrayList<>(

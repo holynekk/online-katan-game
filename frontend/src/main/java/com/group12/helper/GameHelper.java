@@ -18,6 +18,10 @@ import static com.group12.controller.GameController.*;
 import static com.group12.helper.MediaHelper.diceEffect;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code GameHelper} class is responsible for having helper methods about game logic and
+ * setting up the board for offline (against CPU) games.
+ */
 public class GameHelper {
   public static ArrayList<String> hexagonList =
       new ArrayList<>(
@@ -110,6 +114,14 @@ public class GameHelper {
         }
       };
 
+  /**
+   * A method to gather resources for the player.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param tileTextList - List of hexagonal tiles.
+   * @param ownedCircles - Already owned settlements by the player.
+   * @param diceResult - Sum of dice results.
+   */
   public static void gatherNewResourcesPlayer(
       AnchorPane anchorPane, List<Text> tileTextList, List<String> ownedCircles, int diceResult) {
     for (Text txt : tileTextList) {
@@ -145,6 +157,15 @@ public class GameHelper {
     }
   }
 
+  /**
+   * A method to gather resources for the cpu player.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param cpuPlayer - CPUPlayer instance that will gather resources.
+   * @param tileTextList - List of hexagonal tiles.
+   * @param ownedCircles - Already owned settlements by the cpu player.
+   * @param diceResult - Sum of dice results.
+   */
   public static void gatherNewResourcesCPU(
       AnchorPane anchorPane,
       CPUPlayer cpuPlayer,
@@ -184,8 +205,13 @@ public class GameHelper {
     }
   }
 
-  public static void CPUPlays(
-      AnchorPane anchorPane, CPUPlayer cpuPlayer, List<String> ownedCircles) {
+  /**
+   * A helper method to let cpu play.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param cpuPlayer - CPUPlayer instance that will play.
+   */
+  public static void CPUPlays(AnchorPane anchorPane, CPUPlayer cpuPlayer) {
 
     Random rnd = new Random();
     if (cpuPlayer.getHillResource() >= 1 && cpuPlayer.getForestResource() >= 1) {
@@ -208,6 +234,14 @@ public class GameHelper {
     }
   }
 
+  /**
+   * A helper method to roll the dice and gather resources.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param ownedCircles - Already owned settlements by the player.
+   * @param firstDiceImage - ImageView of the first dice.
+   * @param secondDiceImage - ImageView of the second dice.
+   */
   public static void diceThrowResourceGather(
       AnchorPane anchorPane,
       List<String> ownedCircles,
@@ -227,6 +261,12 @@ public class GameHelper {
     }
   }
 
+  /**
+   * A method to run rolling dice animation.
+   *
+   * @param diceImage - Dice ImageView that is going to rotate.
+   * @return - Dice result as an integer.
+   */
   public static int rollDice(ImageView diceImage) {
     Random rnd = new Random();
     int diceResult = rnd.nextInt(6) + 1;
@@ -240,6 +280,13 @@ public class GameHelper {
     return diceResult;
   }
 
+  /**
+   * A method to get all optional roads to build.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param ownedEdges - Already owned roads by the player.
+   * @return - List of buildable roads.
+   */
   public static ArrayList<String> getOptionalRoads(
       AnchorPane anchorPane, ArrayList<String> ownedEdges) {
     ArrayList<String> optionalRoads = new ArrayList<>();
@@ -268,6 +315,13 @@ public class GameHelper {
     return optionalRoads;
   }
 
+  /**
+   * A method to get all optional settlements to build.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param ownedEdges - Already owned roads by the player.
+   * @return - List of buildable settlements.
+   */
   public static ArrayList<String> getOptionalSettlements(
       AnchorPane anchorPane, ArrayList<String> ownedEdges) {
 
@@ -299,6 +353,13 @@ public class GameHelper {
     return optionalSettlements;
   }
 
+  /**
+   * A method to clear all optional effects.
+   *
+   * @param anchorPane - Main game board section of the scene.
+   * @param ownedCircles - Already owned settlements by the player.
+   * @param ownedCities - Already owned cities by the player.
+   */
   public static void clearAllOptionals(
       AnchorPane anchorPane, ArrayList<String> ownedCircles, ArrayList<String> ownedCities) {
     for (Node node : anchorPane.getChildren()) {
@@ -321,6 +382,12 @@ public class GameHelper {
     }
   }
 
+  /**
+   * A method to find the longest path length.
+   *
+   * @param edges - Already owned roads by the player.
+   * @return - The longest path length as an integer value.
+   */
   public static int findLongestRoadLength(ArrayList<String> edges) {
     int longestPath = 0;
 
@@ -333,6 +400,15 @@ public class GameHelper {
     return longestPath;
   }
 
+  /**
+   * A helper method for findLongestRoadLength function.
+   *
+   * @param node - Current node.
+   * @param visited - Set of already visited nodes.
+   * @param edges - Roads to visit.
+   * @param pathLength - Already calculated path length.
+   * @return - Path length.
+   */
   private static int dfs(
       String node, Set<String> visited, ArrayList<String> edges, int pathLength) {
     if (visited.contains(node)) {

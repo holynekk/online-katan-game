@@ -34,6 +34,10 @@ import static com.group12.helper.GameBoardSetupHelper.*;
 import static com.group12.helper.GameHelper.*;
 import static com.group12.helper.MediaHelper.*;
 
+/**
+ * The {@code GameController} class is responsible for handling the offline (playing against CPU)
+ * interactions of the game. This includes sending requests, making moves, etc.
+ */
 @Component
 public class GameController {
 
@@ -321,7 +325,7 @@ public class GameController {
             Duration.seconds(2),
             event -> {
               if (!isOver) {
-                CPUPlays(anchPane, cpuOrange, ownedCircles);
+                CPUPlays(anchPane, cpuOrange);
                 updateScores();
                 p2.getStyleClass().clear();
                 p3.getStyleClass().addAll("player-turn");
@@ -343,7 +347,7 @@ public class GameController {
             Duration.seconds(4),
             event -> {
               if (!isOver) {
-                CPUPlays(anchPane, cpuGreen, ownedCircles);
+                CPUPlays(anchPane, cpuGreen);
                 updateScores();
                 p3.getStyleClass().clear();
                 p4.getStyleClass().addAll("player-turn");
@@ -365,7 +369,7 @@ public class GameController {
             Duration.seconds(6),
             event -> {
               if (!isOver) {
-                CPUPlays(anchPane, cpuPink, ownedCircles);
+                CPUPlays(anchPane, cpuPink);
                 updateScores();
                 checkCpuScore(cpuPink);
               }

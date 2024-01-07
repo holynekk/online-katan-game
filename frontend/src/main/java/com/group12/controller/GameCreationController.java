@@ -26,6 +26,10 @@ import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.buttonSound;
 import static com.group12.helper.MediaHelper.playSoundEffect;
 
+/**
+ * The {@code GameCreationController} class is responsible for handling the creation of an
+ * online/offline games.
+ */
 @Component
 public class GameCreationController {
 

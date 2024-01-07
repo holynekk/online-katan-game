@@ -13,6 +13,10 @@ import java.util.*;
 import static com.group12.controller.GameController.occupiedCircles;
 import static com.group12.helper.GameHelper.*;
 
+/**
+ * The {@code GameBoardSetupHelper} class is responsible for having helper methods about setting up
+ * the board for offline (against CPU) games.
+ */
 public class GameBoardSetupHelper {
 
   private static ArrayList<String> tileList =

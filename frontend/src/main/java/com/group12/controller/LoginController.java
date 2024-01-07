@@ -24,6 +24,7 @@ import static com.group12.helper.BackgroundHelper.menuBackgroundImage;
 import static com.group12.helper.BackgroundHelper.setTheBackground;
 import static com.group12.helper.MediaHelper.*;
 
+/** The {@code LoginController} class is responsible for handling the authentication. */
 @Component
 public class LoginController {
 

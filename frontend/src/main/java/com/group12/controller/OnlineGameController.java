@@ -46,6 +46,10 @@ import static com.group12.helper.HttpClientHelper.getSessionCookie;
 import static com.group12.helper.MediaHelper.*;
 import static com.group12.helper.OnlineGameHelper.*;
 
+/**
+ * The {@code OnlineGameController} class is responsible for handling the online interactions of the
+ * game. This includes sending requests, making moves, sending chat messages, etc.
+ */
 @Component
 public class OnlineGameController {
 
@@ -948,7 +952,8 @@ public class OnlineGameController {
               .uri(
                   URI.create(
                       String.format(
-                          "https://group12-katan-backend.onrender.com/api/game/closeGame?gameId=%s", this.gameId)))
+                          "https://group12-katan-backend.onrender.com/api/game/closeGame?gameId=%s",
+                          this.gameId)))
               .header("Content-Type", "application/json")
               .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
               .PUT(HttpRequest.BodyPublishers.ofString(""))
