@@ -1,14 +1,21 @@
 # Authors
+
 - Mert Kaan YILMAZ (2381093)
 - Umut YILMAZ (2449064)
 
 <b>*General project documentation:*</b> holynekk.github.io/group12JavaDocs/
 
+<b>*Url for the swagger on production environment:*</b> group12-katan-backend.onrender.com/swagger-ui/index.html
+
 # Database Schema
 
-![database_schema](./misc/group12dbSchema.png)
+![database_schema](./misc/group12_dbSchema.png)
+
+Click [here](./misc/sql_scripts/script.sql) and see the sql script for tables and example data.
 
 # How to Use katanBackend API Service?
+
+(There is a postman collection in the folders. You can click [here](./postman_collection/group12%20-%20Katan%20Backend.postman_collection.json) to)
 
 Go to the link below which is an api documentation generated via swagger.
 
@@ -30,7 +37,7 @@ free to create your own user and use it to logging in.)
 
 Now, you have to hit the login endpoint to create a session and a session cookie to use it later.
 
-After logging in successfully, you will have your session cookie token id to use it as you X-CSRF 
+After logging in successfully, you will have your session cookie token id to use it as you X-CSRF
 header value with other endpoints.
 
 ![session_tokenID](./misc/3.png)

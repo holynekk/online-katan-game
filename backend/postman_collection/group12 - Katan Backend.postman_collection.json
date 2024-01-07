@@ -4,7 +4,7 @@
 		"name": "group12 - Katan Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19969170",
-		"_collection_link": "https://galactic-robot-983193.postman.co/workspace/New-Team-Workspace~03b5535d-0829-4709-ac09-07509049a629/collection/19969170-32db8f6a-e408-4a75-9b6f-72f4a774682b?action=share&source=collection_link&creator=19969170"
+		"_collection_link": "https://galactic-robot-983193.postman.co/workspace/Group12---Katan~03b5535d-0829-4709-ac09-07509049a629/collection/19969170-32db8f6a-e408-4a75-9b6f-72f4a774682b?action=share&source=collection_link&creator=19969170"
 	},
 	"item": [
 		{
@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"test_admin565\",\r\n    \"password\" : \"test_password3\",\r\n    \"email\": \"test_admin5566@gmail.com\",\r\n    \"displayName\" : \"Test User 34\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"zzzzzzzzzz\",\r\n    \"password\" : \"test_password3\",\r\n    \"email\": \"zzzzzzzzzz@gmail.com\",\r\n    \"displayName\" : \"Test User 34\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/user?username=test_admin56",
+							"raw": "http://localhost:8080/api/user?username=test_admin",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -58,8 +58,78 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "test_admin56"
+									"value": "test_admin"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-CSRF",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test_admin\",\n    \"firstName\": \"firstTT\",\n    \"lastName\": \"lastTTT\",\n    \"displayName\": \"TESTTT ADDMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-CSRF",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"zzzzzzzzzz\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
 							]
 						}
 					},
@@ -88,7 +158,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/api/auth/login",
@@ -260,13 +330,13 @@
 						"header": [
 							{
 								"key": "X-CSRF",
-								"value": "02aa95f6f9fc05cf9c36d3fd8e41230f2e4e2b98bf5b73a2a3e536209e40ea0d",
+								"value": "2f0a84c3b0b9c1c7eefcf7c125dab555a721eeb141bac8bfb0accfa3a510334b",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"timeInterval\": \"weekly\",\n    \"offset\": 0,\n    \"pagination\": 10\n}",
+							"raw": "{\n    \"timeInterval\": \"all\",\n    \"offset\": 0,\n    \"pagination\": 10\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -283,6 +353,192 @@
 							"path": [
 								"api",
 								"leaderboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Game",
+			"item": [
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/game?gameId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game"
+							],
+							"query": [
+								{
+									"key": "gameId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Active Game List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/game/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Game",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gameName\" : \"dul udl\",\n    \"gameDescription\" : \"test_password3\",\n    \"gamePassword\": null,\n    \"passwordRequired\" : false,\n    \"gameLeader\": 2,\n    \"online\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/game",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close Game",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/game/closeGame?gameId=39",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"closeGame"
+							],
+							"query": [
+								{
+									"key": "gameId",
+									"value": "39"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-CSRF",
+								"value": "c1cf137df3ef313229e8c0561501f260fe8f1e6bd95bf31c2a6b428efba3e281",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/user/game-history?username=test_admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"game-history"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "test_admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game History",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF",
+								"value": "eaad91ae57f57a986e1cdff1623866149ff3b304c0b72e1c5ccffe504d1337ba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gameId\": 1,\n    \"username\": \"a\",\n    \"time\": \"1951-11-06 21:25:56\",\n    \"didWon\": 1,\n    \"totalScore\": 7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/game/game-history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"game-history"
 							]
 						}
 					},
