@@ -1,5 +1,9 @@
 package com.group12;
 
+import static com.group12.helper.HttpClientHelper.getSessionCookie;
+import static com.group12.helper.StompClient.exitGame;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -22,7 +26,8 @@ public class KatanApplication extends Application {
   }
 
   @Override
-  public void stop() {
+  public void stop() throws JsonProcessingException {
+    exitGame(getSessionCookie("gameId"));
     applicationContext.close();
     Platform.exit();
   }

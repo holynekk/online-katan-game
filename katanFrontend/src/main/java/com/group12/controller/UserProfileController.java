@@ -30,6 +30,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
+/**
+ * The {@code UserProfileController} manages the user profile interface. It is responsible for
+ * displaying user-specific information such as user ID, display name, email, and game history.
+ */
 @Component
 public class UserProfileController {
 
@@ -49,7 +53,7 @@ public class UserProfileController {
 
   @FXML private TableColumn<GameHistoryModel, String> historyColumn;
 
-  @FXML private TableColumn<GameHistoryModel, Boolean> didWonColumn;
+  @FXML private TableColumn<GameHistoryModel, String> didWonColumn;
 
   @FXML private TableColumn<GameHistoryModel, Integer> scoreColumn;
 
@@ -59,6 +63,16 @@ public class UserProfileController {
 
   @FXML private ImageView userProfileImage;
 
+  /**
+   * An initialize method to populate tables, user information, background image, etc.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading * * background
+   *     images.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading * * *
+   *     background images.
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading * * *
+   *     background images.
+   */
   public void initialize() throws IOException, InterruptedException, URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
     File file = new File("src/main/resources/assets/villager.png");
@@ -92,7 +106,7 @@ public class UserProfileController {
     gameIdColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, Integer>("gameId"));
     historyColumn.setCellValueFactory(
         new PropertyValueFactory<GameHistoryModel, String>("history"));
-    didWonColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, Boolean>("didWon"));
+    didWonColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, String>("didWon"));
     scoreColumn.setCellValueFactory(new PropertyValueFactory<GameHistoryModel, Integer>("score"));
 
     request =
@@ -116,12 +130,17 @@ public class UserProfileController {
                 new GameHistoryModel(
                     data.getGameId(),
                     data.getHistory().toString(),
-                    data.isDidWon(),
+                    data.isDidWon() ? "Won" : "Lost",
                     data.getScore()));
       }
     }
   }
 
+  /**
+   * A button action to get back to the menu screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);

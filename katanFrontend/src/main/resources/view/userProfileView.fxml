@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.UserProfileController">
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/leaderboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.UserProfileController">
    <top>
       <AnchorPane prefHeight="125.0" prefWidth="800.0" BorderPane.alignment="TOP_CENTER">
          <children>
@@ -29,7 +29,7 @@
                   </Label>
                </children>
             </HBox>
-            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" styleClass="generalButton" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -41,7 +41,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="userProfileImage" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 5;">
+                  <ImageView fx:id="userProfileImage" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

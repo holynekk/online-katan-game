@@ -1,6 +1,5 @@
 package com.group12.model;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -9,14 +8,14 @@ public class GameHistoryModel {
 
   private final SimpleStringProperty history;
 
-  private final SimpleBooleanProperty didWon;
+  private final SimpleStringProperty didWon;
 
   private final SimpleIntegerProperty score;
 
-  public GameHistoryModel(int gameId, String history, boolean didWon, int score) {
+  public GameHistoryModel(int gameId, String history, String didWon, int score) {
     this.gameId = new SimpleIntegerProperty(gameId);
     this.history = new SimpleStringProperty(history);
-    this.didWon = new SimpleBooleanProperty(didWon);
+    this.didWon = new SimpleStringProperty(didWon);
     this.score = new SimpleIntegerProperty(score);
   }
 
@@ -36,11 +35,11 @@ public class GameHistoryModel {
     this.history.set(history);
   }
 
-  public boolean isDidWon() {
+  public String isDidWon() {
     return didWon.get();
   }
 
-  public void setDidWon(boolean didWon) {
+  public void setDidWon(String didWon) {
     this.didWon.set(didWon);
   }
 

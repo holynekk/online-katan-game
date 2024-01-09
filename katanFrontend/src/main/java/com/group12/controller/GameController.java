@@ -129,16 +129,21 @@ public class GameController {
   private ArrayList<String> ownedCities = new ArrayList<>();
   private ArrayList<String> ownedEdges = new ArrayList<>();
 
+  /**
+   * An initialize method to set some data (resources, board tiles, etc.), and initializing of cpu
+   * players.
+   */
   public void initialize() {
+    switchBackgroundMusic(true);
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
     isOver = false;
-    hillResource = 20;
-    mountainResource = 20;
-    forestResource = 20;
-    fieldResource = 20;
-    pastureFieldResource = 20;
-    totalResources = 80;
+    hillResource = 0;
+    mountainResource = 0;
+    forestResource = 0;
+    fieldResource = 0;
+    pastureFieldResource = 0;
+    totalResources = 0;
     longestRoadLength = 0;
     longestOfEveryone = 0;
     tileTextList =
@@ -160,6 +165,11 @@ public class GameController {
     p1.getStyleClass().addAll("player-turn");
   }
 
+  /**
+   * A button action to build a road.
+   *
+   * @param event - Mouse event.
+   */
   @FXML
   public void rectanglePush(MouseEvent event) {
     Rectangle eventRectangle = (Rectangle) event.getSource();
@@ -204,6 +214,11 @@ public class GameController {
     timeline.play();
   }
 
+  /**
+   * A button action to throw the dice with animations and gathering resources at the end.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void throwDice(MouseEvent event) {
     firstDiceImage.setDisable(true);
@@ -225,6 +240,7 @@ public class GameController {
     }
   }
 
+  /** A button action to show optional builds of roads on the screen. */
   @FXML
   public void showOptionalRoads() {
     playSoundEffect(buttonSound);
@@ -239,6 +255,7 @@ public class GameController {
     }
   }
 
+  /** A button action to show optional settlements on the screen. */
   @FXML
   public void showOptionalSettlements() {
     playSoundEffect(buttonSound);
@@ -253,6 +270,7 @@ public class GameController {
     }
   }
 
+  /** A button action to show optional upgrades of settlements on the screen. */
   @FXML
   public void showOptionalUpgrades() {
     playSoundEffect(buttonSound);
@@ -270,6 +288,10 @@ public class GameController {
     }
   }
 
+  /**
+   * A method to allow cpu players to play and let run the turn logic behind it. Contains cpu plays
+   * in order with animations, resource gathering, dice throws, etc.
+   */
   @FXML
   public void skipTurn() {
     playSoundEffect(buttonSound);
@@ -367,11 +389,15 @@ public class GameController {
     timeline.play();
   }
 
+  /**
+   * A button action to build a settlement by te player.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void circlePush(MouseEvent event) {
     Circle eventCircle = (Circle) event.getSource();
     String circleId = eventCircle.getId();
-    // Set the settlement
 
     for (Node node : anchPane.getChildren()) {
       if (node.getClass().getName().contains("Circle")) {
@@ -399,6 +425,11 @@ public class GameController {
     updateScores();
   }
 
+  /**
+   * A method to build a settlement by te player at the second turn of the setup phase.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void lastCirclePush(MouseEvent event) {
     Circle eventCircle = (Circle) event.getSource();
@@ -459,6 +490,11 @@ public class GameController {
     updateScores();
   }
 
+  /**
+   * A method to build a road by te player at the second turn of the setup phase.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void lastRectanglePush(MouseEvent event) {
     Rectangle eventRectangle = (Rectangle) event.getSource();
@@ -490,6 +526,7 @@ public class GameController {
     finalizeSetupPhase();
   }
 
+  /** A helper method to finalize the setup phase (implementing turn login with button toggling). */
   public void finalizeSetupPhase() {
     firstDiceImage.setDisable(false);
     secondDiceImage.setDisable(false);
@@ -509,6 +546,11 @@ public class GameController {
     NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Information", "It's your turn!");
   }
 
+  /**
+   * A button action to build a settlement.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void buildRoad(MouseEvent event) {
     Rectangle road = (Rectangle) event.getSource();
@@ -540,6 +582,11 @@ public class GameController {
     updateScores();
   }
 
+  /**
+   * A button action to build a settlement.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void buildSettlement(MouseEvent event) {
     Circle settlement = (Circle) event.getSource();
@@ -570,6 +617,11 @@ public class GameController {
     updateScores();
   }
 
+  /**
+   * A button action to upgrade a settlement to a city.
+   *
+   * @param event - Mouse event
+   */
   @FXML
   public void upgradeToCity(MouseEvent event) {
     Circle settlement = (Circle) event.getSource();
@@ -597,6 +649,7 @@ public class GameController {
     updateScores();
   }
 
+  /** A method to refresh scoreboard. */
   public void updateScores() {
     woolText.setText(Integer.toString(pastureFieldResource));
     oreText.setText(Integer.toString(mountainResource));
@@ -624,6 +677,11 @@ public class GameController {
     player4Score.setText(Integer.toString(cpuPink.getScore()));
   }
 
+  /**
+   * A method to check if a cpu player has won the game or not.
+   *
+   * @param cpuPlayer - CPU player that asks for the score check.
+   */
   public void checkCpuScore(CPUPlayer cpuPlayer) {
     if (cpuPlayer.getScore() >= 8) {
       closeGame();
@@ -633,6 +691,7 @@ public class GameController {
     }
   }
 
+  /** A method to check the player's score and decide if he won or not. */
   public void checkPlayerScore() {
     if (getScore() >= 8) {
       closeGame();
@@ -642,12 +701,18 @@ public class GameController {
     }
   }
 
+  /**
+   * A method to get total score of the player.
+   *
+   * @return - Score value as integer.
+   */
   public int getScore() {
     return ownedCities.size()
         + ownedCircles.size()
         + (longestRoadLength == longestOfEveryone && longestRoadLength >= 5 ? 2 : 0);
   }
 
+  /** A method to oggling off all the buttons. */
   public void closeGame() {
     firstDiceImage.setDisable(true);
     secondDiceImage.setDisable(true);
@@ -655,6 +720,11 @@ public class GameController {
     backButton.setVisible(true);
   }
 
+  /**
+   * A button action to load user menu screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void backToMenu() throws IOException {
     Stage stage = (Stage) backButton.getScene().getWindow();

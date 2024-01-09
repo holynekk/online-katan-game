@@ -25,6 +25,12 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.springframework.stereotype.Component;
 
+/**
+ * The {@code RegisterController} is a Spring component that manages the user interface and
+ * interactions for the registration process in an application. This controller is responsible for
+ * handling user input for registration details such as email, username, display name, and password.
+ * It validates the input, sends registration requests to the server, and handles the response.
+ */
 @Component
 public class RegisterController {
 
@@ -44,10 +50,22 @@ public class RegisterController {
 
   Window window;
 
+  /**
+   * An initialize method to set the background.
+   *
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading *
+   *     background images.
+   */
   public void initialize() throws URISyntaxException {
     setTheBackground(borderpn, menuBackgroundImage);
   }
 
+  /**
+   * A button action to send request to the server with the data of register form.
+   *
+   * @throws IOException - exception of json serialize/deserialize function.
+   * @throws InterruptedException - Throws an exception.
+   */
   @FXML
   private void register() throws IOException, InterruptedException {
     playSoundEffect(buttonSound);
@@ -76,20 +94,19 @@ public class RegisterController {
             Alert.AlertType.INFORMATION, "Success", "New user has been created!");
         showLoginScene();
       } else if (response.statusCode() == 400) {
-        NotificationHelper.showAlert(Alert.AlertType.INFORMATION, "Error", response.body());
+        NotificationHelper.showAlert(Alert.AlertType.ERROR, "Error", response.body());
       }
     }
   }
 
-  private boolean isAlreadyRegistered() throws IOException, InterruptedException {
-    boolean usernameExist = false;
-    // Check if user is already exists
-
-    return usernameExist;
-  }
-
+  /**
+   * A method to validate the given credentials on the textFields.
+   *
+   * @return - Boolean value if the all form is valid or not.
+   * @throws IOException - Throws exception.
+   * @throws InterruptedException - Throws exception.
+   */
   private boolean isValidated() throws IOException, InterruptedException {
-
     window = registerButton.getScene().getWindow();
     if (email.getText().isEmpty()) {
       NotificationHelper.showAlert(
@@ -117,16 +134,17 @@ public class RegisterController {
           "Error",
           "Password and confirm password text fields does not match.");
       password.requestFocus();
-    } else if (isAlreadyRegistered()) {
-      NotificationHelper.showAlert(
-          Alert.AlertType.ERROR, "Error", "The username is already taken by someone else.");
-      username.requestFocus();
     } else {
       return true;
     }
     return false;
   }
 
+  /**
+   * A button action to get back to the login screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   private void showLoginScene() throws IOException {
     Stage stage = (Stage) registerButton.getScene().getWindow();

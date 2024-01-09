@@ -4,6 +4,11 @@ import javafx.scene.control.Alert;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
+/**
+ * The {@code NotificationHelper} class provides utility methods for displaying notifications. This
+ * class uses the ControlsFX library to create and show customizable notifications with different
+ * alert types.
+ */
 public class NotificationHelper {
 
   /**

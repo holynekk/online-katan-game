@@ -38,8 +38,14 @@
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Slider>
-                  <Slider fx:id="effectsMusicSlider" focusTraversable="false" value="100.0" />
+                  <Slider fx:id="effectsMusicSlider" focusTraversable="false" value="100.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Slider>
                </children>
             </VBox>
          </children>
@@ -63,7 +69,7 @@
                   </Label>
                </children>
             </HBox>
-            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" styleClass="generalButton" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

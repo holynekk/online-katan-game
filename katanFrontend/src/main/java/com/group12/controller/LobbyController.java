@@ -24,6 +24,14 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
+/**
+ * The {@code LobbyController} class handles the user interface and interactions within the game
+ * lobby. This controller manages the display of available game rooms, allows users to create new
+ * lobbies, join existing ones, and navigate back to the main menu.
+ *
+ * <p>The class communicates with a REST API to fetch and display the list of game lobbies and
+ * handles the lobby joining process.
+ */
 @Component
 public class LobbyController {
 
@@ -45,6 +53,16 @@ public class LobbyController {
 
   @FXML private BorderPane borderpn;
 
+  /**
+   * An initialize method to populate tables, user information, background image, etc.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading * * background
+   *     images.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading * *
+   *     background images.
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading * *
+   *     background images.
+   */
   public void initialize() throws IOException, InterruptedException, URISyntaxException {
     setTheBackground(borderpn, parchmentBackgroundImage);
 
@@ -71,6 +89,10 @@ public class LobbyController {
     }
   }
 
+  /**
+   * A button action to set the information at the center after clicking to a listed lobby name at
+   * the left panel.
+   */
   @FXML
   public void handleClickListView() {
     playSoundEffect(buttonSound);
@@ -81,6 +103,11 @@ public class LobbyController {
     lobbyGameLeaderLabel.setText(gameData.getGameLeader());
   }
 
+  /**
+   * A button action to show leaderboard screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void showLeaderboard() throws IOException {
     playSoundEffect(buttonSound);
@@ -91,6 +118,11 @@ public class LobbyController {
     stage.show();
   }
 
+  /**
+   * A button action to show game create screen.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void showGameCreation() throws IOException {
     playSoundEffect(buttonSound);
@@ -101,10 +133,17 @@ public class LobbyController {
     stage.show();
   }
 
+  /**
+   * A button action to join a specific room.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   * @throws InterruptedException - Throws an exception when there is a problem with loading fxml
+   *     file.
+   * @throws URISyntaxException - Throws an exception when there is a problem with loading sound
+   *     files.
+   */
   @FXML
-  public void joinRoom() throws IOException, InterruptedException {
-    //  TODO: Join logic should be rewritten later.
-
+  public void joinRoom() throws IOException, InterruptedException, URISyntaxException {
     playSoundEffect(buttonSound);
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -129,10 +168,15 @@ public class LobbyController {
     Scene scene = new Scene(fxmlLoader.load(), 800, 600);
     stage.setScene(scene);
     RoomController roomController = fxmlLoader.getController();
-    roomController.initData(gData);
+    roomController.initData(gData, Integer.toString(gData.getGameId()), false);
     stage.show();
   }
 
+  /**
+   * A button action to get back to the menu.
+   *
+   * @throws IOException - Throws an exception when there is a problem with loading fxml file.
+   */
   @FXML
   public void backToMenu() throws IOException {
     playSoundEffect(buttonSound);

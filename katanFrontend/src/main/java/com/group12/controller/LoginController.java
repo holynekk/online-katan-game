@@ -56,7 +56,6 @@ public class LoginController {
               .build();
       HttpResponse<String> response =
           HttpClientHelper.getClient().send(request, HttpResponse.BodyHandlers.ofString());
-
       if (response.statusCode() == 200) {
         NotificationHelper.showAlert(
             Alert.AlertType.INFORMATION, "Success", "You successfully logged in!");
@@ -65,10 +64,10 @@ public class LoginController {
         HttpClientHelper.addNewSessionCookie(
             "userId", response.headers().allValues("userId").get(0));
         this.showMenuScene();
-      } else if (response.statusCode() == 400) {
+      } else {
+        username.requestFocus();
         NotificationHelper.showAlert(
             Alert.AlertType.ERROR, "Error", "Username or password is wrong! Please try again.");
-        username.requestFocus();
       }
     }
   }

@@ -352,6 +352,4 @@ public class GameHelper {
     visited.remove(node); // Backtrack
     return maxLength;
   }
-
-  public void checkScores() {}
 }

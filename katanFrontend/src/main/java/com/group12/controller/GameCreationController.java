@@ -53,6 +53,13 @@ public class GameCreationController {
   @FXML
   public void createGame() throws IOException, InterruptedException {
     playSoundEffect(buttonSound);
+
+    if (lobbyNameText.getText().isEmpty()) {
+      lobbyNameText.requestFocus();
+      NotificationHelper.showAlert(Alert.AlertType.ERROR, "Error", "Game name cannot be empty!");
+      return;
+    }
+
     RadioButton cpuOrOnlineButton = (RadioButton) cpuOrOnline.getSelectedToggle();
     RadioButton passwordRequiredButton = (RadioButton) passwordRequired.getSelectedToggle();
 
@@ -119,7 +126,7 @@ public class GameCreationController {
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setScene(scene);
         RoomController roomController = fxmlLoader.getController();
-        roomController.initData(gData);
+        roomController.initData(gData, Integer.toString(gData.getGameId()), true);
         stage.show();
       } else {
         NotificationHelper.showAlert(
