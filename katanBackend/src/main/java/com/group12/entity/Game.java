@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Game {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "game_id")
   private int gameId;
 
@@ -101,6 +102,14 @@ public class Game {
     return isOnline;
   }
 
+  public Boolean getIsOnline() {
+    return isOnline;
+  }
+
+  public void setIsOnline(Boolean online) {
+    isOnline = online;
+  }
+
   public void setOnline(Boolean online) {
     isOnline = online;
   }
@@ -119,5 +128,13 @@ public class Game {
 
   public void setFinished(Boolean finished) {
     isFinished = finished;
+  }
+
+  public Boolean getIsFinished() {
+    return this.isFinished;
+  }
+
+  public void setIsFinished(Boolean isFinished) {
+    this.isFinished = isFinished;
   }
 }

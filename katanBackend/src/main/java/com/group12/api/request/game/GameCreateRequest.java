@@ -1,5 +1,6 @@
 package com.group12.api.request.game;
 
+/** Custom request type to validate request body object for game creation. */
 public class GameCreateRequest {
   private String gameName;
 

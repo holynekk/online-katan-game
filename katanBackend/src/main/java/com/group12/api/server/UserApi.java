@@ -112,6 +112,13 @@ public class UserApi {
     return null;
   }
 
+  /**
+   * An endpoint to update user information.
+   *
+   * @param userRequest - custom request object to validate form fields in request body.
+   * @return - A result string according to the result.
+   * @throws Exception - throws exception.
+   */
   @PutMapping(
       value = "",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -145,6 +152,16 @@ public class UserApi {
       produces = MediaType.TEXT_PLAIN_VALUE)
   public void deleteUser() {}
 
+  /**
+   * An endpoint to get all previous game history data as a list to populate list views.
+   *
+   * @param providedUsername - A specific username to fetch data from the database.
+   * @return - List of game history response data.
+   * @throws InvalidAlgorithmParameterException - throws Exception
+   * @throws IllegalBlockSizeException - throws Exception
+   * @throws BadPaddingException - throws Exception
+   * @throws InvalidKeyException - throws Exception
+   */
   @GetMapping(value = "/game-history", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<GameHistoryResponse>> getGameHistoryByUsername(
       @RequestParam(name = "username") String providedUsername)

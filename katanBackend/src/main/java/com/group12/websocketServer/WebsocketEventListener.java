@@ -20,16 +20,15 @@ public class WebsocketEventListener {
     LOG.info("New connection has been established!");
   }
 
-  //    @EventListener
-  //    public void handleWebSocketDisconnectListener(final SessionConnectedEvent event) {
-  //        final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-  //
-  //        final String username = (String) headerAccessor.getSessionAttributes().get("username");
-  //
-  //        final Message message =
-  // Message.builder().type(MessageType.DISCONNECT).sender(username).build();
-  //
-  //        sendingOperations.convertAndSend("/topic/public", message);
-  //    }
-
+  @EventListener
+  public void handleWebSocketDisconnectListener(final SessionConnectedEvent event) {
+    LOG.info("Connection has been closed!");
+//    final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+//
+//    final String username = (String) headerAccessor.getSessionAttributes().get("username");
+//
+//    final Message message = Message.builder().type(MessageType.DISCONNECT).sender(username).build();
+//
+//    sendingOperations.convertAndSend("/topic/public", message);
+  }
 }
