@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.group12.service.PasswordResetService;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -37,7 +36,6 @@ public class UserApi {
   public static final String SECRET_KEY = "TheSecretKey2468";
 
   @Autowired private UserRepository repository;
-  @Autowired private PasswordResetService passwordResetService;
 
   /**
    * Create user endpoint. Email and username should be unique. After validating the information is
@@ -154,23 +152,6 @@ public class UserApi {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.TEXT_PLAIN_VALUE)
   public void deleteUser() {}
-
-  /**
-   * Endpoint to find a user by their password reset token.
-   *
-   * @param token The password reset token.
-   * @return A ResponseEntity containing the User associated with the valid token, or an error
-   *     message if the token is invalid.
-   */
-  @GetMapping("/find-user-by-reset-token")
-  public ResponseEntity<?> findUserByResetToken(@RequestParam String token) {
-    User user = passwordResetService.getUserByValidatedPasswordResetToken(token);
-    if (user != null) {
-      return ResponseEntity.ok(user);
-    } else {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token not found or invalid");
-    }
-  }
 
   /**
    * An endpoint to get all previous game history data as a list to populate list views.
