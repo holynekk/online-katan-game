@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: A3D5FF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.OnlineGameController">
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="bottom-panel" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="452.0" styleClass="resources-section">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="450.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="28.0" prefWidth="450.0" style="-fx-text-fill: white;" text="Resources">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <HBox minWidth="450.0" prefHeight="82.0" prefWidth="450.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #BC4A3C;">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="53.0" text="Brick">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Text fx:id="brickText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #416422;">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="82.0" text="Lumber">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Text fx:id="lumberText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #4E4F55;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="59.0" text="Ore" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Text fx:id="oreText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #E4C798;">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="70.0" text="Grain">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Text fx:id="grainText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0" style="-fx-background-color: #E0DFD7;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="68.0" text="Wool" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Text fx:id="woolText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children></HBox>
+            <VBox alignment="CENTER" minWidth="200.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="roadBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalRoads" styleClass="game-button" text="Build Road">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="settlementBuildButton" disable="true" mnemonicParsing="false" onAction="#showOptionalSettlements" styleClass="game-button" text="Build Settlement">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="settlementUpgradeButton" disable="true" mnemonicParsing="false" onAction="#showOptionalUpgrades" styleClass="game-button" text="Upgrade Settlement">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="98.0" prefWidth="146.0" spacing="10.0">
+               <children>
+                  <Button fx:id="tradeButton" disable="true" mnemonicParsing="false" onAction="#openTradePanel" styleClass="game-button" text="Trade">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="skipTurnButton" disable="true" mnemonicParsing="false" onAction="#skipTurn" styleClass="game-button" text="Skip Turn &gt;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </children>
+            </VBox>
+         </children></HBox>
+   </bottom>
+   <right>
+      <VBox prefHeight="500.0" prefWidth="197.0" styleClass="right-panel" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="chatBackground">
+               <children>
+                  <ScrollPane fx:id="chatScrollPane" focusTraversable="false" hbarPolicy="NEVER" prefHeight="175.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="chatBox" prefHeight="175.0" prefWidth="178.0" />
+                     </content>
+                  </ScrollPane>
+                  <HBox maxHeight="26.0" prefHeight="26.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="chatTextField" focusTraversable="false" promptText="Send a Message" />
+                        <Button fx:id="sendButton" focusTraversable="false" maxWidth="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#sendChatMessage" text="&gt;">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="playerInfoBox" alignment="TOP_CENTER" prefHeight="299.0" prefWidth="195.0">
+               <children>
+                  <Label style="-fx-border-color: white; -fx-border-style: hidden hidden solid hidden;" text="Players" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children></VBox>
+   </right>
+    <center>
+      <AnchorPane fx:id="anchPane" prefHeight="491.0" prefWidth="654.0" BorderPane.alignment="CENTER">
+         <children>
+
+            <Polygon id="h10" fill="#1f93ff" layoutX="316.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <styleClass>
+                  <String fx:value=".desert" />
+                  <String fx:value="desert" />
+               </styleClass></Polygon>
+            <Polygon id="h19" fill="DODGERBLUE" layoutX="420.0" layoutY="361.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h18" fill="DODGERBLUE" layoutX="316.0" layoutY="361.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h17" fill="DODGERBLUE" layoutX="212.0" layoutY="361.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h3" fill="DODGERBLUE" layoutX="420.0" layoutY="1.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h2" fill="DODGERBLUE" layoutX="316.0" layoutY="1.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h1" fill="DODGERBLUE" layoutX="212.0" layoutY="1.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h13" fill="DODGERBLUE" layoutX="160.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h8" fill="DODGERBLUE" layoutX="108.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h4" fill="DODGERBLUE" layoutX="160.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h12" fill="DODGERBLUE" layoutX="524.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h7" fill="DODGERBLUE" layoutX="472.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h16" fill="DODGERBLUE" layoutX="472.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h15" fill="DODGERBLUE" layoutX="368.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h14" fill="DODGERBLUE" layoutX="264.0" layoutY="271.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h6" fill="DODGERBLUE" layoutX="368.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h5" fill="DODGERBLUE" layoutX="264.0" layoutY="91.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Polygon>
+            <Polygon id="h11" fill="DODGERBLUE" layoutX="420.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon id="h9" fill="DODGERBLUE" layoutX="212.0" layoutY="181.0" points="52.0, 0.0, 104.0, 30.0, 104.0, 90.0, 52.0, 120.0, 0.0, 90.0, 0.0, 30.0" stroke="BLACK" strokeType="INSIDE" />
+
+            <Rectangle id="c10-c20" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="234.0" layoutY="146.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Rectangle id="c19-c30" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="182.0" layoutY="236.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Rectangle id="c14-c24" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="442.0" layoutY="146.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c12-c22" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="338.0" layoutY="146.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor>
+           </Rectangle>
+            <Rectangle id="c3-c11" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="286.0" layoutY="55.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c35-c45" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="442.0" layoutY="326.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c33-c43" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="338.0" layoutY="326.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c31-c41" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="234.0" layoutY="326.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c25-c36" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="494.0" layoutY="235.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c23-c34" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="390.0" layoutY="236.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c21-c32" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="286.0" layoutY="235.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c42-c50" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="286.0" layoutY="415.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c44-c52" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="390.0" layoutY="415.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c5-c13" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="390.0" layoutY="55.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c34-c35" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c18-c19" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="153.0" layoutY="195.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c20-c21" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="195.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c22-c23" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="195.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c24-c25" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="471.0" layoutY="195.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c13-c14" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="102.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c11-c12" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="315.0" layoutY="105.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c9-c10" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="96.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c21-c22" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="195.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c12-c13" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="96.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c14-c15" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="471.0" layoutY="96.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c10-c11" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="263.0" layoutY="96.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c43-c44" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="374.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c45-c46" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="465.0" layoutY="374.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c41-c42" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="374.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c36-c37" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="517.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c32-c33" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c30-c31" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c23-c24" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="186.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c33-c34" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c40-c41" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="374.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c31-c32" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="263.0" layoutY="276.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c29-c30" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="153.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c25-c26" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="523.0" layoutY="186.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c19-c20" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="195.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c42-c43" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="374.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c44-c45" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="374.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c35-c36" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="465.0" layoutY="285.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c6-c7" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="465.0" layoutY="15.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c15-c16" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="523.0" layoutY="104.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c26-c27" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="568.0" layoutY="194.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c27-c38" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="598.0" layoutY="236.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c37-c38" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="568.0" layoutY="283.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c37-c47" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="546.0" layoutY="326.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c46-c47" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="517.0" layoutY="370.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c46-c54" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="494.0" layoutY="415.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c53-c54" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="471.0" layoutY="456.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c52-c53" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="456.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c16-c26" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="546.0" layoutY="146.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c5-c6" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="419.0" layoutY="15.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c4-c5" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="15.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c7-c15" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="494.0" layoutY="55.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c3-c4" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="315.0" layoutY="15.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c2-c3" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="9.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c1-c2" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="10.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c1-c9" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="187.0" layoutY="55.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c8-c9" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="158.0" layoutY="102.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c8-c18" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="128.0" layoutY="146.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c17-c18" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="107.0" layoutY="194.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c17-c28" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="85.0" layoutY="236.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c28-c29" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="107.0" layoutY="280.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c29-c39" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="130.0" layoutY="326.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c39-c40" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="154.0" layoutY="370.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c40-c48" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="184.0" layoutY="415.0" onMouseClicked="#buildRoad" rotate="90.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c48-c49" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="205.0" layoutY="456.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c49-c50" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="257.0" layoutY="456.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+            <Rectangle id="c50-c51" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="309.0" layoutY="456.0" onMouseClicked="#buildRoad" rotate="30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+            <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Rectangle>
+
+            <Rectangle id="c51-c52" arcHeight="5.0" arcWidth="5.0" fill="#D3D3D3" height="11.0" layoutX="361.0" layoutY="461.0" onMouseClicked="#buildRoad" rotate="-30.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="60.0">
+
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Rectangle>
+
+            <Circle id="c10" fill="#D3D3D3" layoutX="264.0" layoutY="120.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c41" fill="#D3D3D3" layoutX="264.0" layoutY="362.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c36" fill="#D3D3D3" layoutX="524.0" layoutY="272.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c35" fill="#D3D3D3" layoutX="472.0" layoutY="302.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c33" fill="#D3D3D3" layoutX="368.0" layoutY="302.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c32" fill="#D3D3D3" layoutX="316.0" layoutY="271.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c31" fill="#D3D3D3" layoutX="264.0" layoutY="301.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c30" fill="#D3D3D3" layoutX="213.0" layoutY="272.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c25" fill="#D3D3D3" layoutX="524.0" layoutY="211.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c23" fill="#D3D3D3" layoutX="420.0" layoutY="211.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c21" fill="#D3D3D3" layoutX="316.0" layoutY="212.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c19" fill="#D3D3D3" layoutX="212.0" layoutY="212.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c14" fill="#D3D3D3" layoutX="472.0" layoutY="122.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c12" fill="#D3D3D3" layoutX="368.0" layoutY="120.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c45" fill="#D3D3D3" layoutX="472.0" layoutY="362.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c44" fill="#D3D3D3" layoutX="420.0" layoutY="391.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c43" fill="#D3D3D3" layoutX="368.0" layoutY="362.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c24" fill="#D3D3D3" layoutX="472.0" layoutY="181.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c22" fill="#D3D3D3" layoutX="368.0" layoutY="182.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c20" fill="#D3D3D3" layoutX="264.0" layoutY="182.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c34" fill="#D3D3D3" layoutX="420.0" layoutY="272.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c42" fill="#D3D3D3" layoutX="316.0" layoutY="391.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c13" fill="#D3D3D3" layoutX="420.0" layoutY="91.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+             </cursor></Circle>
+            <Circle id="c11" fill="#D3D3D3" layoutX="316.0" layoutY="91.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+             </cursor></Circle>
+            <Circle id="c1" fill="#D3D3D3" layoutX="213.0" layoutY="31.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Circle>
+            <Circle id="c3" fill="#D3D3D3" layoutX="316.0" layoutY="35.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                   <Cursor fx:constant="HAND" />
+                </cursor></Circle>
+            <Circle id="c4" fill="#D3D3D3" layoutX="368.0" layoutY="1.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                   <Cursor fx:constant="HAND" />
+                </cursor></Circle>
+            <Circle id="c6" fill="#D3D3D3" layoutX="472.0" layoutY="1.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Circle>
+            <Circle id="c5" fill="#D3D3D3" layoutX="419.0" layoutY="35.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                   <Cursor fx:constant="HAND" />
+                </cursor></Circle>
+            <Circle id="c2" fill="#D3D3D3" layoutX="263.0" layoutY="1.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+             </cursor></Circle>
+            <Circle id="c7" fill="#D3D3D3" layoutX="524.0" layoutY="31.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor></Circle>
+            <Circle id="c15" fill="#D3D3D3" layoutX="525.0" layoutY="91.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+             </cursor></Circle>
+            <Circle id="c16" fill="#D3D3D3" layoutX="576.0" layoutY="122.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c26" fill="#D3D3D3" layoutX="576.0" layoutY="182.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c27" fill="#D3D3D3" layoutX="628.0" layoutY="212.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c38" fill="#D3D3D3" layoutX="628.0" layoutY="272.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c37" fill="#D3D3D3" layoutX="576.0" layoutY="301.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c47" fill="#D3D3D3" layoutX="571.0" layoutY="362.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c46" fill="#D3D3D3" layoutX="524.0" layoutY="391.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c54" fill="#D3D3D3" layoutX="524.0" layoutY="447.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c53" fill="#D3D3D3" layoutX="472.0" layoutY="478.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c51" fill="#D3D3D3" layoutX="368.0" layoutY="478.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c52" fill="#D3D3D3" layoutX="420.0" layoutY="451.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c50" fill="#D3D3D3" layoutX="316.0" layoutY="451.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c49" fill="#D3D3D3" layoutX="264.0" layoutY="477.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c40" fill="#D3D3D3" layoutX="213.0" layoutY="391.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c48" fill="#D3D3D3" layoutX="214.0" layoutY="447.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Circle>
+            <Circle id="c39" fill="#D3D3D3" layoutX="160.0" layoutY="362.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                 <Cursor fx:constant="HAND" />
+              </cursor></Circle>
+            <Circle id="c29" fill="#D3D3D3" layoutX="160.0" layoutY="301.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Circle>
+            <Circle id="c28" fill="#D3D3D3" layoutX="110.0" layoutY="272.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Circle>
+            <Circle id="c18" fill="#D3D3D3" layoutX="160.0" layoutY="182.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Circle>
+            <Circle id="c17" fill="#D3D3D3" layoutX="108.0" layoutY="212.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Circle>
+            <Circle id="c8" fill="#D3D3D3" layoutX="158.0" layoutY="122.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+             </cursor></Circle>
+            <Circle id="c9" fill="#D3D3D3" layoutX="212.0" layoutY="91.0" onMouseClicked="#buildSettlement" radius="13.0" stroke="BLACK" strokeType="INSIDE" visible="false">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor></Circle>
+
+            <Text fx:id="h1" layoutX="260.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h2" layoutX="364.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h3" layoutX="468.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h4" layoutX="206.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h5" layoutX="312.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h6" layoutX="415.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h7" layoutX="521.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h8" layoutX="152.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h9" layoutX="260.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h10" layoutX="341.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESERT" />
+            <Text fx:id="h11" layoutX="468.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h12" layoutX="571.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h13" layoutX="207.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h14" layoutX="311.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h15" layoutX="415.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h16" layoutX="520.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h17" layoutX="259.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h18" layoutX="363.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+            <Text fx:id="h19" layoutX="468.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+
+            <ImageView fx:id="firstDiceImage" fitHeight="48.0" fitWidth="48.0" layoutX="574.0" layoutY="433.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/dice6.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="secondDiceImage" fitHeight="48.0" fitWidth="48.0" layoutX="628.0" layoutY="433.0" onMouseClicked="#throwDice" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/dice6.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <AnchorPane fx:id="tradePanel" layoutX="85.0" layoutY="380.0" maxHeight="100.0" maxWidth="275.0" minHeight="100.0" minWidth="275.0" prefHeight="100.0" prefWidth="275.0" styleClass="tradePanel" visible="false">
+               <children>
+                  <Label layoutX="7.0" layoutY="12.0" text="Give">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" layoutX="75.0" layoutY="2.0" prefHeight="52.0" prefWidth="106.0" spacing="5.0">
+                     <children>
+                        <RadioButton fx:id="cpuToggleButton" focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets left="-20.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="resourceGiveGroup" />
+                           </toggleGroup>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="brick" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="lumber" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="ore" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="grain" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGiveGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="wool" />
+                           </styleClass>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <Label layoutX="8.0" layoutY="60.0" text="Get">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" layoutX="63.0" layoutY="55.0" prefHeight="40.0" prefWidth="86.0" spacing="5.0">
+                     <children>
+                        <RadioButton fx:id="cpuToggleButton1" focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets left="-8.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="resourceGetGroup" />
+                           </toggleGroup>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="brick" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="lumber" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="ore" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="grain" />
+                           </styleClass>
+                        </RadioButton>
+                        <RadioButton focusTraversable="false" minHeight="40.0" minWidth="25.0" mnemonicParsing="false" toggleGroup="$resourceGetGroup">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="resourceRadioButton" />
+                              <String fx:value="wool" />
+                           </styleClass>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <Button fx:id="cancelTradeButton" layoutX="255.0" layoutY="-4.0" mnemonicParsing="false" onAction="#closeTradePanels" styleClass="circularButton" text="X">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="sendTradeButton" layoutX="210.0" layoutY="42.0" minWidth="50.0" mnemonicParsing="false" onAction="#sendTradeOffer" styleClass="tradeButton" text="Send">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="tradeOfferPanel" layoutX="470.0" maxHeight="100.0" maxWidth="200.0" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" styleClass="tradePanel" visible="false">
+               <children>
+                  <HBox layoutX="9.0" layoutY="6.0" prefHeight="16.0" prefWidth="175.0" spacing="2.0">
+                     <children>
+                        <Label fx:id="tradeUsername" text="username" />
+                        <Label text="wants to trade!" />
+                     </children>
+                  </HBox>
+                  <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gives:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="105.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wants:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="tradeAcceptButton" layoutX="69.0" layoutY="88.0" mnemonicParsing="false" onAction="#acceptTradeOffer" styleClass="tradeButton" text="Accept" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="tradeRejectButton" layoutX="137.0" layoutY="88.0" mnemonicParsing="false" onAction="#closeOfferPanel" styleClass="tradeButton" text="Reject" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Rectangle fx:id="tradeWantedResource" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="158.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" styleClass="tradeCard" width="25.0" />
+                  <Rectangle fx:id="tradeGivenResource" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="69.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" styleClass="tradeCard" width="25.0" />
+               </children>
+            </AnchorPane>
+            <Label fx:id="resultBanner" alignment="CENTER" layoutX="295.0" layoutY="83.0" styleClass="result-banner" text="The Result Banner" textFill="WHITE" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="120.0" />
+            <Button fx:id="backButton" layoutX="101.0" layoutY="2.0" mnemonicParsing="false" onAction="#backToMenu" style="-fx-pref-width: 30;" styleClass="game-button" text="&lt;" visible="false">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets left="-80.0" top="20.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </center>
+
+</BorderPane>

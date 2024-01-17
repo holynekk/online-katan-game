@@ -1,0 +1,35 @@
+package com.group12.model.chat;
+
+/** Message types to classify different types of messaging while processing it. */
+public enum MessageType {
+  CONNECT,
+  CONNECT_OK,
+  CONNECT_FAILED,
+  GAME_CREATED,
+  USER_JOINED,
+  LEAVE,
+  USER_LEFT,
+  KICK,
+  USER_KICKED,
+  USER_LIST,
+  READY,
+  DISCONNECT,
+  BAN,
+  LOBBY_CHAT,
+  IN_GAME_CHAT,
+  START_GAME,
+  SHOW_ROADS_AT_SETUP,
+  SHOW_ROADS_AT_SETUP_AND_GATHER,
+  THROW_DICE,
+  RESOURCE_CHANGE,
+  SKIP_TURN,
+  SKIP_SETUP_TURN,
+  END_SETUP,
+  BUILD_ROAD,
+  BUILD_SETTLEMENT,
+  UPGRADE_SETTLEMENT,
+  TRADE_OFFER_SENT,
+  TRADE_OFFER_RECEIVED,
+  TRADE_OFFER_ACCEPTED,
+  GAME_ENDED
+}

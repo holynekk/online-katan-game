@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderpn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/leaderboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group12.controller.LobbyController">
+   <top>
+      <AnchorPane prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label text="Lobby">
+                     <font>
+                        <Font size="54.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="90.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToMenu" styleClass="generalButton" text="&lt;" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="newLobbyButton" focusTraversable="false" mnemonicParsing="false" onAction="#showGameCreation" prefWidth="110.0" styleClass="generalButton" text="New Lobby" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="170.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="lobbyListView" focusTraversable="false" maxHeight="300.0" maxWidth="150.0" onMouseClicked="#handleClickListView" prefHeight="200.0" prefWidth="150.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets left="40.0" top="-10.0" />
+               </HBox.margin>
+            </ListView>
+            <VBox prefHeight="200.0" prefWidth="180.0" spacing="5.0">
+               <children>
+                  <Label text="Lobby Id: ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Lobby Name: ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Password Required: ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Game Leader: ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" top="25.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="300.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Label fx:id="lobbyIdLabel" text="Lorem Ipsum">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label fx:id="lobbyNameLabel" text="Lorem Ipsum">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label fx:id="lobbyPasswordRequiredLabel" text="Lorem Ipsum">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label fx:id="lobbyGameLeaderLabel" text="Lorem Ipsum">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Button fx:id="joinButton" focusTraversable="false" mnemonicParsing="false" onAction="#joinRoom" styleClass="generalButton" text="Join">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets top="25.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <Button fx:id="leaderboardButton" mnemonicParsing="false" onAction="#showLeaderboard" styleClass="generalButton" text="Show Leaderboard" BorderPane.alignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <BorderPane.margin>
+            <Insets bottom="60.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+</BorderPane>
