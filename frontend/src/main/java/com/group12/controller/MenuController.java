@@ -83,7 +83,7 @@ public class MenuController {
       nextScene = "/view/loginView.fxml";
       HttpRequest request =
           HttpRequest.newBuilder()
-              .uri(URI.create("https://group12-katan-backend.onrender.com/api/auth/logout"))
+              .uri(URI.create("http://localhost:8080/api/auth/logout"))
               .header("X-CSRF", getSessionCookie("X-CSRF"))
               .DELETE()
               .build();

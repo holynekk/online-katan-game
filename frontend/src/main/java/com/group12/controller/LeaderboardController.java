@@ -127,7 +127,7 @@ public class LeaderboardController {
 
     HttpRequest request =
         HttpRequest.newBuilder()
-            .uri(URI.create("https://group12-katan-backend.onrender.com/api/leaderboard"))
+            .uri(URI.create("http://localhost:8080/api/leaderboard"))
             .header("Content-Type", "application/json")
             .header("X-CSRF", HttpClientHelper.getSessionCookie("X-CSRF"))
             .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))
