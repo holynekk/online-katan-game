@@ -1,11 +1,4 @@
-# Authors
-
-- Mert Kaan YILMAZ (2381093)
-- Umut YILMAZ (2449064)
-
 <b>*General project documentation:*</b> holynekk.github.io/group12BackendJavaDocs/
-
-<b>*Url for the swagger on production environment:*</b> group12-katan-backend.onrender.com/swagger-ui/index.html
 
 # Database Schema
 

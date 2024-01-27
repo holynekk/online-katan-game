@@ -33,11 +33,11 @@ public class CPUPlayer {
     this.ownedCircles = new ArrayList<>();
     this.ownedCities = new ArrayList<>();
     this.ownedRoads = new ArrayList<>();
-    this.hillResource = 10;
-    this.mountainResource = 10;
-    this.forestResource = 10;
-    this.fieldResource = 10;
-    this.pastureFieldResource = 10;
+    this.hillResource = 0;
+    this.mountainResource = 0;
+    this.forestResource = 0;
+    this.fieldResource = 0;
+    this.pastureFieldResource = 0;
     this.score = 0;
   }
 
